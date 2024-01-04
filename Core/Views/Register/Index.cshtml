@@ -1,0 +1,74 @@
+﻿
+@model CoreDemo.Controllers.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<section class="main-content-w3layouts-agileits">
+	<div class="container">
+		<h3 class="tittle">Kayıt ol</h3>
+		<div class="inner-sec">
+			<div class="login p-5 bg-light mx-auto mw-100">
+				@using(Html.BeginForm("Index", "Register", FormMethod.Post))
+				{
+					<div class="form-row">
+						<div class="col-md-6 mb-3">
+							<label for="validationCustom01" style="font-size: 20px;">Adınız Soyadınız</label>
+
+							@Html.TextBoxFor(x => x.Writer.WriterName, new { @class = "form-control" })
+							@Html.ValidationMessageFor(x => x.Writer.WriterName, "", new { @class = "text-danger" })
+
+							@* <input type="text" class="form-control" id="validationDefault01" name="WriterName" placeholder="" required=""> *@
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="validationCustom02" style="font-size: 20px;">E-mail</label>
+
+							@Html.TextBoxFor(x => x.Writer.WriterMail, new { @class = "form-control" })
+							@Html.ValidationMessageFor(x => x.Writer.WriterMail, "", new { @class = "text-danger" })
+
+							@* <input type="email" class="form-control" id="validationDefault02" name="WriterMail" placeholder="" required=""> *@
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="exampleInputPassword1 mb-2" style="font-size: 20px;">Şifre</label>
+
+							@Html.TextBoxFor(x => x.Writer.WriterPassword, new { @class = "form-control", type = "password" })
+							@Html.ValidationMessageFor(x => x.Writer.WriterPassword, "", new { @class = "text-danger" })
+
+							@* <input type="password" class="form-control" id="password1" name="WriterPassword" placeholder="" required=""> *@
+						</div>
+						<div class="form-group col-md-6">
+							<label for="exampleInputPassword2 mb-2" style="font-size: 20px;">Görsel Dosya Yolu</label>
+
+							@Html.TextBoxFor(x => x.Writer.WriterImage, new { @class="form-control"})
+							@Html.ValidationMessageFor(x => x.Writer.WriterImage, "", new { @class = "text-danger" })
+
+							@* <input type="text" class="form-control" id="password2" name="WriterImage" placeholder="" required=""> *@
+						</div>
+					</div>		
+
+					@await Html.PartialAsync("~/Views/Register/CitiesPartial.cshtml", Model.Cities)
+
+					<button type="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
+					<p>
+						<a href="#" id="btn1">Tüm şartları okudum, kabul ediyorum.</a>
+					</p>
+				}
+
+			</div>
+		</div>
+	</div>
+	<br />
+	<script>
+		$('#btn1').click(function () {
+			Swal.fire({
+				text: " Bu örnek bir rıza metnidir, okuduğunuz ve kabul ettiğiniz varsayılacaktır.",
+			});
+		});
+		</script>
+</section>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<string>
+
+<div class="form-row">
+	<div class="form-group col-md-12">
+		<label for="city">Şehir Seçiniz    </label>
+		<br />
+		<select>
+			@foreach (var item in Model)
+			{
+				<option value="@item">@item</option>
+			}
+		</select>
+	</div>
+</div>

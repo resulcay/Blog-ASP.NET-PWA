@@ -1,0 +1,34 @@
+﻿<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="comment-top">
+	<h4>Yorum Yap</h4>
+	<div class="comment-bottom">
+		<form id="comment" action="/Blog/BlogReadAll/" method="post">
+
+			<input class="form-control" type="text" name="CommentUserName" placeholder="Adınız Soyadınız" required="">
+			<input class="form-control" type="text" name="CommentTitle" placeholder="Konu" required="">
+			<textarea class="form-control" name="CommentContent" placeholder="Yorumunuz..." required=""></textarea>
+			<button type="submit" class="btn btn-primary submit">Yorum Yap</button>
+		</form>
+	</div>
+    <script>
+        $(document).ready(function () {
+            $("#comment").submit(function (e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '/Comment/PartialAddComment',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        $("input[name='CommentUserName']").val('');
+                        $("input[name='CommentTitle']").val('');
+                        $("textarea[name='CommentContent']").val('');
+                    }
+                });
+            });
+        });
+    </script>
+</div>
