@@ -39,7 +39,22 @@ cd Blog-ASP.NET-PWA
 
 #### or
 
-~/DataAccessLayer/Concrete/Context.cs --> ln.15  server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true
+~/DataAccessLayer/Concrete/Context.cs --> ln.15
+
+```c#
+namespace DataAccessLayer.Concrete
+{
+    public class Context : DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true;");
+        }
+
+        //Entities...
+    }
+}
+```
 
 ### Run the database migrations
 
