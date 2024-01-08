@@ -37,25 +37,32 @@ cd Blog-ASP.NET-PWA
 }
 ```
 
-or ~/DataAccessLayer/Concrete/Context.cs --> ln.15  optionsBuilder.UseSqlServer("server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true;");
+#### or
 
-Run the database migrations:
+~/DataAccessLayer/Concrete/Context.cs --> ln.15  server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true
 
-In Package Manager Console:
--dotnet ef add-migration exampleMigName
+### Run the database migrations
+
+#### In Package Manager Console
+
+-dotnet ef add-migration exampleMigName\
 -dotnet ef update-database
 
-Run the project:
-dotnet run
+### Run the project
+
+dotnet run\
 Open <http://localhost:5000x> in your browser.
 
-Usage
+### Usage
+
 To use the blog app, you need to register an account and log in. You can then access the admin panel by clicking on the user icon on the top right corner. From there, you can create and manage your blog posts, categories, tags, files, and settings.
 
-License
+### License
+
 This project is not licenced yet.
 
-Acknowledgments
+### Acknowledgments
+
 This project is based on the following tutorials and resources:
 
 Blazor PWA by Murat Yücedağ
