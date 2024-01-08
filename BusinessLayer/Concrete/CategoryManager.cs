@@ -20,11 +20,6 @@ namespace BusinessLayer.Concrete
             _categoryDal = categoryDal;
         }
 
-		public List<Category> CategoriesWithBlogCounts()
-		{
-			return _categoryDal.CategoriesWithBlogCounts();
-		}
-
 		public void CategoryAdd(Category category)
         {
            _categoryDal.Insert(category);

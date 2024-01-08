@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Controllers
 {
-	[Authorize]
-
 	public class WriterController : Controller
 	{
 		public IActionResult Index()

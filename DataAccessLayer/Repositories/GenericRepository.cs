@@ -51,13 +51,5 @@ namespace DataAccessLayer.Repositories
             context.Update(item);
             context.SaveChanges();
         }
-
-		public List<Category> CategoriesWithBlogCounts()
-		{
-			using var context = new Context();
-			var categoriesWithBlogCounts = context.Categories.Include(x => x.Blogs).OrderByDescending(c => c.Blogs.Count).ToList();   
-
-			return categoriesWithBlogCounts;
-		}
 	}
 }
