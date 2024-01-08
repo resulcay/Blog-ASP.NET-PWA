@@ -35,6 +35,7 @@ cd Blog-ASP.NET-PWA
       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=BlogDb;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
 }
+```
 
 or ~/DataAccessLayer/Concrete/Context.cs --> ln.15  optionsBuilder.UseSqlServer("server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true;");
 
@@ -46,7 +47,7 @@ In Package Manager Console:
 
 Run the project:
 dotnet run
-Open http://localhost:5000x in your browser.
+Open <http://localhost:5000x> in your browser.
 
 Usage
 To use the blog app, you need to register an account and log in. You can then access the admin panel by clicking on the user icon on the top right corner. From there, you can create and manage your blog posts, categories, tags, files, and settings.
