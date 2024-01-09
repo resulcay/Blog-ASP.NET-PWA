@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreDemo.Controllers
 {
+    [AllowAnonymous]
     public class BlogController : Controller
     {
         readonly BlogManager manager = new(new EfBlogRepository());
@@ -21,5 +22,5 @@ namespace CoreDemo.Controllers
             var values = manager.GetBlogById(id);
             return View(values);
         }
-    }
+	}
 }

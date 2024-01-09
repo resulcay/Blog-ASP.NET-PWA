@@ -12,7 +12,7 @@ namespace CoreDemo.Controllers
 	public class RegisterController : Controller
 	{
 		readonly WriterManager manager = new(new EfWriterRepository());
-		List<string> cities = new()
+		readonly List<string> cities = new()
 			{
 			"Adana", "Adıyaman", "Afyon", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
 			"Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale",
