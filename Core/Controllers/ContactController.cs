@@ -6,23 +6,23 @@ using System;
 
 namespace Core.Controllers
 {
-	public class ContactController : Controller
-	{
-		readonly ContactManager _contactManager = new(new EfContactRepository());
+    public class ContactController : Controller
+    {
+        readonly ContactManager _contactManager = new(new EfContactRepository());
 
-		[HttpGet]
-		public IActionResult Index()
-		{
-			return View();
-		}
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-		[HttpPost]
-		public IActionResult Index(Contact contact)
-		{
-			contact.ContactCreatedAt = DateTime.Parse(DateTime.Now.ToShortDateString());
-			contact.ContactStatus = true;
-			_contactManager.ContactAdd(contact);
-			return RedirectToAction("Index", "Blog");
-		}
-	}
+        [HttpPost]
+        public IActionResult Index(Contact contact)
+        {
+            contact.ContactCreatedAt = DateTime.Parse(DateTime.Now.ToShortDateString());
+            contact.ContactStatus = true;
+            _contactManager.ContactAdd(contact);
+            return RedirectToAction("Index", "Blog");
+        }
+    }
 }

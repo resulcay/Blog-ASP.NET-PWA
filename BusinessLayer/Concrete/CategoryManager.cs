@@ -1,13 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
-using DataAccessLayer.EntityFramework;
-using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
@@ -20,29 +14,29 @@ namespace BusinessLayer.Concrete
             _categoryDal = categoryDal;
         }
 
-		public void CategoryAdd(Category category)
+        public void AddEntity(Category entity)
         {
-           _categoryDal.Insert(category);
+            _categoryDal.Insert(entity);
         }
 
-        public void CategoryDelete(Category category)
+        public void UpdateEntity(Category entity)
         {
-            _categoryDal.Delete(category);
+            _categoryDal.Update(entity);
         }
 
-        public void CategoryUpdate(Category category)
+        public void DeleteEntity(Category entity)
         {
-            _categoryDal.Update(category);
+            _categoryDal.Delete(entity);
         }
 
-        public List<Category> GetCategories()
+        public List<Category> GetEntities()
         {
             return _categoryDal.ListAll();
         }
 
-        public Category GetCategoryById(int id)
+        public Category GetEntityById(int id)
         {
-           return _categoryDal.GetById(id);
+            return _categoryDal.GetById(id);
         }
     }
 }

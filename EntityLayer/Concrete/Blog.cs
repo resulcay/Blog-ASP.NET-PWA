@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
@@ -19,7 +16,7 @@ namespace EntityLayer.Concrete
 
         public string BlogThumbnailImage { get; set; }
 
-        public string BlogImage {  get; set; }
+        public string BlogImage { get; set; }
 
         public DateTime BlogCreatedAt { get; set; }
 
@@ -29,10 +26,10 @@ namespace EntityLayer.Concrete
 
         public Category Category { get; set; }
 
-		public int WriterID { get; set; }
+        public int WriterID { get; set; }
 
-		public Writer Writer { get; set; }
+        public Writer Writer { get; set; }
 
-		public List<Comment> Comments { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreDemo.ViewComponents.BlogComponent
 {
-	public class WriterLastBlog: ViewComponent
-	{
-		readonly BlogManager manager = new(new EfBlogRepository());
+    public class WriterLastBlog : ViewComponent
+    {
+        readonly BlogManager manager = new(new EfBlogRepository());
 
-		public IViewComponentResult Invoke(int id)
-		{
-			ViewBag.i = id;
+        public IViewComponentResult Invoke(int id)
+        {
+            ViewBag.i = id;
 
-			var blog = manager.GetById(id);
-			var values = manager.GetBlogListByWriter(blog.WriterID);
-			return View(values);
-		}
-	}
+            var blog = manager.GetEntityById(id);
+            var values = manager.GetBlogListByWriter(blog.WriterID);
+            return View(values);
+        }
+    }
 }

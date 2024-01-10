@@ -8,10 +8,10 @@ namespace CoreDemo.ViewComponents.Comment
     {
         readonly CommentManager manager = new(new EfCommentRepository());
 
-        public IViewComponentResult Invoke(int id) 
+        public IViewComponentResult Invoke(int id)
         {
             ViewBag.i = id;
-            var values = manager.GetComments(id);
+            var values = manager.GetCommentsByBlogId(id);
             return View(values);
         }
     }

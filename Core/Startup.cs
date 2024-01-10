@@ -5,15 +5,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CoreDemo
 {
@@ -32,10 +27,11 @@ namespace CoreDemo
             services.AddControllersWithViews();
             //services.AddSession();
             services.AddMvc(
-                config => {
+                config =>
+                {
                     var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-					.Build();
+                    .Build();
 
                     config.Filters.Add(new AuthorizeFilter(policy));
                 });
@@ -43,12 +39,16 @@ namespace CoreDemo
             services.AddMvc();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
             {
-				x.LoginPath = "/Login/Index";
-			});
-            services.AddValidatorsFromAssemblyContaining<WriterValidator>(); // register validators
-	        services.AddFluentValidationAutoValidation(); // the same old MVC pipeline behavior
-			services.AddFluentValidationClientsideAdapters(); // for client side
-		}
+                x.LoginPath = "/Login/Index";
+            });
+
+            // Register Validators
+            services.AddValidatorsFromAssemblyContaining<WriterValidator>();
+            services.AddValidatorsFromAssemblyContaining<BlogValidator>();
+
+            services.AddFluentValidationAutoValidation(); // the same old MVC pipeline behavior
+            services.AddFluentValidationClientsideAdapters(); // for client side
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

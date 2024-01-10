@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EntityLayer.Concrete
 {
@@ -18,7 +13,7 @@ namespace EntityLayer.Concrete
         public string AboutDetailsSecond { get; set; }
 
         public string AboutImageFirst { get; set; }
-    
+
         public string AboutImageSecond { get; set; }
 
         public string AboutMapLocation { get; set; }

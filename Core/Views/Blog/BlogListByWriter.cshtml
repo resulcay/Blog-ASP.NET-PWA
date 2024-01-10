@@ -1,0 +1,65 @@
+﻿@using EntityLayer.Concrete
+@model List<Blog>
+
+@{
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Bloglarınız</h1>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><h5>ID</h5></th>
+                <th><h5>Blog Başlığı</h5></th>
+                <th><h5>Oluşturma Tarihi</h5></th>
+                <th><h5>Kategori</h5></th>
+                <th><h5>Durum</h5></th>
+                <th><h5></h5></th>
+                <th><h5></h5></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.BlogID</td>
+                    <td>@item.BlogTitle</td>
+                    <td>@item.BlogCreatedAt</td>
+                    <td>@item.Category.CategoryName</td>
+                    <td>
+                        @{
+                            if (item.BlogStatus == true)
+                            {
+                                <span class="badge badge-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-dark">Pasif</span>
+                            }
+                        }
+                    </td>
+                    <td><a href="/Blog/DeleteBlog/@item.BlogID" class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;">Sil</a></td>
+                    <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning" style="padding: 8px 10px; font-size: 14px; text-align: center;">Düzenle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<a href="/Blog/BlogAdd/" class="btn btn-inverse-primary">Yeni Blog Oluştur</a>
+
+<style>
+    .table thead th {
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody tr:first-child {
+        border-top: none;
+    }
+
+    .table tbody tr:last-child {
+        border-bottom: 2px solid #dee2e6;
+    }
+</style>

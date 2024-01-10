@@ -1,26 +1,42 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-	public class AboutManager : IAboutServie
-	{
-		readonly IAboutDal _aboutDal;
+    public class AboutManager : IAboutService
+    {
+        readonly IAboutDal _aboutDal;
 
-		public AboutManager(IAboutDal aboutDal)
-		{
-			_aboutDal = aboutDal;
-		}
+        public AboutManager(IAboutDal aboutDal)
+        {
+            _aboutDal = aboutDal;
+        }
 
-		public List<About> GetList()
-		{
-			return _aboutDal.ListAll();
-		}
-	}
+        public void AddEntity(About entity)
+        {
+            _aboutDal.Insert(entity);
+        }
+
+        public void UpdateEntity(About entity)
+        {
+            _aboutDal.Update(entity);
+        }
+
+        public void DeleteEntity(About entity)
+        {
+            _aboutDal.Delete(entity);
+        }
+
+        public List<About> GetEntities()
+        {
+            return _aboutDal.ListAll();
+        }
+
+        public About GetEntityById(int id)
+        {
+            return _aboutDal.GetById(id);
+        }
+    }
 }

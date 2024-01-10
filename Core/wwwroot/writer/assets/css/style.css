@@ -3233,11 +3233,12 @@ pre {
   width: 100%;
   margin-bottom: 1rem;
   color: #212529; }
-  .table th,
-  .table td {
+    .table th,
+    .table td {
     padding: 0.9375rem;
     vertical-align: top;
-    border-top: 1px solid #ebedf2; }
+    border-top: 1px solid #c4cbdb;
+    }
   .table thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #ebedf2; }
@@ -13575,5 +13576,4 @@ dl {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1; }
-
 /*# sourceMappingURL=style.css.map */

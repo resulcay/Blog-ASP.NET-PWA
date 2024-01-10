@@ -11,36 +11,36 @@ using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
-	public class LoginController : Controller
-	{
-		[AllowAnonymous]
-		public IActionResult Index()
-		{
-			return View();
-		}
+    public class LoginController : Controller
+    {
+        [AllowAnonymous]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-		[HttpPost]
-		[AllowAnonymous]
-		public async Task<IActionResult> Index(Writer writer)
-		{
-			using var context = new Context();
-			var value = context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
-           
-			if (value != null)
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(Writer writer)
+        {
+            using var context = new Context();
+            var value = context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
+
+            if (value != null)
             {
-				var claims = new List<Claim>
-				{
-					new (ClaimTypes.Name, writer.WriterMail)
-				};
+                var claims = new List<Claim>
+                {
+                    new (ClaimTypes.Name, writer.WriterMail)
+                };
 
-				var userIdentity = new ClaimsIdentity(claims, "login");
-				ClaimsPrincipal principal = new (userIdentity);
-				await HttpContext.SignInAsync(principal);
+                var userIdentity = new ClaimsIdentity(claims, "login");
+                ClaimsPrincipal principal = new(userIdentity);
+                await HttpContext.SignInAsync(principal);
 
-                return RedirectToAction("Index", "Writer");
+                return RedirectToAction("Index", "Home");
             }
 
-			return View();
+            return View();
         }
-	}
+    }
 }
