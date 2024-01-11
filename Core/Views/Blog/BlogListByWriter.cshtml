@@ -24,7 +24,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.BlogID</td>
+                    <td><h4>@item.BlogID</h4></td>
                     <td>@item.BlogTitle</td>
                     <td>@item.BlogCreatedAt</td>
                     <td>@item.Category.CategoryName</td>
@@ -52,7 +52,7 @@
 
 <style>
     .table thead th {
-        border-bottom: 2px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
     }
 
     .table tbody tr:first-child {
@@ -60,6 +60,6 @@
     }
 
     .table tbody tr:last-child {
-        border-bottom: 2px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
     }
 </style>

@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Core.ViewComponents.BlogComponent
 {
-    public class LastBlogs : ViewComponent
+    public class BlogListDashboard : ViewComponent
     {
-        readonly BlogManager manager = new (new EfBlogRepository());
+        readonly BlogManager manager = new(new EfBlogRepository());
 
         public IViewComponentResult Invoke()
         {
-            var values = manager.GetLastBlogs();
+            var values = manager.GetBlogListWithCategory(10);
             return View(values);
         }
     }

@@ -1,0 +1,53 @@
+﻿@using EntityLayer.Concrete
+@model List<Blog>
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h3>Son 10 Blog</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td><h4>Görsel</h4></td>
+                                <th><h4>Başlık</h4></th>
+                                <th><h4>Kategori</h4></th>
+                                <th> <h4>Tarih</h4> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src=@item.BlogImage alt="image">
+                                    </td>
+                                    <td>
+                                        <h6>@item.BlogTitle</h6>
+                                    </td>
+                                    <td>
+                                        <h5><label class="badge badge-gradient-primary">@item.Category.CategoryName</label></h5>
+                                    </td>
+                                    <td> @(((DateTime)item.BlogCreatedAt).ToString("dd-MMM-yyyy")) </td>
+                                    <td><a href="/Blog/BlogReadAll/@item.BlogID" class="btn btn-outline-secondary" style="padding: 8px 10px; font-size: 14px; text-align: center;">Detaylar</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table thead tr td:first-child{
+        border: 1px solid #ffffff;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .table tbody tr:last-child {
+        border-bottom: 1px solid #dee2e6;
+    }
+</style>

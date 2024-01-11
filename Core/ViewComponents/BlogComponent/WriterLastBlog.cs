@@ -11,9 +11,9 @@ namespace CoreDemo.ViewComponents.BlogComponent
         public IViewComponentResult Invoke(int id)
         {
             ViewBag.i = id;
-
             var blog = manager.GetEntityById(id);
             var values = manager.GetBlogListByWriter(blog.WriterID);
+
             return View(values);
         }
     }

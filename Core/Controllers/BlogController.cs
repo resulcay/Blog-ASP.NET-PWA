@@ -20,7 +20,7 @@ namespace CoreDemo.Controllers
 
         public IActionResult Index()
         {
-            var values = blogManager.GetBlogListWithCategory();
+            var values = blogManager.GetBlogListWithCategory(null);
             return View(values);
         }
 
