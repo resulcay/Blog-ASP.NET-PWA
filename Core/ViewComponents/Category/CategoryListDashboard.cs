@@ -2,16 +2,16 @@
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreDemo.ViewComponents.Category
+namespace Core.ViewComponents.Category
 {
-    public class CategoryList : ViewComponent
+    public class CategoryListDashboard : ViewComponent
     {
         readonly CategoryManager manager = new(new EfCategoryRepository());
 
         public IViewComponentResult Invoke()
         {
-            var categoriesWithBlogCounts = manager.GetCategoryListWithBlogCount();
-            return View(categoriesWithBlogCounts);
+            var values = manager.GetEntities();
+            return View(values);
         }
     }
 }

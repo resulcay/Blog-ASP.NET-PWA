@@ -10,6 +10,18 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfBlogRepository : GenericRepository<Blog>, IBlogDal
     {
+        public int TotalBlogCountByWriter(int id)
+        {
+            using var context = new Context();
+            return context.Blogs.Count(x => x.WriterID == id);
+        }
+
+        public int TotalBlogCount()
+        {
+            using var context = new Context();
+            return context.Blogs.Count();
+        }
+
         public List<Blog> GetLastBlogs()
         {
             using var context = new Context();
@@ -33,10 +45,10 @@ namespace DataAccessLayer.EntityFramework
             return query.ToList();
         }
 
-        public List<Blog> GetBlogListByWriter(int id)
+        public List<Blog> GetBlogListByWriter(int id, bool isWriter)
         {
             using var context = new Context();
-            return context.Blogs.Include(c => c.Category).Where(w => w.WriterID == id && w.BlogStatus).ToList();
+            return context.Blogs.Include(c => c.Category).Where(w => w.WriterID == id && (isWriter || w.BlogStatus)).ToList();
         }
     }
 }

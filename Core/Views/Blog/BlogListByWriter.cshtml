@@ -30,7 +30,7 @@
                     <td>@item.Category.CategoryName</td>
                     <td>
                         @{
-                            if (item.BlogStatus == true)
+                            if (item.BlogStatus)
                             {
                                 <span class="badge badge-success">Aktif</span>
                             }

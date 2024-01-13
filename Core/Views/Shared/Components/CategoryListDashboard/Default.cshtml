@@ -1,0 +1,50 @@
+﻿@using EntityLayer.Concrete
+@model List<Category>
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h3>Kategoriler</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><h4>ID</h4></th>
+                                <th><h4>Kategori Adı</h4></th>
+                                <th><h4>Durumu</h4></th>
+                                <th><h4>İşlemler</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             @foreach(var item in Model)
+                            {
+                                <tr>
+                                    <td><h4>@item.CategoryID</h4> </td>
+                                    <td><h5>@item.CategoryName</h5></td>
+                                    <td>
+                                        @{
+                                            if (item.CategoryStatus)
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-dark">Pasif</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

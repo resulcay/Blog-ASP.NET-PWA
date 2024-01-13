@@ -11,6 +11,7 @@
 {
     <input type="hidden" name="BlogID" value="@Model.BlogID" />
     <input type="hidden" name="BlogCreatedAt" value="@Model.BlogCreatedAt" />
+    <input type="hidden" name="BlogStatus" value="@Model.BlogStatus" />
 
     <h4>Başlık</h4>
     @Html.TextBoxFor(b => b.BlogTitle, new { @class = "form-control" })

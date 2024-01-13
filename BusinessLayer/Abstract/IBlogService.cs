@@ -5,8 +5,10 @@ namespace BusinessLayer.Abstract
 {
     public interface IBlogService : IGenericService<Blog>
     {
+        int TotalBlogCount();
+        int TotalBlogCountByWriter(int id);
         List<Blog> GetLastBlogs();
         List<Blog> GetBlogListWithCategory(int? length);
-        List<Blog> GetBlogListByWriter(int id);
+        List<Blog> GetBlogListByWriter(int id, bool isWriter);
     }
 }

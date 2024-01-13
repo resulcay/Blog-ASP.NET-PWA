@@ -33,20 +33,14 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var values = blogManager.GetBlogListByWriter(1);
+            var values = blogManager.GetBlogListByWriter(1, true);
             return View(values);
         }
 
         [HttpGet]
         public IActionResult BlogAdd()
         {
-            List<SelectListItem> categories = (from x in categoryManager.GetEntities()
-                                               select new SelectListItem
-                                               {
-                                                   Text = x.CategoryName,
-                                                   Value = x.CategoryID.ToString()
-                                               }).ToList();
-            ViewBag.categories = categories;
+            PopulateCategoriesDropdown();
             return View();
         }
 
@@ -55,7 +49,6 @@ namespace CoreDemo.Controllers
         {
             BlogValidator blogValidator = new();
             ValidationResult result = blogValidator.Validate(blog);
-
 
             if (result.IsValid)
             {
@@ -68,6 +61,8 @@ namespace CoreDemo.Controllers
             }
             else
             {
+                PopulateCategoriesDropdown();
+
                 foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
@@ -89,6 +84,22 @@ namespace CoreDemo.Controllers
         public IActionResult EditBlog(int id)
         {
             var value = blogManager.GetEntityById(id);
+            PopulateCategoriesDropdown();
+
+            return View(value);
+        }
+
+        [HttpPost]
+        public IActionResult EditBlog(Blog blog)
+        {
+            blog.WriterID = 1;
+            blogManager.UpdateEntity(blog);
+
+            return RedirectToAction("BlogListByWriter");
+        }
+
+        private void PopulateCategoriesDropdown()
+        {
             List<SelectListItem> categories = (from x in categoryManager.GetEntities()
                                                select new SelectListItem
                                                {
@@ -96,17 +107,6 @@ namespace CoreDemo.Controllers
                                                    Value = x.CategoryID.ToString()
                                                }).ToList();
             ViewBag.categories = categories;
-            return View(value);
         }
-
-		[HttpPost]
-		public IActionResult EditBlog(Blog blog)
-		{
-            blog.WriterID = 1;
-            blog.BlogStatus = true;
-            blogManager.UpdateEntity(blog);
-
-			return RedirectToAction("BlogListByWriter");
-		}
-	}
+    }
 }

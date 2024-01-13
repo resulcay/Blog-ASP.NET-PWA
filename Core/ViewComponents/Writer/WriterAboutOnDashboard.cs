@@ -2,15 +2,15 @@
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.ViewComponents.BlogComponent
+namespace Core.ViewComponents.Writer
 {
-    public class LastBlogs : ViewComponent
+    public class WriterAboutOnDashboard : ViewComponent
     {
-        readonly BlogManager manager = new(new EfBlogRepository());
+        readonly WriterManager manager = new(new EfWriterRepository());
 
         public IViewComponentResult Invoke()
         {
-            var values = manager.GetLastBlogs();
+            var values = manager.GetEntityById(1);
             return View(values);
         }
     }

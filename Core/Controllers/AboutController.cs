@@ -14,7 +14,7 @@ namespace CoreDemo.Controllers
             return View(values);
         }
 
-        public PartialViewResult SocialMediaAbout() 
+        public PartialViewResult SocialMediaAbout()
         {
             return PartialView();
         }

@@ -12,7 +12,7 @@ namespace CoreDemo.ViewComponents.BlogComponent
         {
             ViewBag.i = id;
             var blog = manager.GetEntityById(id);
-            var values = manager.GetBlogListByWriter(blog.WriterID);
+            var values = manager.GetBlogListByWriter(blog.WriterID, false);
 
             return View(values);
         }

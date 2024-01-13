@@ -44,14 +44,24 @@ namespace BusinessLayer.Concrete
             return _blogDal.GetListWithCategory(length);
         }
 
-        public List<Blog> GetBlogListByWriter(int id)
+        public List<Blog> GetBlogListByWriter(int id, bool isWriter)
         {
-            return _blogDal.GetBlogListByWriter(id);
+            return _blogDal.GetBlogListByWriter(id, isWriter);
         }
 
         public List<Blog> GetLastBlogs()
         {
             return _blogDal.GetLastBlogs();
+        }
+
+        public int TotalBlogCount()
+        {
+            return _blogDal.TotalBlogCount();
+        }
+
+        public int TotalBlogCountByWriter(int id)
+        {
+            return _blogDal.TotalBlogCountByWriter(id);
         }
     }
 }
