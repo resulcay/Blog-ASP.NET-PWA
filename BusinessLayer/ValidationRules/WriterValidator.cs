@@ -13,6 +13,9 @@ namespace BusinessLayer.ValidationRules
             RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Mail adresi boş geçilemez");
             RuleFor(x => x.WriterPassword).NotEmpty().WithMessage("Şifre boş geçilemez");
             RuleFor(x => x.WriterPassword).MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı");
+            RuleFor(x => x.WriterAbout).NotEmpty().WithMessage("Hakkımda kısmı boş geçilemez");
+            RuleFor(x => x.WriterAbout).MinimumLength(10).WithMessage("Hakkımda kısmı en az 10 karakter olmalı");
+            // RuleFor(x => x.WriterImage).NotEmpty().WithMessage("Lütfen Bir Görsel Yükleyiniz");
         }
     }
 }

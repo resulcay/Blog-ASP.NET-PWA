@@ -7,7 +7,7 @@ namespace Core.Controllers
 {
     public class DashboardController : Controller
     {
-        readonly BlogManager blogManager = new( new EfBlogRepository());
+        readonly BlogManager blogManager = new(new EfBlogRepository());
         readonly CategoryManager categoryManager = new(new EfCategoryRepository());
 
         [AllowAnonymous]
