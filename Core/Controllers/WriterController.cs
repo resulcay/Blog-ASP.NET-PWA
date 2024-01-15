@@ -47,11 +47,16 @@ namespace Core.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult WriterEditProfile(Writer writer, string confirmPassword)
+        public IActionResult WriterEditProfile(Writer writer, string confirmPassword, dynamic image)
         {
             if (writer.WriterPassword != confirmPassword)
             {
                 ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
+            }
+
+            if (image == null)
+            {
+                ModelState.AddModelError("WriterImage", "Lütfen bir profil resmi yükleyiniz.");
             }
 
             WriterValidator writerValidator = new();
@@ -100,7 +105,7 @@ namespace Core.Controllers
             var extension = Path.GetExtension(imageObject.WriterImage?.FileName);
             var newImageName = Guid.NewGuid() + extension;
 
-            writer.WriterImage = newImageName;
+            writer.WriterImage = "/WriterImageFiles/" + newImageName;
             writer.WriterName = imageObject.WriterName;
             writer.WriterMail = imageObject.WriterMail;
             writer.WriterPassword = imageObject.WriterPassword;
