@@ -1,0 +1,58 @@
+﻿@using EntityLayer.Concrete
+@model List<Message2>
+
+@{
+    ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Gelen Kutusu</h1>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><h5>ID</h5></th>
+                <th><h5>Konu</h5></th>
+                <th><h5>Mesaj İçeriği</h5></th>
+                <th><h5>Atılma Tarihi</h5></th>
+                <th><h5>Gönderen Adı</h5></th>
+                <th><h5>Gönderen Maili</h5></th>
+                <th><h5></h5></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><h4>@item.MessageID</h4></td>
+                    <td>@item.Subject</td>
+                    <td>@item.MessageDetails</td>
+                    <td>@item.MessageDate</td>
+                    <td>@item.SenderUser.WriterName</td>
+                    <td>@item.SenderUser.WriterMail</td>
+                    <td><a href="/Message/DeleteMessage/@item.MessageID" class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;">Sil</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<div class="d-flex justify-content-center">
+    <a href="/Message/MessageAdd/" class="btn btn-inverse-primary">Yeni Mesaj Gönder</a>
+</div>
+
+
+<style>
+    .table thead th {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .table tbody tr:first-child {
+        border-top: none;
+    }
+
+    .table tbody tr:last-child {
+        border-bottom: 1px solid #dee2e6;
+    }
+</style>
+

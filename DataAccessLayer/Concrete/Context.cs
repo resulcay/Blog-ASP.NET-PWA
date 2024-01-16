@@ -10,6 +10,35 @@ namespace DataAccessLayer.Concrete
             optionsBuilder.UseSqlServer("server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true;");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeTeam)
+                .WithMany(m => m.HomeMatches)
+                .HasForeignKey(m => m.HomeTeamID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.GuestTeam)
+                .WithMany(m => m.GuestMatches)
+                .HasForeignKey(m => m.GuestTeamID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Message2>()
+                .HasOne(m => m.SenderUser)
+                .WithMany(m => m.WriterSender)
+                .HasForeignKey(m => m.SenderID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Message2>()
+                .HasOne(m => m.ReceiverUser)
+                .WithMany(m => m.WriterReceiver)
+                .HasForeignKey(m => m.ReceiverID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            // base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<About> Abouts { get; set; }
 
         public DbSet<Blog> Blogs { get; set; }
@@ -29,5 +58,11 @@ namespace DataAccessLayer.Concrete
         public DbSet<Notification> Notifications { get; set; }
 
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Message2> Message2s { get; set; }
+
+        public DbSet<Match> Matches { get; set; }
+
+        public DbSet<Team> Teams { get; set; }
     }
 }

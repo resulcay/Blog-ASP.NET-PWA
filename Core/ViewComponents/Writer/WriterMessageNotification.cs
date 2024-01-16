@@ -8,12 +8,12 @@ namespace Core.ViewComponents.Writer
 {
     public class WriterMessageNotification : ViewComponent
     {
-        readonly MessageManager manager = new(new EfMessageRepository());
+        readonly Message2Manager manager = new(new EfMessage2Repository());
 
         public IViewComponentResult Invoke()
         {
-            string writerMail = "ali@gmail.com";
-            var values = manager.GetMessagesByWriter(writerMail);
+            int writerID = 1;
+            var values = manager.GetMessagesByWriterName(writerID);
 
             foreach (var item in values)
             {

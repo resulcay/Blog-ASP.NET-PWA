@@ -10,8 +10,11 @@ namespace Core.ViewComponents.Writer
 
         public IViewComponentResult Invoke()
         {
-            var values = manager.GetEntityById(1);
-            return View(values);
+            var userMail = User.Identity.Name;
+            var writerID = manager.GetWriterIDBySession(userMail);
+            var writer = manager.GetEntityById(writerID);
+
+            return View(writer);
         }
     }
 }

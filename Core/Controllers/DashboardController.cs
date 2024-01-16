@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Controllers
@@ -10,7 +9,6 @@ namespace Core.Controllers
         readonly BlogManager blogManager = new(new EfBlogRepository());
         readonly CategoryManager categoryManager = new(new EfCategoryRepository());
 
-        [AllowAnonymous]
         public IActionResult Index()
         {
             ViewBag.totalBlogCount = blogManager.TotalBlogCount();

@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using Core.Models;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -8,44 +9,46 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Core.Controllers
 {
     public class WriterController : Controller
     {
         readonly WriterManager writerManager = new(new EfWriterRepository());
+        [Authorize]
 
         public IActionResult Index()
         {
+            var userMail = User.Identity.Name;
+            ViewBag.v = userMail;
+
+            Context context = new();
+            var writerInfo = context.Writers.Where(x => x.WriterMail == userMail).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.v2 = writerInfo;
             return View();
         }
 
-        public IActionResult WriterProfile()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
         public PartialViewResult WriterNavBarPartial()
         {
             return PartialView();
         }
 
-        [AllowAnonymous]
         public PartialViewResult WriterFooterPartial()
         {
             return PartialView();
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var values = writerManager.GetEntityById(1);
-            return View(values);
+            var userMail = User.Identity.Name;
+            var writerID = writerManager.GetWriterIDBySession(userMail);
+            var writer = writerManager.GetEntityById(writerID);
+
+            return View(writer);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult WriterEditProfile(Writer writer, string confirmPassword, dynamic image)
         {
@@ -78,6 +81,7 @@ namespace Core.Controllers
             return View();
         }
 
+        #region WriterAddBlog
         [AllowAnonymous]
         [HttpGet]
         public IActionResult WriterAdd()
@@ -133,5 +137,7 @@ namespace Core.Controllers
 
             return View();
         }
+
+        #endregion
     }
 }

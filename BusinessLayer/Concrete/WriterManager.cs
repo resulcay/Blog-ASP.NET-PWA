@@ -38,5 +38,10 @@ namespace BusinessLayer.Concrete
         {
             return _writerDal.GetById(id);
         }
+
+        public int GetWriterIDBySession(string session)
+        {
+            return _writerDal.GetWriterIDBySession(session);
+        }
     }
 }

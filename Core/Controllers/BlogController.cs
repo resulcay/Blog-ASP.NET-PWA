@@ -12,18 +12,20 @@ using System.Linq;
 
 namespace CoreDemo.Controllers
 {
-    [AllowAnonymous]
     public class BlogController : Controller
     {
         readonly BlogManager blogManager = new(new EfBlogRepository());
         readonly CategoryManager categoryManager = new(new EfCategoryRepository());
+        readonly WriterManager writerManager = new(new EfWriterRepository());
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var values = blogManager.GetBlogListWithCategory(null);
             return View(values);
         }
 
+        [AllowAnonymous]
         public IActionResult BlogReadAll(int id)
         {
             ViewBag.i = id;
@@ -33,7 +35,10 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var values = blogManager.GetBlogListByWriter(1, true);
+            var userMail = User.Identity.Name;
+            var writerID = writerManager.GetWriterIDBySession(userMail);
+            var values = blogManager.GetBlogListByWriter(writerID, true);
+
             return View(values);
         }
 
@@ -52,9 +57,12 @@ namespace CoreDemo.Controllers
 
             if (result.IsValid)
             {
+                var userMail = User.Identity.Name;
+                var writerID = writerManager.GetWriterIDBySession(userMail);
+
                 blog.BlogStatus = true;
                 blog.BlogCreatedAt = DateTime.Now;
-                blog.WriterID = 1;
+                blog.WriterID = writerID;
                 blogManager.AddEntity(blog);
 
                 return RedirectToAction("BlogListByWriter", "Blog");
@@ -92,7 +100,9 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog blog)
         {
-            blog.WriterID = 1;
+            var userMail = User.Identity.Name;
+            var writerID = writerManager.GetWriterIDBySession(userMail);
+            blog.WriterID = writerID;
             blogManager.UpdateEntity(blog);
 
             return RedirectToAction("BlogListByWriter");
