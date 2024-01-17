@@ -8,12 +8,18 @@ namespace Core.Controllers
     {
         readonly BlogManager blogManager = new(new EfBlogRepository());
         readonly CategoryManager categoryManager = new(new EfCategoryRepository());
+        readonly WriterManager writerManager = new(new EfWriterRepository());
 
         public IActionResult Index()
         {
-            ViewBag.totalBlogCount = blogManager.TotalBlogCount();
-            ViewBag.totalBlogCountByWriter = blogManager.TotalBlogCountByWriter(1);
+            // TODO: will impact performance if there are many.
+            ViewBag.totalBlogCount = blogManager.GetEntities().Count;
             ViewBag.categoryCount = categoryManager.GetEntities().Count;
+
+            var userMail = User.Identity.Name;
+            var writerID = writerManager.GetWriterIDBySession(userMail);
+
+            ViewBag.totalBlogCountByWriter = blogManager.TotalBlogCountByWriter(writerID);
 
             return View();
         }

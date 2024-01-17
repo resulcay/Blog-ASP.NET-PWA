@@ -5,7 +5,6 @@ namespace DataAccessLayer.Abstract
 {
     public interface IBlogDal : IGenericDal<Blog>
     {
-        int TotalBlogCount();
         int TotalBlogCountByWriter(int id);
         List<Blog> GetLastBlogs();
         List<Blog> GetListWithCategory(int? id);

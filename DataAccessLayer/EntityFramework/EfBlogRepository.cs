@@ -16,17 +16,11 @@ namespace DataAccessLayer.EntityFramework
             return context.Blogs.Count(x => x.WriterID == id);
         }
 
-        public int TotalBlogCount()
-        {
-            using var context = new Context();
-            return context.Blogs.Count();
-        }
-
         public List<Blog> GetLastBlogs()
         {
             using var context = new Context();
 
-            return context.Blogs.Where(x => x.BlogStatus)
+            return context.Blogs.Include(t => t.Category).Where(z => z.Category.CategoryStatus).Where(x => x.BlogStatus)
                 .OrderByDescending(x => x.BlogCreatedAt)
                 .Take(3)
                 .ToList();
@@ -35,7 +29,7 @@ namespace DataAccessLayer.EntityFramework
         public List<Blog> GetListWithCategory(int? length)
         {
             using var context = new Context();
-            var query = context.Blogs.Where(x => x.BlogStatus).Include(c => c.Category);
+            var query = context.Blogs.Where(x => x.BlogStatus).Include(c => c.Category).Where(t => t.Category.CategoryStatus);
 
             if (length.HasValue && length > 0)
             {

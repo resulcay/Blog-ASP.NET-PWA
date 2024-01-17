@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "BlogListToExcel";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Blogları İndir - Excel</h1>
+
+<br />
+
+<button class="btn btn-primary" onclick="GetBlogsAsExcel()">Blogları İndir</button>
+
+<script>
+function GetBlogsAsExcel()
+{
+        window.open("/Admin/Blog/ExportDynamicBlogToExcel")
+}
+</script>

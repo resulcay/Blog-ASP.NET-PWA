@@ -54,11 +54,6 @@ namespace BusinessLayer.Concrete
             return _blogDal.GetLastBlogs();
         }
 
-        public int TotalBlogCount()
-        {
-            return _blogDal.TotalBlogCount();
-        }
-
         public int TotalBlogCountByWriter(int id)
         {
             return _blogDal.TotalBlogCountByWriter(id);
