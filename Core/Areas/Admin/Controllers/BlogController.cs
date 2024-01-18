@@ -1,8 +1,6 @@
-﻿using BusinessLayer.Concrete;
-using ClosedXML.Excel;
+﻿using ClosedXML.Excel;
 using Core.Areas.Admin.Models;
 using DataAccessLayer.Concrete;
-using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -52,7 +50,7 @@ namespace Core.Areas.Admin.Controllers
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Blog Listesi- {date}.xlsx");
         }
 
-        private List<BlogModel> GetBlogList()
+        private static List<BlogModel> GetBlogList()
         {
             using var context = new Context();
 
