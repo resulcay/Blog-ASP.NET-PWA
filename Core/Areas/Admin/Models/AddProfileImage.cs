@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Core.Models
+namespace Core.Areas.Admin.Models
 {
     public class AddProfileImage
     {

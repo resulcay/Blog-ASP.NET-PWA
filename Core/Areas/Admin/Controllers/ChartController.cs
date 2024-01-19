@@ -15,7 +15,7 @@ namespace Core.Areas.Admin.Controllers
 
         public IActionResult CategoryChart()
         {
-            List<ChartCategory> list = new()
+            List<CategoryModel> list = new()
             { 
                 new(){ CategoryName = "Teknoloji", CategoryCount = 10},
                 new(){ CategoryName = "Yazılım", CategoryCount = 6},

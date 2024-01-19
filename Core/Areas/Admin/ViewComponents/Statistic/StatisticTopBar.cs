@@ -34,7 +34,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
             string weather = GetWeatherByXmlFormat();
             ViewBag.weather = weather;
 
-            // JSON format
+            //JSON format
             //WeatherModel weather = GetWeatherByJsonFormat().Result;
             //if (weather != null)
             //{
@@ -59,7 +59,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
            
             try
             {
-                var response = httpClient.GetAsync(apiUrl).Result;
+                var response = await httpClient.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {

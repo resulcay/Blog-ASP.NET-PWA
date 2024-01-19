@@ -2,7 +2,7 @@
 
 namespace Core.Areas.Admin.Models
 {
-    public class ChartCategory
+    public class CategoryModel
     {
         [JsonProperty("categorycount")]
         public int CategoryCount { get; set; }
