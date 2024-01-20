@@ -3,12 +3,10 @@ using Core.Areas.Admin.Models;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using static System.Net.WebRequestMethods;
 
 namespace Core.Areas.Admin.ViewComponents.Statistic
 {
@@ -24,12 +22,12 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
             int blogCount = blogManager.GetEntities().Count;
             int messageCount = message2Manager.GetEntities().Count;
             int commentCount = commentManager.GetEntities().Count;
-        
+
 
             ViewBag.blogCount = blogCount;
             ViewBag.messageCount = messageCount;
             ViewBag.commentCount = commentCount;
-             
+
             // XML format
             string weather = GetWeatherByXmlFormat();
             ViewBag.weather = weather;
@@ -56,7 +54,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
 
             string apiUrl = "https://api.open-meteo.com/v1/forecast?latitude=40.656624&longitude=29.283731&current=temperature_2m";
             using var httpClient = new HttpClient();
-           
+
             try
             {
                 var response = await httpClient.GetAsync(apiUrl);
@@ -78,7 +76,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
         ///<summary>
         ///Returns temperature in celcius
         ///</summary>
-        static private string GetWeatherByXmlFormat() 
+        static private string GetWeatherByXmlFormat()
         {
             // Yalova, TR
             // double latitude = 40.656624;
@@ -86,7 +84,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
 
             string apiKey = "e9462439c0ed29e0d999e78203b9cd90";
             string apiUrl = "https://api.openweathermap.org/data/2.5/weather?lat=40.656624&lon=29.283731&mode=xml&appid=" + apiKey;
-            
+
             using var httpClient = new HttpClient();
             XDocument xml = XDocument.Load(apiUrl);
             string response = xml.Descendants("temperature").ElementAt(0).Attribute("value").Value;

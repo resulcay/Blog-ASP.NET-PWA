@@ -1,4 +1,6 @@
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -24,6 +26,18 @@ namespace CoreDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Context>();
+            services.AddIdentity<AppUser, AppRole>(x => 
+            {
+                x.Password.RequireUppercase = false;
+                x.Password.RequireLowercase = false;
+                x.Password.RequireDigit = false;
+                x.Password.RequireNonAlphanumeric = false;
+                x.Password.RequiredLength = 8;
+            })
+                
+                .AddEntityFrameworkStores<Context>();
+
             services.AddControllersWithViews();
             //services.AddSession();
             services.AddMvc(
@@ -81,14 +95,14 @@ namespace CoreDemo
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
             );
 
-                endpoints.MapControllerRoute(
-                name: "admin_default",
-                pattern: "{area:exists}/{controller=Writer}/{action=Index}/{id?}",
-                defaults: new { area = "Admin" });
+                //endpoints.MapControllerRoute(
+                //name: "admin_default",
+                //pattern: "{area:exists}/{controller=Writer}/{action=Index}/{id?}",
+                //defaults: new { area = "Admin" });
 
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=RegisterUser}/{action=Index}/{id?}");
 
             });
         }

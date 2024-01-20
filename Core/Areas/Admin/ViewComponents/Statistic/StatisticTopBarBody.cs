@@ -13,7 +13,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
         {
             var lastBlog = blogManager.GetLastBlogs().First();
             string content = lastBlog.BlogContent;
-            
+
             if (content.Length > 100)
             {
                 content = content[..200] + "...";

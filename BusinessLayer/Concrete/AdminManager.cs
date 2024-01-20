@@ -1,11 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
@@ -20,12 +16,12 @@ namespace BusinessLayer.Concrete
 
         public void AddEntity(Admin entity)
         {
-           _adminDal.Insert(entity);
+            _adminDal.Insert(entity);
         }
 
         public void UpdateEntity(Admin entity)
         {
-           _adminDal.Update(entity);
+            _adminDal.Update(entity);
         }
 
         public void DeleteEntity(Admin entity)
@@ -35,7 +31,7 @@ namespace BusinessLayer.Concrete
 
         public List<Admin> GetEntities()
         {
-           return _adminDal.ListAll();
+            return _adminDal.ListAll();
         }
 
         public Admin GetEntityById(int id)

@@ -13,12 +13,12 @@ namespace Core.Areas.Admin.Controllers
     [Area("Admin")]
     public class BlogController : Controller
     {
-        public IActionResult BlogListToExcel() 
+        public IActionResult BlogListToExcel()
         {
             return View();
         }
 
-        public IActionResult ExportDynamicBlogToExcel() 
+        public IActionResult ExportDynamicBlogToExcel()
         {
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Blog Listesi");
@@ -63,7 +63,7 @@ namespace Core.Areas.Admin.Controllers
                 Category = x.Category.CategoryName,
                 Writer = x.Writer.WriterName
             }).ToList();
-            
+
             return blogList;
         }
 

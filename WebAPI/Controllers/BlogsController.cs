@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -9,7 +8,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BlogsController : ControllerBase
     {
-        readonly BlogManager manager = new( new EfBlogRepository());
+        readonly BlogManager manager = new(new EfBlogRepository());
 
         [HttpGet]
         public IActionResult GetBlogList()
