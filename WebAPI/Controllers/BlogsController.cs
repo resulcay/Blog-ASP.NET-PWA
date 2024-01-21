@@ -4,30 +4,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BlogsController : ControllerBase
-    {
-        readonly BlogManager manager = new(new EfBlogRepository());
+	[Route("api/[controller]")]
+	[ApiController]
+	public class BlogsController : ControllerBase
+	{
+		readonly BlogManager manager = new(new EfBlogRepository());
 
-        [HttpGet]
-        public IActionResult GetBlogList()
-        {
-            var result = manager.GetEntities();
-            return Ok(result);
-        }
+		[HttpGet]
+		public IActionResult GetBlogList()
+		{
+			var result = manager.GetEntities();
+			return Ok(result);
+		}
 
-        [HttpGet("{id}")]
-        public IActionResult GetBlogById(int id)
-        {
-            var result = manager.GetEntityById(id);
+		[HttpGet("{id}")]
+		public IActionResult GetBlogById(int id)
+		{
+			var result = manager.GetEntityById(id);
 
-            if (result == null)
-            {
-                return NotFound();
-            }
+			if (result == null)
+			{
+				return NotFound();
+			}
 
-            return Ok(result);
-        }
-    }
+			return Ok(result);
+		}
+	}
 }

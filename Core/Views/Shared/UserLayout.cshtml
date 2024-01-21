@@ -11,16 +11,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<meta name="keywords" content="" />
+		<script>
+			addEventListener("load", function () {
+				setTimeout(hideURLbar, 0);
+			}, false);
 
-	<script>
-		addEventListener("load", function () {
-			setTimeout(hideURLbar, 0);
-		}, false);
-
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		}
-	</script>
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+		</script>
 	<link href="~/coredemotheme/css/bootstrap.css" rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="~/coredemotheme/css/single.css">
 	<link href="~/coredemotheme/css/style.css" rel='stylesheet' type='text/css' />
@@ -68,24 +67,15 @@
 				</div>
 			</div>
 		</div>
-
 		@await Html.PartialAsync("TopSectionPartial")
-		
 	</header>
-	<!--//header-->
-	<!--//banner-->
-	<!--/main-->
 @RenderBody()
-<!--//main-->
-	<!--footer-->
 	@await Html.PartialAsync("FooterPartial")
-	<!---->
-	<!-- js -->
 	<script src="~/coredemotheme/js/jquery-2.2.3.min.js"></script>
-	<!-- //js -->
-	<!--/ start-smoth-scrolling -->
 	<script src="~/coredemotheme/js/move-top.js"></script>
 	<script src="~/coredemotheme/js/easing.js"></script>
+	<script src="~/coredemotheme/js/bootstrap.js"></script>
+	<script src="~/coredemotheme/js/jquery.flexisel.js"></script>
 	<script>
 		jQuery(document).ready(function ($) {
 			$(".scroll").click(function (event) {
@@ -96,18 +86,15 @@
 			});
 		});
 	</script>
-	<!--// end-smoth-scrolling -->
-
 	<script>
 		$(document).ready(function () {
-			/*
-									var defaults = {
-											containerID: 'toTop', // fading element id
-										containerHoverID: 'toTopHover', // fading element hover id
-										scrollSpeed: 1200,
-										easingType: 'linear'
-										};
-									*/
+
+			var defaults = {
+				containerID: 'toTop',
+				containerHoverID: 'toTopHover',
+				scrollSpeed: 1200,
+				easingType: 'linear'
+			};
 
 			$().UItoTop({
 				easingType: 'easeOutQuart'
@@ -118,11 +105,5 @@
 	<a href="#home" class="scroll" id="toTop" style="display: block;">
 		<span id="toTopHover" style="opacity: 1;"> </span>
 	</a>
-
-	<!-- //Custom-JavaScript-File-Links -->
-	<script src="~/coredemotheme/js/bootstrap.js"></script>
-
-
 </body>
-
 </html>

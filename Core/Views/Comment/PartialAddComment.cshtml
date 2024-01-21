@@ -4,7 +4,6 @@
 	<h4>Yorum Yap</h4>
 	<div class="comment-bottom">
 		<form id="comment" action="/Blog/BlogReadAll/" method="post">
-
 			<input class="form-control" type="text" name="CommentUserName" placeholder="Ad Soyad" required="">
 			<input class="form-control" type="text" name="CommentTitle" placeholder="Konu" required="">
 			<textarea class="form-control" name="CommentContent" placeholder="Yorumunuz..." required=""></textarea>
@@ -26,9 +25,23 @@
                         $("input[name='CommentUserName']").val('');
                         $("input[name='CommentTitle']").val('');
                         $("textarea[name='CommentContent']").val('');
+
+                        window.location.reload();
                     }
                 });
             });
         });
     </script>
 </div>
+
+@* <div class="comment-top">
+    <h4>Yorum Yap</h4>
+    <div class="comment-bottom">
+        <form method="post" asp-action="PartialAddComment" asp-controller="Comment">
+            <input class="form-control" type="text" name="CommentUserName" placeholder="Ad Soyad" required="">
+            <input class="form-control" type="text" name="CommentTitle" placeholder="Konu" required="">
+            <textarea class="form-control" name="CommentContent" placeholder="Yorumunuz..." required=""></textarea>
+            <button type="submit" class="btn btn-primary submit">Yorum Yap</button>
+        </form>
+    </div>
+</div> *@

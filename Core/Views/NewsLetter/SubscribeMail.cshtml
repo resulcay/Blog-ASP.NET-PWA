@@ -1,5 +1,6 @@
 ﻿
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="tech-btm">
 	<p>Bloglar size mail ile yollanacaktır. </p>
@@ -9,28 +10,33 @@
 	</form>
 
     <script>
-        $(document).ready(function () {
-            $("#news").submit(function (e) {
-                e.preventDefault();
+        $(document).on('submit', '#news', function (e) {
 
-                var formData = $(this).serialize();
+            e.preventDefault();
 
-                $.ajax({
-                    url: '/NewsLetter/SubscribeMail',
-                    type: 'POST',
-                    data: formData,
-                    success: function (response) {
+            var formData = $(this).serialize();
 
-                        $("input[name='Mail']").val('');
+            $.ajax({
+                url: '/NewsLetter/SubscribeMail',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    $("input[name='Mail']").val('');
 
-                        alert('Başarıyla Abone Olundu!');
-                    },
-                    error: function (error) {
-                        alert('Hata Oluştu!');
-                    }
-                });
+                    Swal.fire({
+                        title: 'Başarılı',
+                        icon: 'success',
+                        confirmButtonText: 'Tamam'
+                    });
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: 'Hata',
+                        icon: 'error',
+                        confirmButtonText: 'Tamam'
+                    });
+                }
             });
         });
     </script>
-
 </div>

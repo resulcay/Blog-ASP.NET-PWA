@@ -2,8 +2,8 @@
 
 namespace DataAccessLayer.Abstract
 {
-    public interface IWriterDal : IGenericDal<Writer>
-    {
-        int GetWriterIDBySession(string session);
-    }
+	public interface IWriterDal : IGenericDal<Writer>
+	{
+		int GetWriterIDBySession(string session);
+	}
 }

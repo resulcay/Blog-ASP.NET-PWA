@@ -5,43 +5,43 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Concrete
 {
-    public class MessageManager : IMessageService
-    {
-        readonly IMessageDal _messageDal;
+	public class MessageManager : IMessageService
+	{
+		readonly IMessageDal _messageDal;
 
-        public MessageManager(IMessageDal messageDal)
-        {
-            _messageDal = messageDal;
-        }
+		public MessageManager(IMessageDal messageDal)
+		{
+			_messageDal = messageDal;
+		}
 
-        public void AddEntity(Message entity)
-        {
-            _messageDal.Insert(entity);
-        }
+		public void AddEntity(Message entity)
+		{
+			_messageDal.Insert(entity);
+		}
 
-        public void UpdateEntity(Message entity)
-        {
-            _messageDal.Update(entity);
-        }
+		public void UpdateEntity(Message entity)
+		{
+			_messageDal.Update(entity);
+		}
 
-        public void DeleteEntity(Message entity)
-        {
-            _messageDal.Delete(entity);
-        }
+		public void DeleteEntity(Message entity)
+		{
+			_messageDal.Delete(entity);
+		}
 
-        public Message GetEntityById(int id)
-        {
-            return _messageDal.GetById(id);
-        }
+		public Message GetEntityById(int id)
+		{
+			return _messageDal.GetById(id);
+		}
 
-        public List<Message> GetEntities()
-        {
-            return _messageDal.ListAll();
-        }
+		public List<Message> GetEntities()
+		{
+			return _messageDal.ListAll();
+		}
 
-        public List<Message> GetMessagesByWriter(string receiver)
-        {
-            return _messageDal.ListAll(x => x.Receiver == receiver);
-        }
-    }
+		public List<Message> GetMessagesByWriter(string receiver)
+		{
+			return _messageDal.ListAll(x => x.Receiver == receiver);
+		}
+	}
 }

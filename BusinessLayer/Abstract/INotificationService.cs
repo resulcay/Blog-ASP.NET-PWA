@@ -2,7 +2,7 @@
 
 namespace BusinessLayer.Abstract
 {
-    public interface INotificationService : IGenericService<Notification>
-    {
-    }
+	public interface INotificationService : IGenericService<Notification>
+	{
+	}
 }

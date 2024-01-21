@@ -6,18 +6,18 @@ using System.Linq;
 
 namespace Core.Controllers
 {
-    public class DashboardController : Controller
-    {
-        readonly BlogManager blogManager = new(new EfBlogRepository());
-        readonly CategoryManager categoryManager = new(new EfCategoryRepository());
-        readonly WriterManager writerManager = new(new EfWriterRepository());
-        readonly Context context = new();
+	public class DashboardController : Controller
+	{
+		readonly BlogManager blogManager = new(new EfBlogRepository());
+		readonly CategoryManager categoryManager = new(new EfCategoryRepository());
+		readonly WriterManager writerManager = new(new EfWriterRepository());
+		readonly Context context = new();
 
-        public IActionResult Index()
-        {
-            // TODO: will impact performance if there are many.
-            ViewBag.totalBlogCount = blogManager.GetEntities().Count;
-            ViewBag.categoryCount = categoryManager.GetEntities().Count;
+		public IActionResult Index()
+		{
+			// TODO: will impact performance if there are many.
+			ViewBag.totalBlogCount = blogManager.GetEntities().Count;
+			ViewBag.categoryCount = categoryManager.GetEntities().Count;
 
 			var userName = User.Identity.Name;
 			var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
@@ -26,7 +26,7 @@ namespace Core.Controllers
 
 			ViewBag.totalBlogCountByWriter = blogManager.TotalBlogCountByWriter(writerID);
 
-            return View();
-        }
-    }
+			return View();
+		}
+	}
 }

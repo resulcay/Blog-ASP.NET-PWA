@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreDemo.ViewComponents.Comment
 {
-    public class CommentListByBlog : ViewComponent
-    {
-        readonly CommentManager manager = new(new EfCommentRepository());
+	public class CommentListByBlog : ViewComponent
+	{
+		readonly CommentManager manager = new(new EfCommentRepository());
 
-        public IViewComponentResult Invoke(int id)
-        {
-            ViewBag.i = id;
-            var values = manager.GetCommentsByBlogId(id);
-            return View(values);
-        }
-    }
+		public IViewComponentResult Invoke(int id)
+		{
+			ViewBag.i = id;
+			var values = manager.GetCommentsByBlogId(id);
+			return View(values);
+		}
+	}
 }

@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Abstract
 {
-    public interface INewsLetterDal : IGenericDal<NewsLetter>
-    {
-    }
+	public interface INewsLetterDal : IGenericDal<NewsLetter>
+	{
+	}
 }

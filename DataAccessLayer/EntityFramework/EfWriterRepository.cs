@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace DataAccessLayer.EntityFramework
 {
-    public class EfWriterRepository : GenericRepository<Writer>, IWriterDal
-    {
-        public int GetWriterIDBySession(string session)
-        {
-            Context context = new();
-            var writerID = context.Writers.Where(x => x.WriterMail == session).Select(y => y.WriterID).FirstOrDefault();
+	public class EfWriterRepository : GenericRepository<Writer>, IWriterDal
+	{
+		public int GetWriterIDBySession(string session)
+		{
+			Context context = new();
+			var writerID = context.Writers.Where(x => x.WriterMail == session).Select(y => y.WriterID).FirstOrDefault();
 
-            return writerID;
-        }
-    }
+			return writerID;
+		}
+	}
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Abstract
 {
-    public interface ICategoryService : IGenericService<Category>
-    {
-        List<Category> GetCategoryListWithBlogCount();
-    }
+	public interface ICategoryService : IGenericService<Category>
+	{
+		List<Category> GetCategoryListWithBlogCount();
+	}
 }

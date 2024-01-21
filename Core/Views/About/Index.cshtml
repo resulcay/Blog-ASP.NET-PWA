@@ -42,7 +42,44 @@
 							<img src="~/coredemotheme/images/banner1.jpg" class="img-fluid" alt="">
 						</div>
 						<h4>Mail Bültenine Abone Ol</h4>
-						@await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+						<div class="tech-btm">
+							<p>Bloglar size mail ile yollanacaktır. </p>
+							<form id="newsabout" method="post">
+								<input type="email" placeholder="Email" required="" name="Mail">
+								<input type="submit" value="ABONE OL">
+							</form>
+							<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+							<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+							<script>
+								$(document).on('submit', '#newsabout', function (e) {
+									e.preventDefault();
+
+									var formData = $(this).serialize();
+
+									$.ajax({
+										url: '/NewsLetter/SubscribeMail',
+										type: 'POST',
+										data: formData,
+										success: function (response) {
+											$("input[name='Mail']").val('');
+
+											Swal.fire({
+												title: 'Başarılı',
+												icon: 'success',
+												confirmButtonText: 'Tamam'
+											});
+										},
+										error: function (error) {
+											Swal.fire({
+												title: 'Hata',
+												icon: 'error',
+												confirmButtonText: 'Tamam'
+											});
+										}
+									});
+								});
+							</script>
+						</div>
 
 						@await Html.PartialAsync("~/Views/About/SocialMediaAbout.cshtml")
 

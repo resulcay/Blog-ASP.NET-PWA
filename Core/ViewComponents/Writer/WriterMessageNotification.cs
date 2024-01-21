@@ -6,25 +6,25 @@ using System;
 
 namespace Core.ViewComponents.Writer
 {
-    public class WriterMessageNotification : ViewComponent
-    {
-        readonly Message2Manager manager = new(new EfMessage2Repository());
+	public class WriterMessageNotification : ViewComponent
+	{
+		readonly Message2Manager manager = new(new EfMessage2Repository());
 
-        public IViewComponentResult Invoke()
-        {
-            int writerID = 1;
-            var values = manager.GetMessagesByWriterName(writerID);
+		public IViewComponentResult Invoke()
+		{
+			int writerID = 1;
+			var values = manager.GetMessagesByWriterName(writerID);
 
-            foreach (var item in values)
-            {
-                var now = DateTime.Now;
-                var tempDate = item.MessageDate;
-                var relativeDate = tempDate.ToNaturalText(now, false);
+			foreach (var item in values)
+			{
+				var now = DateTime.Now;
+				var tempDate = item.MessageDate;
+				var relativeDate = tempDate.ToNaturalText(now, false);
 
-                item.MessageDetails = relativeDate;
-            }
+				item.MessageDetails = relativeDate;
+			}
 
-            return View(values);
-        }
-    }
+			return View(values);
+		}
+	}
 }
