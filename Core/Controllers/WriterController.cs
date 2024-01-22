@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using Core.Models;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -15,7 +16,14 @@ namespace Core.Controllers
 	public class WriterController : Controller
 	{
 		readonly WriterManager writerManager = new(new EfWriterRepository());
-		readonly Context context = new();
+		readonly UserManager<AppUser> userManager;
+
+        public WriterController(UserManager<AppUser> userManager)
+        {
+            this.userManager = userManager;
+        }
+
+        readonly Context context = new();
 
 		[Authorize]
 		public IActionResult Index()
@@ -40,46 +48,68 @@ namespace Core.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult WriterEditProfile()
+		public async Task<IActionResult> WriterEditProfile()
 		{
-			var userName = User.Identity.Name;
-			var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-			var writerID = writerManager.GetWriterIDBySession(userMail);
-			var writer = writerManager.GetEntityById(writerID);
+			//var userName = User.Identity.Name;
+			//var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
+			//var writerID = writerManager.GetWriterIDBySession(userMail);
+			//var writer = writerManager.GetEntityById(writerID);
 
-			return View(writer);
+			//return View(writer);
+
+			//var username = User.Identity.Name;
+			//var userMail = context.Users.Where(x => x.UserName == username).Select(x => x.Email).FirstOrDefault();
+			//var id = context.Users.Where(x => x.Email == userMail).Select(x => x.Id).FirstOrDefault();
+			//var value = userManager.GetEntityById(id);
+
+			//return View(value);
+
+			var value = await userManager.FindByNameAsync(User.Identity.Name);
+			return View(value);
 		}
 
 		[HttpPost]
-		public IActionResult WriterEditProfile(Writer writer, string confirmPassword, dynamic image)
+		public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel model) 
 		{
-			if (writer.WriterPassword != confirmPassword)
-			{
-				ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
-			}
+			var value = await userManager.FindByNameAsync(User.Identity.Name);
 
-			if (image == null)
-			{
-				ModelState.AddModelError("WriterImage", "Lütfen bir profil resmi yükleyiniz.");
-			}
+			model.NameSurname = value.NameSurname;
+			model.Email = value.Email;
+			model.ImageUrl = value.Image;
 
-			WriterValidator writerValidator = new();
-			ValidationResult result = writerValidator.Validate(writer);
+            return RedirectToAction("Index", "Dashboard");
+        }
 
-			if (result.IsValid && ModelState.IsValid)
-			{
-				writerManager.UpdateEntity(writer);
-				return RedirectToAction("Index", "Dashboard");
-			}
-			else
-			{
-				foreach (var item in result.Errors)
-				{
-					ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-				}
-			}
+		//[HttpPost]
+		//public IActionResult WriterEditProfile(Writer writer, string confirmPassword, dynamic image)
+		//{
+		//	if (writer.WriterPassword != confirmPassword)
+		//	{
+		//		ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
+		//	}
 
-			return View();
-		}
+		//	if (image == null)
+		//	{
+		//		ModelState.AddModelError("WriterImage", "Lütfen bir profil resmi yükleyiniz.");
+		//	}
+
+		//	WriterValidator writerValidator = new();
+		//	ValidationResult result = writerValidator.Validate(writer);
+
+		//	if (result.IsValid && ModelState.IsValid)
+		//	{
+		//		writerManager.UpdateEntity(writer);
+		//		return RedirectToAction("Index", "Dashboard");
+		//	}
+		//	else
+		//	{
+		//		foreach (var item in result.Errors)
+		//		{
+		//			ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+		//		}
+		//	}
+
+		//	return View();
+		//}
 	}
 }

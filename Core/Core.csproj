@@ -45,5 +45,7 @@
 	<PropertyGroup>
 		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
 
 </Project>

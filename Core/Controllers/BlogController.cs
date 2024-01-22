@@ -61,7 +61,7 @@ namespace CoreDemo.Controllers
 			if (result.IsValid)
 			{
 				var userName = User.Identity.Name;
-				var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();	
+				var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
 				var writerID = writerManager.GetWriterIDBySession(userMail);
 
 				blog.BlogStatus = true;

@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.Writer
+﻿@model EntityLayer.Concrete.UserUpdateViewModel
 
 @{
     ViewData["Title"] = "WriterEditProfile";
@@ -14,24 +14,25 @@
             <div class="card-body">
                 <h1>Profili Düzenle</h1>
                 <br />
-                <form class="forms-sample">
-                    @Html.HiddenFor(x => x.WriterID, new { @class = "form-control" })
-                    @Html.HiddenFor(x => x.WriterImage, new { @class = "form-control" })
-                    @Html.HiddenFor(x => x.WriterStatus, new { @class = "form-control" })
+                <form class="forms-sample" method="post">
+                 @* @Html.HiddenFor(x => x.Id, new { @class = "form-control" })
+                    @Html.HiddenFor(x => x.Image, new { @class = "form-control" })
+                    @Html.HiddenFor(x => x.WriterStatus, new { @class = "form-control" }) *@
                     <div class="form-group">
                         <h4>Ad - Soyad</h4>
-                        @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
+                        <input type="text" asp-for="@Model.NameSurname" class="form-control"/>
+                       @*  @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(x => x.NameSurname, "", new { @class = "text-danger" }) *@
                     </div>
                     <div class="form-group">
                         <h4>Email adresi</h4>
-                        @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(x => x.WriterMail, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <h4>Şifre</h4>
-                        @Html.PasswordFor(x => x.WriterPassword, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(x => x.WriterPassword, "", new { @class = "text-danger" })
+                        @Html.PasswordFor(x => x.PasswordHash, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.PasswordHash, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <h4>Şifre - Tekrar</h4>
@@ -40,14 +41,14 @@
                     </div>
                     <div class="form-group">
                         <h4>Görsel</h4>
-                        <input type="file" name="WriterImage" class="file-upload-default" id="fileInput">
+                        <input type="file" name="Image" class="file-upload-default" id="fileInput">
                         <div class="input-group col-xs-12">
                             <input type="text" class="form-control file-upload-info" disabled placeholder="Görsel Seç">
                             <span class="input-group-append">
                                 <button class="file-upload-browse btn btn-gradient-primary" type="button" onclick="chooseFile()">SEÇ</button>
                             </span>
                         </div>
-                        @Html.ValidationMessage("WriterImage", null, new { @class = "text-danger" })
+                        @Html.ValidationMessage("Image", null, new { @class = "text-danger" })
                     </div>
                     <script>
                         function chooseFile() {
@@ -59,11 +60,11 @@
                             $(".file-upload-info").val(fileName);
                         });
                     </script>
-                    <div class="form-group">
+@*                     <div class="form-group">
                         <h4>Hakkımda</h4>
                         @Html.TextAreaFor(x => x.WriterAbout, 10, 3, new { @class = "form-control"})
                         @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
-                    </div>
+                    </div> *@
                     <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
                     <a href="/Dashboard/Index/" class="btn btn-light">İptal</a>
                 </form>
