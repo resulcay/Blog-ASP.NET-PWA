@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.UserUpdateViewModel
+﻿@model Core.Models.UserUpdateViewModel
 
 @{
     ViewData["Title"] = "WriterEditProfile";
@@ -25,20 +25,27 @@
                         @Html.ValidationMessageFor(x => x.NameSurname, "", new { @class = "text-danger" }) *@
                     </div>
                     <div class="form-group">
-                        <h4>Email adresi</h4>
-                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                        <h4>Kullanıcı Adı</h4>
+                        <input type="text" asp-for="@Model.UserName" class="form-control" />
+                        @*  @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.NameSurname, "", new { @class = "text-danger" }) *@
                     </div>
                     <div class="form-group">
+                        <h4>Email adresi</h4>
+                        <input type="text" asp-for="@Model.Email" class="form-control" />
+              @*         @Html.TextBoxFor(x => x.Email, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" }) *@
+                    </div>
+@*                      <div class="form-group">
                         <h4>Şifre</h4>
                         @Html.PasswordFor(x => x.PasswordHash, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.PasswordHash, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
+                     </div>
+                              <div class="form-group">
                         <h4>Şifre - Tekrar</h4>
                         @Html.Password("ConfirmPassword", null, new { @class = "form-control" })
                         @Html.ValidationMessage("ConfirmPassword", null, new { @class = "text-danger" })
-                    </div>
+                    </div> *@
                     <div class="form-group">
                         <h4>Görsel</h4>
                         <input type="file" name="Image" class="file-upload-default" id="fileInput">
@@ -48,7 +55,7 @@
                                 <button class="file-upload-browse btn btn-gradient-primary" type="button" onclick="chooseFile()">SEÇ</button>
                             </span>
                         </div>
-                        @Html.ValidationMessage("Image", null, new { @class = "text-danger" })
+                       @*  @Html.ValidationMessage("Image", null, new { @class = "text-danger" }) *@
                     </div>
                     <script>
                         function chooseFile() {
