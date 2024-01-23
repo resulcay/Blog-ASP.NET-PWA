@@ -2,8 +2,8 @@
 
 namespace BusinessLayer.Abstract
 {
-	public interface IContactService
-	{
-		void ContactAdd(Contact contact);
-	}
+    public interface IContactService
+    {
+        void ContactAdd(Contact contact);
+    }
 }

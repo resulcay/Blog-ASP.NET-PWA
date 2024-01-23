@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Abstract
 {
-	public interface ICommentService : IGenericService<Comment>
-	{
-		List<Comment> GetCommentsByBlogId(int id);
-	}
+    public interface ICommentService : IGenericService<Comment>
+    {
+        List<Comment> GetCommentsByBlogId(int id);
+    }
 }

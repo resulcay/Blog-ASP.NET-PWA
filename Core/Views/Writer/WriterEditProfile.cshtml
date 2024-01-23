@@ -7,8 +7,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-@using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post))
-{
+@* @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post))
+{ *@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -35,6 +35,18 @@
                         <input type="text" asp-for="@Model.Email" class="form-control" />
               @*         @Html.TextBoxFor(x => x.Email, new { @class = "form-control"})
                         @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" }) *@
+                    </div>
+                <div class="form-group">
+                    <h4>Şifre</h4>
+                    <input type="text" asp-for="@Model.Password" class="form-control" />
+                    @*  @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.NameSurname, "", new { @class = "text-danger" }) *@
+                </div>
+                    <div class="form-group">
+                        <h4>Görsel Yolu</h4>
+                        <input type="text" asp-for="@Model.ImageUrl" class="form-control" />
+                        @*  @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.NameSurname, "", new { @class = "text-danger" }) *@
                     </div>
 @*                      <div class="form-group">
                         <h4>Şifre</h4>
@@ -78,5 +90,5 @@
             </div>
         </div>
     </div>
-}
+@* } *@
 

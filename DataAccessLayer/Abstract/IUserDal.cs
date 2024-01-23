@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Abstract
 {
-	public interface IUserDal : IGenericDal<AppUser>
-	{
-	}
+    public interface IUserDal : IGenericDal<AppUser>
+    {
+    }
 }

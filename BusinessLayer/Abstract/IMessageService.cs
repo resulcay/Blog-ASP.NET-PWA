@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Abstract
 {
-	public interface IMessageService : IGenericService<Message>
-	{
-		List<Message> GetMessagesByWriter(string receiver);
-	}
+    public interface IMessageService : IGenericService<Message>
+    {
+        List<Message> GetMessagesByWriter(string receiver);
+    }
 }

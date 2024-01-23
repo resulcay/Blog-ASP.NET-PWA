@@ -5,8 +5,16 @@
     ViewData["Title"] = "Inbox";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
-
-<h1>Gelen Kutusu</h1>
+<style>
+    .endless {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+<div class="endless">
+    <h1>Gelen Kutusu</h1>
+    <button onclick="window.location.href='/Message/SendBox/'" style="text-align:center" class="btn btn-outline-danger btn-fw">Giden Kutusu</button>
+</div>
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -28,9 +36,22 @@
                     <td>@item.Subject</td>
                     <td>@item.MessageDetails</td>
                     <td>@item.MessageDate</td>
-                    <td>@item.SenderUser.WriterName</td>
+                    <td>@{ if (item.SenderUser.WriterID == item.ReceiverUser.WriterID)
+                            {
+                                <span>@item.SenderUser.WriterName (Ben)</span>
+                            }
+                            else
+                            {
+                                <span>@item.SenderUser.WriterName</span>
+                            } }
+                    </td>
                     <td>@item.SenderUser.WriterMail</td>
-                    <td><a href="/Message/DeleteMessage/@item.MessageID" class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;">Sil</a></td>
+                    <td>
+                        <button class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;"
+                                onclick="confirmDelete('@item.MessageID')">
+                            Sil
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -38,10 +59,30 @@
 </div>
 <br />
 <div class="d-flex justify-content-center">
-    <a href="/Message/MessageAdd/" class="btn btn-inverse-primary">Yeni Mesaj Gönder</a>
+    <a href="/Message/SendMessage/" class="btn btn-inverse-primary">Yeni Mesaj Gönder</a>
 </div>
 
-
+<script>
+    function confirmDelete(messageId) {
+        Swal.fire({
+            title: 'Sil?',
+            text: 'Mesajı silmek istediğinize emin misiniz?',
+            showDenyButton: true,
+            confirmButtonText: 'Evet',
+            denyButtonText: 'Hayır',
+            customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2',
+                denyButton: 'order-3',
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Message/DeleteMessage/' + messageId;
+            }
+        })
+    }
+</script>
 <style>
     .table thead th {
         border-bottom: 1px solid #dee2e6;

@@ -4,18 +4,18 @@ using EntityLayer.Concrete;
 
 namespace BusinessLayer.Concrete
 {
-	public class ContactManager : IContactService
-	{
-		readonly IContactDal _contactDal;
+    public class ContactManager : IContactService
+    {
+        readonly IContactDal _contactDal;
 
-		public ContactManager(IContactDal contactDal)
-		{
-			_contactDal = contactDal;
-		}
+        public ContactManager(IContactDal contactDal)
+        {
+            _contactDal = contactDal;
+        }
 
-		public void ContactAdd(Contact contact)
-		{
-			_contactDal.Insert(contact);
-		}
-	}
+        public void ContactAdd(Contact contact)
+        {
+            _contactDal.Insert(contact);
+        }
+    }
 }

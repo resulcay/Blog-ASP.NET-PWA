@@ -2,11 +2,11 @@
 
 namespace Core.Controllers
 {
-	public class NotificationController : Controller
-	{
-		public IActionResult Index()
-		{
-			return View();
-		}
-	}
+    public class NotificationController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
 }

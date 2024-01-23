@@ -1,30 +1,37 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using DateTimeExtensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Core.ViewComponents.Writer
 {
-	public class WriterMessageNotification : ViewComponent
-	{
-		readonly Message2Manager manager = new(new EfMessage2Repository());
+    public class WriterMessageNotification : ViewComponent
+    {
+        readonly Message2Manager manager = new(new EfMessage2Repository());
+        readonly WriterManager writerManager = new(new EfWriterRepository());
+        readonly Context context = new();
 
-		public IViewComponentResult Invoke()
-		{
-			int writerID = 1;
-			var values = manager.GetMessagesByWriterName(writerID);
+        public IViewComponentResult Invoke()
+        {
+            var userName = User.Identity.Name;
+            var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
+            var writerID = writerManager.GetWriterIDBySession(userMail);
 
-			foreach (var item in values)
-			{
-				var now = DateTime.Now;
-				var tempDate = item.MessageDate;
-				var relativeDate = tempDate.ToNaturalText(now, false);
+            var values = manager.GetReceivedMessagesByWriter(writerID);
 
-				item.MessageDetails = relativeDate;
-			}
+            foreach (var item in values)
+            {
+                var now = DateTime.Now;
+                var tempDate = item.MessageDate;
+                var relativeDate = tempDate.ToNaturalText(now, false);
 
-			return View(values);
-		}
-	}
+                item.MessageDetails = relativeDate;
+            }
+
+            return View(values);
+        }
+    }
 }

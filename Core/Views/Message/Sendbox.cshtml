@@ -1,22 +1,22 @@
 ﻿@using EntityLayer.Concrete
-@model List<Blog>
+@model List<Message2>
 
 @{
-    ViewData["Title"] = "BlogListByWriter";
+    ViewData["Title"] = "Inbox";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<h1>Bloglarınız</h1>
+<h1>Giden Kutusu</h1>
 <div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
                 <th><h5>ID</h5></th>
-                <th><h5>Blog Başlığı</h5></th>
-                <th><h5>Oluşturma Tarihi</h5></th>
-                <th><h5>Kategori</h5></th>
-                <th><h5>Durum</h5></th>
-                <th><h5></h5></th>
+                <th><h5>Konu</h5></th>
+                <th><h5>Mesaj İçeriği</h5></th>
+                <th><h5>Atılma Tarihi</h5></th>
+                <th><h5>Alıcı Adı</h5></th>
+                <th><h5>Alıcı Maili</h5></th>
                 <th><h5></h5></th>
             </tr>
         </thead>
@@ -24,43 +24,44 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><h4>@item.BlogID</h4></td>
-                    <td>@item.BlogTitle</td>
-                    <td>@item.BlogCreatedAt</td>
-                    <td>@item.Category.CategoryName</td>
+                    <td><h4>@item.MessageID</h4></td>
+                    <td>@item.Subject</td>
+                    <td>@item.MessageDetails</td>
+                    <td>@item.MessageDate</td>
                     <td>
                         @{
-                            if (item.BlogStatus)
+                            if (item.ReceiverUser.WriterID == item.SenderUser.WriterID)
                             {
-                                <span class="badge badge-success">Aktif</span>
+                                <span>@item.ReceiverUser.WriterName (Ben)</span>
                             }
                             else
                             {
-                                <span class="badge badge-dark">Pasif</span>
+                                <span>@item.ReceiverUser.WriterName</span>
                             }
                         }
                     </td>
+                    <td>@item.ReceiverUser.WriterMail</td>
                     <td>
                         <button class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;"
-                                onclick="confirmDelete('@item.BlogID')">Sil
+                                onclick="confirmDelete('@item.MessageID')">
+                            Sil
                         </button>
                     </td>
-                    <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning" style="padding: 8px 10px; font-size: 14px; text-align: center;">Düzenle</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
 <br />
-<div
-class="d-flex justify-content-center">
-    <a href="/Blog/BlogAdd/" class="btn btn-inverse-primary">Yeni Blog Oluştur</a>
+<div class="d-flex justify-content-center">
+    <a href="/Message/SendMessage/" class="btn btn-inverse-primary">Yeni Mesaj Gönder</a>
 </div>
+
 <script>
-    function confirmDelete(blogId) {
+    function confirmDelete(messageId) {
         Swal.fire({
             title: 'Sil?',
-            text: 'Blogu silmek istediğinize emin misiniz?',
+            text: 'Mesajı silmek istediğinize emin misiniz?',
             showDenyButton: true,
             confirmButtonText: 'Evet',
             denyButtonText: 'Hayır',
@@ -72,7 +73,7 @@ class="d-flex justify-content-center">
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '/Blog/DeleteBlog/' + blogId;
+                window.location.href = '/Message/DeleteMessage/' + messageId;
             }
         })
     }
@@ -90,3 +91,4 @@ class="d-flex justify-content-center">
         border-bottom: 1px solid #dee2e6;
     }
 </style>
+

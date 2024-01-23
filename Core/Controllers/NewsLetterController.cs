@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreDemo.Controllers
 {
-	public class NewsLetterController : Controller
-	{
+    public class NewsLetterController : Controller
+    {
 
-		readonly NewsLetterManager newsLetterManager = new(new EfNewsLetterRepository());
+        readonly NewsLetterManager newsLetterManager = new(new EfNewsLetterRepository());
 
-		[HttpGet]
-		public PartialViewResult SubscribeMail()
-		{
-			return PartialView();
-		}
+        [HttpGet]
+        public PartialViewResult SubscribeMail()
+        {
+            return PartialView();
+        }
 
-		[HttpPost]
-		public PartialViewResult SubscribeMail(NewsLetter newsLetter)
-		{
-			newsLetter.MailStatus = true;
-			newsLetterManager.AddNewsLetter(newsLetter);
-			return PartialView();
-		}
-	}
+        [HttpPost]
+        public PartialViewResult SubscribeMail(NewsLetter newsLetter)
+        {
+            newsLetter.MailStatus = true;
+            newsLetterManager.AddNewsLetter(newsLetter);
+            return PartialView();
+        }
+    }
 }
