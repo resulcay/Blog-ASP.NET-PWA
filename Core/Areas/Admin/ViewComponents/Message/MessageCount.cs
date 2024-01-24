@@ -4,29 +4,23 @@ using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace Core.Controllers
+namespace Core.Areas.Admin.ViewComponents.Admin
 {
-    public class AdminController : Controller
+    public class MessageCount : ViewComponent
     {
         readonly Message2Manager messageManager = new(new EfMessage2Repository());
         readonly WriterManager writerManager = new(new EfWriterRepository());
         readonly Context context = new();
 
-        public IActionResult Index()
+        public IViewComponentResult Invoke()
         {
             // TODO: will impact performance if there are many
             string allMessageCount = messageManager.GetEntities().Count.ToString();
             string sentMessageCount = messageManager.GetSentMessagesByWriter(GetWriterID()).Count.ToString();
             string result = allMessageCount + "/" + sentMessageCount;
-            
+
             ViewBag.result = result;
-
             return View();
-        }
-
-        public PartialViewResult AdminNavbarPartial()
-        {
-            return PartialView();
         }
 
         private int GetWriterID()
