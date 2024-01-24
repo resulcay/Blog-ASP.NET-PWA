@@ -25,5 +25,13 @@ namespace DataAccessLayer.EntityFramework
 
             return messages;
         }
+
+        public List<Message2> GetDetailedMessages()
+        {
+            using var context = new Context();
+            var messages = context.Message2s.Include(z => z.SenderUser).Include(a => a.ReceiverUser).ToList();
+
+            return messages;
+        }
     }
 }

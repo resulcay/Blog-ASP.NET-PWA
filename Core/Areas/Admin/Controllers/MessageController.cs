@@ -4,29 +4,27 @@ using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
-namespace Core.Controllers
+namespace Core.Areas.Admin.Controllers
 {
-    public class AdminController : Controller
+    [Area("Admin")]
+    public class MessageController : Controller
     {
         readonly Message2Manager messageManager = new(new EfMessage2Repository());
         readonly WriterManager writerManager = new(new EfWriterRepository());
         readonly Context context = new();
 
-        public IActionResult Index()
+        public IActionResult Inbox()
         {
-            // TODO: will impact performance if there are many
-            string allMessageCount = messageManager.GetEntities().Count.ToString();
-            string sentMessageCount = messageManager.GetSentMessagesByWriter(GetWriterID()).Count.ToString();
-            string result = allMessageCount + "/" + sentMessageCount;
-            
-            ViewBag.result = result;
-
-            return View();
+            var values = messageManager.GetDetailedMessages();
+            values = values.OrderByDescending(x => x.MessageDate).ToList();
+            return View(values);
         }
 
-        public PartialViewResult AdminNavbarPartial()
+        public IActionResult Sendbox()
         {
-            return PartialView();
+            var values = messageManager.GetSentMessagesByWriter(GetWriterID());
+            values = values.OrderByDescending(x => x.MessageDate).ToList();
+            return View(values);
         }
 
         private int GetWriterID()

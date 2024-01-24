@@ -60,7 +60,7 @@ namespace Core.Controllers
             value.PasswordHash = userManager.PasswordHasher.HashPassword(value, model.Password);
 
             var result = await userManager.UpdateAsync(value);
-            
+
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Dashboard");

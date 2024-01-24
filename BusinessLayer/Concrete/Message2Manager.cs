@@ -48,5 +48,10 @@ namespace BusinessLayer.Concrete
         {
             return _message2Dal.GetSentMessagesByWriter(id);
         }
+
+        public List<Message2> GetDetailedMessages()
+        {
+            return _message2Dal.GetDetailedMessages();
+        }
     }
 }

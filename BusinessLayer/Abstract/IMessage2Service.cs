@@ -7,5 +7,6 @@ namespace BusinessLayer.Abstract
     {
         List<Message2> GetReceivedMessagesByWriter(int id);
         List<Message2> GetSentMessagesByWriter(int id);
+        List<Message2> GetDetailedMessages();
     }
 }

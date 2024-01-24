@@ -20,12 +20,14 @@ namespace Core.Controllers
         public IActionResult Inbox()
         {
             var values = messageManager.GetReceivedMessagesByWriter(GetWriterID());
+            values = values.OrderByDescending(x => x.MessageDate).ToList();
             return View(values);
         }
 
         public IActionResult Sendbox()
         {
             var values = messageManager.GetSentMessagesByWriter(GetWriterID());
+            values = values.OrderByDescending(x => x.MessageDate).ToList();
             return View(values);
         }
 
@@ -73,12 +75,12 @@ namespace Core.Controllers
             return View();
         }
 
-        private int GetWriterID() 
+        private int GetWriterID()
         {
             var userName = User.Identity.Name;
             var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
             var writerID = writerManager.GetWriterIDBySession(userMail);
-            
+
             return writerID;
         }
 

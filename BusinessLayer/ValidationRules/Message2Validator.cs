@@ -1,14 +1,9 @@
 ﻿using EntityLayer.Concrete;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.ValidationRules
 {
-    public class Message2Validator: AbstractValidator<Message2>
+    public class Message2Validator : AbstractValidator<Message2>
     {
         public Message2Validator()
         {
