@@ -12,7 +12,7 @@ namespace BusinessLayer.ValidationRules
             RuleFor(x => x.Subject).MinimumLength(3).WithMessage("Lütfen en az 3 karakter girişi yapın");
             RuleFor(x => x.Subject).MaximumLength(20).WithMessage("Lütfen 100 karakterden fazla değer girişi yapmayın");
             RuleFor(x => x.MessageDetails).MinimumLength(10).WithMessage("Lütfen en az 10 karakter girişi yapın");
-            RuleFor(x => x.MessageDetails).MaximumLength(100).WithMessage("Lütfen 100 karakterden fazla değer girişi yapmayın");
+            RuleFor(x => x.MessageDetails).MaximumLength(200).WithMessage("Lütfen 200 karakterden fazla değer girişi yapmayın");
         }
     }
 }

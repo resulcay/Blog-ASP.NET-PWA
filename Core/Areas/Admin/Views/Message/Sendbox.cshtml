@@ -28,14 +28,22 @@
                         <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
                         <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
                     </div>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Gelen kutusunu yenile"><i class="fa fa-refresh"></i> Yenile</button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Okundu olarak işaretle"><i class="fa fa-eye"></i> </button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Önemli oalrak işaretle"><i class="fa fa-exclamation"></i> </button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Çöp kutusuna taşı"><i class="fa fa-trash-o"></i> </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Giden kutusunu yenile"><i class="fa fa-refresh"></i> Yenile</button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Sil"><i class="fa fa-trash-o"></i> </button>
                 </div>
             </div>
-            <div class="mail-box">
+            <div class="mail-box table-responsive">
                 <table class="table table-hover table-mail">
+                    <thead>
+                        <tr>
+                            <td class="text-center"><h4>#</h4></td>
+                            <td><h4>Alıcı</h4></td>
+                            <td><h4>Konu</h4></td>
+                            <td><h4>İçerik</h4></td>
+                            <td class="text-center mail-date"><h4>Atılma Tarihi</h4></td>
+                            <td class="text-center mail-date"><h4>Sil</h4></td>
+                        </tr>
+                    </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
@@ -45,7 +53,14 @@
                                 </td>
                                 <td class="mail-ontact"><a href="#">@item.ReceiverUser.WriterName</a></td>
                                 <td class="mail-subject"><a href="#">@item.Subject</a></td>
-                                <td class="text-right mail-date">@item.MessageDate</td>
+                                <td class="mail-subject"><a href="#">@item.MessageDetails</a></td>
+                                <td class="text-center mail-date">@item.MessageDate</td>
+                                <td class="text-center mail-date">
+                                    <button class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;"
+                                            onclick="confirmDelete('@item.MessageID')">
+                                        Sil
+                                    </button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -54,3 +69,24 @@
         </div>
     </div>
 </div>
+<script>
+    function confirmDelete(messageId) {
+        Swal.fire({
+            title: 'Sil?',
+            text: 'Mesajı silmek istediğinize emin misiniz?',
+            showDenyButton: true,
+            confirmButtonText: 'Evet',
+            denyButtonText: 'Hayır',
+            customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2',
+                denyButton: 'order-3',
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Admin/Message/DeleteMessage/' + messageId;
+            }
+        })
+    }
+</script>

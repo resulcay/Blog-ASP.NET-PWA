@@ -1,0 +1,58 @@
+﻿@using EntityLayer.Concrete
+@model List<Blog>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content product-box">
+                        <div class="product-imitation">
+                           <img src="@item.BlogImage"/>
+                        </div>
+                        <div class="product-desc">
+                            <span class="product-price">
+                                @(((DateTime)item.BlogCreatedAt).ToString("dd-MMM-yyyy"))
+                            </span>
+                            <small class="text-muted">@item.Category.CategoryName</small>
+                            <a href="#" class="product-name"> @item.BlogTitle</a>
+                            <div class="small m-t-xs">
+                                @{
+                                    string content = item.BlogContent;
+                                    int endIndex = content.Length < 100 ? content.Length : 100;
+
+                                    if (content.Length > endIndex)
+                                    {
+                                        var spaceIndex = content.Substring(0, endIndex).LastIndexOf(" ");
+                                        if (spaceIndex != -1)
+                                        {
+                                            content = content.Substring(0, spaceIndex);
+                                        }
+                                    }
+
+                                    @Html.Raw(content + "...")
+                                }
+                            </div>
+                            <div class="m-t text-righ">
+                                <a href="#" class="btn btn-xs btn-outline btn-primary">Detaylar <i class="fa fa-long-arrow-right"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .product-imitation img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>

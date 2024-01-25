@@ -58,5 +58,10 @@ namespace BusinessLayer.Concrete
         {
             return _blogDal.TotalBlogCountByWriter(id);
         }
+
+        public List<Blog> GetDetailedBlogList()
+        {
+            return _blogDal.GetDetailedBlogList();
+        }
     }
 }

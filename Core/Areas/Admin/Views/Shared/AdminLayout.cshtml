@@ -7,7 +7,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta lang="tr" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin Paneli</title>
@@ -17,6 +16,9 @@
     <link href="~/inspinia-gh-pages/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="~/inspinia-gh-pages/css/animate.css" rel="stylesheet">
     <link href="~/inspinia-gh-pages/css/style.css" rel="stylesheet">
+    <link href="~/inspinia-gh-pages/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+    <link href="~/inspinia-gh-pages/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
 </head>
 <body>
     <div id="wrapper">
@@ -162,13 +164,33 @@
     <script src="~/inspinia-gh-pages/js/plugins/pace/pace.min.js"></script>
     <script src="~/inspinia-gh-pages/js/plugins/iCheck/icheck.min.js"></script>
     <script src="~/inspinia-gh-pages/js/demo/peity-demo.js"></script>
-    @*<script src="~/inspinia-gh-pages/js/plugins/jquery-ui/jquery-ui.min.js"></script> *@
     <script src="~/inspinia-gh-pages/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
     <script src="~/inspinia-gh-pages/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="~/inspinia-gh-pages/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="~/inspinia-gh-pages/js/plugins/flot/jquery.flot.js"></script>
     <script src="~/inspinia-gh-pages/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
     <script src="~/inspinia-gh-pages/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="~/inspinia-gh-pages/js/plugins/summernote/summernote-bs4.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-tr-TR.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                lang: 'tr-TR',
+                height: 200,
+                callbacks: {
+                    onChange: function (contents) {
+                        $('#summernoteContent').val(contents);
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote();
+        });
+    </script>
     <script>
         $(document).ready(function () {
             var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302], [1280620800000, 24237], [1283299200000, 21004], [1285891200000, 12144], [1288569600000, 10577], [1291161600000, 10295]];

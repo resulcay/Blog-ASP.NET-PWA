@@ -1,0 +1,39 @@
+﻿@model EntityLayer.Concrete.Message2
+@{
+    ViewData["Title"] = "SendMessage";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="wrapper wrapper-content">
+    <div class="row">  
+        <div class="col-lg-12 animated fadeInRight">
+            <div class="mail-box-header">
+                <h2>
+                    Mesaj Gönder
+                </h2>
+            </div>
+            <div class="mail-box">
+                <div class="mail-body">
+                    <form method="post" action="/Admin/Message/SendMessage/">
+                        <h3>Alıcı</h3>
+                        @Html.DropDownListFor(x => x.ReceiverID, (List<SelectListItem>)ViewBag.receivers, new { @class = "form-control" })
+                        <br />
+                        <h3>Konu</h3>
+                        @Html.TextBoxFor(x => x.Subject, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Subject, "", new { @class = "text-danger" })
+                        <br />
+                        <h3>Mesaj</h3>
+                        <div class="mail-text h-200">
+                            <div class="summernote"></div>
+                            @Html.HiddenFor(x => x.MessageDetails, new { id = "summernoteContent" })
+                            @Html.ValidationMessageFor(x => x.MessageDetails, "", new { @class = "text-danger" })
+                            <div class="clearfix"></div>
+                        </div>
+                        <br />
+                        <div class="d-flex justify-content-center"><button class="btn btn-primary" style="width: 100px">Gönder</button></div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
