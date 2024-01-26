@@ -1,0 +1,22 @@
+﻿@using Core.Areas.Admin.Models
+@model RoleEditViewModel
+
+@{
+    ViewData["Title"] = "EditRole";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Rol Düzenle</h1>
+<br />
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" name="Id" class="form-control" value="@Model.Id"/>
+        <input type="text" class="form-control" name="Name" value="@Model.Name" placeholder="Rol Adı Giriniz">
+        @Html.ValidationMessage("Name", "", new { @class = "text-danger" })
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary block m-b" style="width:150px; margin-right:5px">Güncelle</button>
+        <a href="/Admin/Role/Index/" class="btn btn-success block m-b" style="width:150px; margin-left:5px">Roller</a>
+    </div>
+</form>
+

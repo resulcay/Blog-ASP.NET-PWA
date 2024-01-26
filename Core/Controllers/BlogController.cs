@@ -31,7 +31,13 @@ namespace CoreDemo.Controllers
         public IActionResult BlogReadAll(int id)
         {
             ViewBag.i = id;
+
             var value = blogManager.GetEntityById(id);
+            if (!value.BlogStatus)
+            {
+                return RedirectToAction("Error","Home");
+            }
+
             return View(value);
         }
 

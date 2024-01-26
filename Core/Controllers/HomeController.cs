@@ -1,4 +1,4 @@
-﻿using CoreDemo.Models;
+﻿using Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

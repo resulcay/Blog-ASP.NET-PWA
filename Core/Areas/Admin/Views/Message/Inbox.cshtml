@@ -7,34 +7,34 @@
 }
 
 <div class="wrapper wrapper-content">
-<div class="row">
-    <div class="col-lg-12 animated fadeInRight">
-    <div class="mail-box-header">
-        <form method="get" action="index.html" class="float-right mail-search">
-            <div class="input-group">
-                <input type="text" class="form-control form-control-sm" name="search" placeholder="Mesajlarda ara">
-                <div class="input-group-btn">
-                    <button type="submit" class="btn btn-sm btn-primary">
-                        Ara
-                    </button>
+    <div class="row">
+        <div class="col-lg-12 animated fadeInRight">
+            <div class="mail-box-header">
+                <form method="get" action="index.html" class="float-right mail-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" name="search" placeholder="Mesajlarda ara">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Ara
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <h2>
+                    Gelen Kutusu (@Model.Count)
+                </h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
+                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
+                    </div>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Gelen kutusunu yenile"><i class="fa fa-refresh"></i> Yenile</button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Okundu olarak işaretle"><i class="fa fa-eye"></i> </button>
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Sil"><i class="fa fa-trash-o"></i> </button>
                 </div>
             </div>
-        </form>
-        <h2>
-              Gelen Kutusu (@Model.Count)
-        </h2>
-        <div class="mail-tools tooltip-demo m-t-md">
-            <div class="btn-group float-right">
-                <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-            </div>
-            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Gelen kutusunu yenile"><i class="fa fa-refresh"></i> Yenile</button>
-            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Okundu olarak işaretle"><i class="fa fa-eye"></i> </button>
-            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Sil"><i class="fa fa-trash-o"></i> </button>
-        </div>
-    </div>
             <div class="mail-box table-responsive">
-        <table class="table table-hover table-mail">
+                <table class="table table-hover table-mail">
                     <thead>
                         <tr>
                             <td class="text-center"><h4>#</h4></td>
@@ -45,29 +45,29 @@
                             <td class="text-center mail-date"><h4>Sil</h4></td>
                         </tr>
                     </thead>
-        <tbody>
-            @foreach(var item in Model)
-            {
-                <tr class="unread">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="#">@item.SenderUser.WriterName -> @item.ReceiverUser.WriterName</a></td>
-                    <td class="mail-subject"><a href="#">@item.Subject</a></td>
-                    <td class="mail-subject"><a href="#">@item.MessageDetails</a></td>
-                    <td class="text-center mail-date">@item.MessageDate</td>
-                    <td class="text-center mail-date">
-                        <button class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;"
-                                onclick="confirmDelete('@item.MessageID')">
-                            Sil
-                        </button>
-                    </td>
-                </tr>
-            }
-           </tbody>
-         </table>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="unread">
+                                <td style="vertical-align:middle;" class="check-mail">
+                                    <input type="checkbox" class="i-checks">
+                                </td>
+                                <td style="vertical-align:middle;" class="mail-ontact"><a href="#">@item.SenderUser.WriterName -> @item.ReceiverUser.WriterName</a></td>
+                                <td style="vertical-align:middle;" class="mail-subject"><a href="#">@item.Subject</a></td>
+                                <td style="vertical-align:middle;" class="mail-subject"><a href="#">@item.MessageDetails</a></td>
+                                <td style="vertical-align:middle;" class="text-center mail-date">@item.MessageDate</td>
+                                <td style="vertical-align:middle;" class="text-center mail-date">
+                                    <button class="btn btn-danger" style="width:60px; padding: 8px 10px; font-size: 14px; text-align: center;"
+                                            onclick="confirmDelete('@item.MessageID')">
+                                        Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 <script>

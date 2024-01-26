@@ -1,0 +1,20 @@
+﻿@using Core.Areas.Admin.Models
+@model RoleViewModel
+
+@{
+    ViewData["Title"] = "AddRole";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Rol Ekle</h1>
+<br />
+<form method="post" >
+    <div class="form-group">
+        <input type="text" class="form-control" name="Name" placeholder="Rol Adı Giriniz">
+        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary block m-b" style="width:150px">EKLE</button>
+    </div>
+</form>
+
