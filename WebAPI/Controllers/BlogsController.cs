@@ -10,7 +10,7 @@ namespace WebAPI.Controllers
     {
         readonly BlogManager manager = new(new EfBlogRepository());
 
-        [HttpGet]
+        [HttpGet("blogs")]
         public IActionResult GetBlogList()
         {
             var result = manager.GetEntities();

@@ -43,6 +43,7 @@ namespace CoreDemo
                 options.SlidingExpiration = true;
                 options.LoginPath = "/Login/Index";
                 options.LogoutPath = "/Login/LogOut";
+                options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Login/AccessDenied");
                 options.ExpireTimeSpan = System.TimeSpan.FromMinutes(30);
             });
 
@@ -102,10 +103,10 @@ namespace CoreDemo
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
             );
 
-                endpoints.MapControllerRoute(
-                name: "admin_default",
-                pattern: "{area:exists}/{controller=Role}/{action=Index}/{id?}",
-                defaults: new { area = "Admin" });
+                //endpoints.MapControllerRoute(
+                //name: "admin_default",
+                //pattern: "{area:exists}/{controller=Role}/{action=Index}/{id?}",
+                //defaults: new { area = "Admin" });
 
                 endpoints.MapControllerRoute(
                 name: "default",
