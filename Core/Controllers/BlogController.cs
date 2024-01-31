@@ -35,7 +35,7 @@ namespace CoreDemo.Controllers
             var value = blogManager.GetEntityById(id);
             if (!value.BlogStatus)
             {
-                return RedirectToAction("Error","Home");
+                return RedirectToAction("Error", "Home");
             }
 
             return View(value);

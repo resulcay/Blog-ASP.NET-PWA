@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml;
 
 namespace Core.Areas.Admin.Controllers
 {
@@ -51,7 +50,7 @@ namespace Core.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendMessage(Message2 message) 
+        public IActionResult SendMessage(Message2 message)
         {
             string summernoteHtml = message.MessageDetails;
             string nonHtmlText = ExtractNonHtmlText(summernoteHtml);

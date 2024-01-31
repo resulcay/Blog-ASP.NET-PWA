@@ -4,11 +4,11 @@ using WebAPI.DataAccessLayer;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
-    public class DefaultsController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        [HttpGet("[action]")]
+        [HttpGet("login")]
         public IActionResult Login()
         {
             BuildToken token = new();
@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("[action]")]
+        [HttpGet("demopage")]
         public IActionResult DemoPage()
         {
             return Ok("Demo Girişi Başarılı");

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace EntityLayer.Concrete
 {
+    [Serializable]
     public class Category
     {
         [Key]
@@ -15,6 +19,8 @@ namespace EntityLayer.Concrete
 
         public bool CategoryStatus { get; set; }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public List<Blog> Blogs { get; set; }
     }
 }

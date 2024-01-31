@@ -4,7 +4,6 @@ using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 using System.Linq;
 
 namespace DataAccessLayer.EntityFramework
@@ -46,7 +45,7 @@ namespace DataAccessLayer.EntityFramework
             return context.Blogs.Include(c => c.Category).Where(w => w.WriterID == id && (isWriter || w.BlogStatus)).ToList();
         }
 
-        public List<Blog> GetDetailedBlogList()  
+        public List<Blog> GetDetailedBlogList()
         {
             using var context = new Context();
             return context.Blogs.Include(c => c.Category).Include(d => d.Writer).ToList();

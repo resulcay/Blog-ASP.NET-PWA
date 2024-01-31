@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EntityLayer.Concrete
 {
+    [Serializable]
     public class Message2
     {
         [Key]

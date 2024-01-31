@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Serialization;
 
 namespace EntityLayer.Concrete
 {
+    [Serializable]
     public class Blog
     {
         [Key]
-
         public int BlogID { get; set; }
 
         public string BlogTitle { get; set; }
@@ -30,6 +31,7 @@ namespace EntityLayer.Concrete
 
         public Writer Writer { get; set; }
 
+        [XmlIgnore]
         public List<Comment> Comments { get; set; }
     }
 }

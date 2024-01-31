@@ -6,14 +6,14 @@ namespace WebAPI.DataAccessLayer
 {
     public class BuildToken
     {
-        public string CreateToken() 
+        public string CreateToken()
         {
             var bytes = Encoding.UTF8.GetBytes("mySuperSecret--withluck8andlongtextarea");
             SymmetricSecurityKey key = new(bytes);
             SigningCredentials creds = new(key, SecurityAlgorithms.HmacSha256);
 
             DateTime now = DateTime.Now;
-            DateTime duration = now.AddSeconds(10);
+            DateTime duration = now.AddSeconds(20);
 
             JwtSecurityToken token = new(
                 issuer: "https://localhost",

@@ -1,23 +1,33 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/blogs")]
     [ApiController]
     public class BlogsController : ControllerBase
     {
-        readonly BlogManager manager = new(new EfBlogRepository());
+        private readonly BlogManager manager = new(new EfBlogRepository());
 
-        [HttpGet("blogs")]
-        public IActionResult GetBlogList()
+        [HttpGet("all")]
+        public IActionResult GetBlogList([FromQuery] string? format)
         {
-            var result = manager.GetEntities();
-            return Ok(result);
+            var result = manager.GetDetailedBlogList();
+
+            if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
+            {
+                var xmlResult = SerializeToXml(result);
+                return Content(xmlResult, "application/xml");
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("byid/{id}")]
         public IActionResult GetBlogById(int id)
         {
             var result = manager.GetEntityById(id);
@@ -28,6 +38,14 @@ namespace WebAPI.Controllers
             }
 
             return Ok(result);
+        }
+
+        private static string SerializeToXml(object data)
+        {
+            var serializer = new XmlSerializer(data.GetType());
+            using var value = new StringWriter();
+            serializer.Serialize(value, data);
+            return value.ToString();
         }
     }
 }

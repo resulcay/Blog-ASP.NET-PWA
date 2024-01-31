@@ -63,7 +63,7 @@ namespace Core.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult EditRole(int id)
         {
-            var value =  roleManager.Roles.FirstOrDefault(x => x.Id == id);
+            var value = roleManager.Roles.FirstOrDefault(x => x.Id == id);
 
             var model = new RoleEditViewModel
             {
@@ -110,14 +110,14 @@ namespace Core.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult UserRoleList() 
+        public IActionResult UserRoleList()
         {
             var values = userManager.Users.ToList();
             return View(values);
         }
 
         [HttpGet]
-        public async Task<IActionResult> AssignRole(int id) 
+        public async Task<IActionResult> AssignRole(int id)
         {
             var user = userManager.Users.FirstOrDefault(x => x.Id == id);
             var roles = roleManager.Roles.ToList();
@@ -152,7 +152,7 @@ namespace Core.Areas.Admin.Controllers
                 {
                     await userManager.AddToRoleAsync(user, item.Name);
                 }
-                else 
+                else
                 {
                     await userManager.RemoveFromRoleAsync(user, item.Name);
                 }

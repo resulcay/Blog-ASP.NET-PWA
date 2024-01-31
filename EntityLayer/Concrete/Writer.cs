@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace EntityLayer.Concrete
 {
+    [Serializable]
     public class Writer
     {
         [Key]
@@ -21,10 +25,16 @@ namespace EntityLayer.Concrete
 
         public bool WriterStatus { get; set; }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public List<Blog> Blogs { get; set; }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public virtual ICollection<Message2> WriterSender { get; set; }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public virtual ICollection<Message2> WriterReceiver { get; set; }
     }
 }
