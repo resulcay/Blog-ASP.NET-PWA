@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace EntityLayer.Concrete
@@ -32,6 +33,7 @@ namespace EntityLayer.Concrete
         public Writer Writer { get; set; }
 
         [XmlIgnore]
+        [JsonIgnore]
         public List<Comment> Comments { get; set; }
     }
 }
