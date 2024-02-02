@@ -7,16 +7,16 @@ using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/blogs")]
+    [Route("api/writers")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class WritersController : ControllerBase
     {
-        private readonly BlogManager manager = new(new EfBlogRepository());
+        private readonly WriterManager manager = new(new EfWriterRepository());
 
         [HttpGet("all")]
-        public IActionResult GetBlogList(string? format)
+        public IActionResult GetWriterList(string? format)
         {
-            var result = manager.GetDetailedBlogList();
+            var result = manager.GetEntities();
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetBlogById(int blogId, string? format)
+        public IActionResult GetWriterById(int writerId, string? format)
         {
-            var result = manager.GetEntityById(blogId);
+            var result = manager.GetEntityById(writerId);
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -58,12 +58,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateBlog(Blog blog, string? format)
+        public IActionResult UpdateWriter(Writer writer, string? format)
         {
             try
             {
-                manager.UpdateEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.UpdateEntity(writer);
+                var result = manager.GetEntityById(writer.WriterID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -92,12 +92,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddBlog(Blog blog, string? format)
+        public IActionResult AddWriter(Writer writer, string? format)
         {
             try
             {
-                manager.AddEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.AddEntity(writer);
+                var result = manager.GetEntityById(writer.WriterID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -126,12 +126,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeleteBlog(int blogId, string? format)
+        public IActionResult DeleteWriter(int writerId, string? format)
         {
             try
             {
-                var blog = manager.GetEntityById(blogId);
-                manager.DeleteEntity(blog);
+                var writer = manager.GetEntityById(writerId);
+                manager.DeleteEntity(writer);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {

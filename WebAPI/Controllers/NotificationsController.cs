@@ -7,16 +7,16 @@ using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/blogs")]
+    [Route("api/notifications")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class NotificationsController : ControllerBase
     {
-        private readonly BlogManager manager = new(new EfBlogRepository());
+        private readonly NotificationManager manager = new(new EfNotificationRepository());
 
         [HttpGet("all")]
-        public IActionResult GetBlogList(string? format)
+        public IActionResult GetNotificationList(string? format)
         {
-            var result = manager.GetDetailedBlogList();
+            var result = manager.GetEntities();
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetBlogById(int blogId, string? format)
+        public IActionResult GetNotificationById(int notificationId, string? format)
         {
-            var result = manager.GetEntityById(blogId);
+            var result = manager.GetEntityById(notificationId);
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -58,12 +58,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateBlog(Blog blog, string? format)
+        public IActionResult UpdateNotification(Notification notification, string? format)
         {
             try
             {
-                manager.UpdateEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.UpdateEntity(notification);
+                var result = manager.GetEntityById(notification.NotificationID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -92,12 +92,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddBlog(Blog blog, string? format)
+        public IActionResult AddNotification(Notification notification, string? format)
         {
             try
             {
-                manager.AddEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.AddEntity(notification);
+                var result = manager.GetEntityById(notification.NotificationID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -126,12 +126,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeleteBlog(int blogId, string? format)
+        public IActionResult DeleteNotification(int notificationId, string? format)
         {
             try
             {
-                var blog = manager.GetEntityById(blogId);
-                manager.DeleteEntity(blog);
+                var notification = manager.GetEntityById(notificationId);
+                manager.DeleteEntity(notification);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {

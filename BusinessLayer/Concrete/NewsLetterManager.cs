@@ -6,7 +6,7 @@ namespace BusinessLayer.Concrete
 {
     public class NewsLetterManager : INewsLetterService
     {
-        INewsLetterDal _newsLetterDal;
+        readonly INewsLetterDal _newsLetterDal;
 
         public NewsLetterManager(INewsLetterDal newsLetterDal)
         {
@@ -16,6 +16,11 @@ namespace BusinessLayer.Concrete
         public void AddNewsLetter(NewsLetter newsLetter)
         {
             _newsLetterDal.Insert(newsLetter);
+        }
+
+        public NewsLetter GetById(int id)
+        {
+            return _newsLetterDal.GetById(id);
         }
     }
 }

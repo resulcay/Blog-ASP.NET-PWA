@@ -7,16 +7,16 @@ using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/blogs")]
+    [Route("api/comments")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class CommentsController : ControllerBase
     {
-        private readonly BlogManager manager = new(new EfBlogRepository());
+        private readonly CommentManager manager = new(new EfCommentRepository());
 
         [HttpGet("all")]
-        public IActionResult GetBlogList(string? format)
+        public IActionResult GetCommentList(string? format)
         {
-            var result = manager.GetDetailedBlogList();
+            var result = manager.GetCommentsWithBlogAndWriter();
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetBlogById(int blogId, string? format)
+        public IActionResult GetCommentById(int commentId, string? format)
         {
-            var result = manager.GetEntityById(blogId);
+            var result = manager.GetEntityById(commentId);
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -58,12 +58,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateBlog(Blog blog, string? format)
+        public IActionResult UpdateComment(Comment comment, string? format)
         {
             try
             {
-                manager.UpdateEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.UpdateEntity(comment);
+                var result = manager.GetEntityById(comment.CommentID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -92,12 +92,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddBlog(Blog blog, string? format)
+        public IActionResult AddComment(Comment comment, string? format)
         {
             try
             {
-                manager.AddEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.AddEntity(comment);
+                var result = manager.GetEntityById(comment.CommentID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -126,12 +126,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeleteBlog(int blogId, string? format)
+        public IActionResult DeleteComment(int commentId, string? format)
         {
             try
             {
-                var blog = manager.GetEntityById(blogId);
-                manager.DeleteEntity(blog);
+                var comment = manager.GetEntityById(commentId);
+                manager.DeleteEntity(comment);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {

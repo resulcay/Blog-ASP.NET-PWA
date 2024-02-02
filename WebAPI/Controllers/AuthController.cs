@@ -16,10 +16,10 @@ namespace WebAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("demopage")]
+        [HttpGet("checkauth")]
         public IActionResult DemoPage()
         {
-            return Ok("Demo Girişi Başarılı");
+            return Ok("Giriş Başarılı");
         }
     }
 }

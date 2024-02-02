@@ -7,16 +7,16 @@ using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/blogs")]
+    [Route("api/messages")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class MessagesController : ControllerBase
     {
-        private readonly BlogManager manager = new(new EfBlogRepository());
+        private readonly Message2Manager manager = new(new EfMessage2Repository());
 
         [HttpGet("all")]
-        public IActionResult GetBlogList(string? format)
+        public IActionResult GetMessageList(string? format)
         {
-            var result = manager.GetDetailedBlogList();
+            var result = manager.GetDetailedMessages();
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetBlogById(int blogId, string? format)
+        public IActionResult GetMessageById(int messageId, string? format)
         {
-            var result = manager.GetEntityById(blogId);
+            var result = manager.GetEntityById(messageId);
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -58,12 +58,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateBlog(Blog blog, string? format)
+        public IActionResult UpdateMessage(Message2 message, string? format)
         {
             try
             {
-                manager.UpdateEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.UpdateEntity(message);
+                var result = manager.GetEntityById(message.MessageID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -92,12 +92,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddBlog(Blog blog, string? format)
+        public IActionResult AddMessage(Message2 message, string? format)
         {
             try
             {
-                manager.AddEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.AddEntity(message);
+                var result = manager.GetEntityById(message.MessageID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -126,12 +126,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeleteBlog(int blogId, string? format)
+        public IActionResult DeleteMessage(int messageId, string? format)
         {
             try
             {
-                var blog = manager.GetEntityById(blogId);
-                manager.DeleteEntity(blog);
+                var message = manager.GetEntityById(messageId);
+                manager.DeleteEntity(message);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {

@@ -7,16 +7,16 @@ using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/blogs")]
+    [Route("api/categories")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
-        private readonly BlogManager manager = new(new EfBlogRepository());
+        private readonly CategoryManager manager = new(new EfCategoryRepository());
 
         [HttpGet("all")]
-        public IActionResult GetBlogList(string? format)
+        public IActionResult GetCategoryList(string? format)
         {
-            var result = manager.GetDetailedBlogList();
+            var result = manager.GetEntities();
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("byid")]
-        public IActionResult GetBlogById(int blogId, string? format)
+        public IActionResult GetCategoryById(int categoryId, string? format)
         {
-            var result = manager.GetEntityById(blogId);
+            var result = manager.GetEntityById(categoryId);
 
             if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
             {
@@ -58,12 +58,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateBlog(Blog blog, string? format)
+        public IActionResult UpdateCategory(Category category, string? format)
         {
             try
             {
-                manager.UpdateEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.UpdateEntity(category);
+                var result = manager.GetEntityById(category.CategoryID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -92,12 +92,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddBlog(Blog blog, string? format)
+        public IActionResult AddCategory(Category category, string? format)
         {
             try
             {
-                manager.AddEntity(blog);
-                var result = manager.GetEntityById(blog.BlogID);
+                manager.AddEntity(category);
+                var result = manager.GetEntityById(category.CategoryID);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
@@ -126,12 +126,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeleteBlog(int blogId, string? format)
+        public IActionResult DeleteCategory(int categoryId, string? format)
         {
             try
             {
-                var blog = manager.GetEntityById(blogId);
-                manager.DeleteEntity(blog);
+                var category = manager.GetEntityById(categoryId);
+                manager.DeleteEntity(category);
 
                 if (string.Equals(format, "xml", StringComparison.OrdinalIgnoreCase))
                 {
