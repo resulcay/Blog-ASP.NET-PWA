@@ -4,24 +4,27 @@ using System.Data.SqlClient;
 
 public class BlogDataAccess
 {
+    const string connectionString = @"Data Source=77.245.159.27\MSSQLSERVER2019; User Id=resulcay; Password=HV8plhmA&z?9d6za; Initial Catalog=CoreBlogDb;";
+
     public List<Blog> GetAllBlogs()
     {
         List<Blog> blogs = new List<Blog>();
 
-        //            "Data Source=77.245.159.27\\MSSQLSERVER2019;" +
-        //                         "User Id=resulcay;" +
-        //             "Password=HV8plhmA&z?9d6za;" +
-        //             "Initial Catalog=CoreBlogDb;"
-
-        // string connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-        string connectionString = @"Data Source=(localdb)\CoreDemo;Initial Catalog=CoreBlogDb;Integrated Security=SSPI;";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
-            string query = "SELECT * FROM Blogs";
+            string query = @"SELECT Blogs.*, Categories.CategoryName, Writers.WriterName FROM Blogs INNER JOIN Categories ON Blogs.CategoryID = Categories.CategoryID
+INNER JOIN Writers ON Blogs.WriterID = Writers.WriterID WHERE BlogCreatedAt BETWEEN @InitialDate AND @EndingDate";
+
             using (SqlCommand command = new SqlCommand(query, connection))
             {
+                DateTime initialDate = DateTime.Now.AddDays(-100);
+                DateTime endingDate = DateTime.Now;
+
+                command.Parameters.AddWithValue("@InitialDate", initialDate);
+                command.Parameters.AddWithValue("@EndingDate", endingDate);
+
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -36,27 +39,11 @@ public class BlogDataAccess
         return blogs;
     }
 
-    private Blog MapReaderToBlog(SqlDataReader reader)
-    {
-        return new Blog
-        {
-            BlogID = Convert.ToInt32(reader["BlogID"]),
-            BlogTitle = reader["BlogTitle"].ToString(),
-            BlogContent = reader["BlogContent"].ToString(),
-            BlogThumbnailImage = reader["BlogThumbnailImage"].ToString(),
-            BlogImage = reader["BlogImage"].ToString(),
-            BlogCreatedAt = Convert.ToDateTime(reader["BlogCreatedAt"]),
-            BlogStatus = Convert.ToBoolean(reader["BlogStatus"]),
-            CategoryID = Convert.ToInt32(reader["CategoryID"]),
-            WriterID = Convert.ToInt32(reader["WriterID"])
-        };
-    }
-
     public Blog GetBlogById(int blogId)
     {
         Blog blog = null;
 
-        using (SqlConnection connection = new SqlConnection("server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true;"))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -77,4 +64,21 @@ public class BlogDataAccess
 
         return blog;
     }
+
+    private static Blog MapReaderToBlog(SqlDataReader reader)
+    {
+        return new Blog
+        {
+            BlogID = Convert.ToInt32(reader["BlogID"]),
+            BlogTitle = reader["BlogTitle"].ToString(),
+            BlogContent = reader["BlogContent"].ToString(),
+            BlogThumbnailImage = reader["BlogThumbnailImage"].ToString(),
+            BlogImage = reader["BlogImage"].ToString(),
+            BlogCreatedAt = Convert.ToDateTime(reader["BlogCreatedAt"]),
+            BlogStatus = Convert.ToBoolean(reader["BlogStatus"]),
+            Category = reader["CategoryName"].ToString(),
+            Writer = reader["WriterName"].ToString()
+        };
+    }
+
 }

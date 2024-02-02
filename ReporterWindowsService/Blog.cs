@@ -9,6 +9,6 @@ public class Blog
     public string BlogImage { get; set; }
     public DateTime BlogCreatedAt { get; set; }
     public bool BlogStatus { get; set; }
-    public int CategoryID { get; set; }
-    public int WriterID { get; set; }
+    public string Category { get; set; }
+    public string Writer { get; set; }
 }

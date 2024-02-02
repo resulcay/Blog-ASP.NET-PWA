@@ -39,7 +39,7 @@
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.Description = "Reports Blogs every 10 seconds";
+            this.serviceInstaller.Description = "Reports Blogs daily where added between 10:00PM - 12:00AM.";
             this.serviceInstaller.DisplayName = "Blog Report Service";
             this.serviceInstaller.ServiceName = "BlogReporter";
             // 
