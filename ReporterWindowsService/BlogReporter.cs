@@ -7,6 +7,8 @@ using System.Net;
 using System.ServiceProcess;
 using System.Timers;
 using System.Net.Mime;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ReporterWindowsService
 {
@@ -93,16 +95,21 @@ namespace ReporterWindowsService
                     blogRowCount++;
                 }
 
-               File.WriteAllBytes(filePath, excelPackage.GetAsByteArray());
+                File.WriteAllBytes(filePath, excelPackage.GetAsByteArray());
 
-               SendEmailWithAttachment(filePath);
+                SendEmailWithAttachment(filePath);
             }
         }
 
         static void SendEmailWithAttachment(string filePath)
         {
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                {
+                    return true;
+                };
 
-           try {
                 int smtpPort = 587;
                 string smtpServer = "mail.pureblog.com.tr";
                 string smtpUsername = "test@pureblog.com.tr";
@@ -110,9 +117,6 @@ namespace ReporterWindowsService
                 string senderEmail = "test@pureblog.com.tr";
                 string recipientEmail = "karayip630@gmail.com";
                 string subject = "Günlük Blog Raporu";
-
-                MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, "");
-
                 string htmlBody = @"<!DOCTYPE html>
 <html lang=""en"">
 
@@ -133,13 +137,14 @@ namespace ReporterWindowsService
             <a href=""https://pureblog.com.tr"">Web Sitemi Ziyaret edebilirsiniz.</a>.
         </p>
 
-        <img src=""https://pouch.jumpshare.com/preview/J1AfGBg0jp7nXM5BLXy5tRRVgcOukRVCXhdOE187JEPHlDtAxV2V-X_Aq72m3IDmcEqR2VErWv4xh83KyUw_fnmxfSQY-i_icHCb3GB6IeA""/>
+        <img src=""https://firebasestorage.googleapis.com/v0/b/tekno-fest-d65ab.appspot.com/o/cup.gif?alt=media&token=789741b9-d547-43d7-8428-89198bb60de1""/>
 </body>
 </html>";
-                ContentType mimeType = new ContentType("text/html");
 
-                AlternateView alternate = AlternateView.CreateAlternateViewFromString(htmlBody, mimeType);
-                mailMessage.AlternateViews.Add(alternate);
+                MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, htmlBody)
+                {
+                    IsBodyHtml = true
+                };
 
                 Attachment attachment = new Attachment(filePath);
                 mailMessage.Attachments.Add(attachment);
@@ -147,7 +152,7 @@ namespace ReporterWindowsService
                 SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort)
                 {
                     Credentials = new NetworkCredential(smtpUsername, smtpPassword),
-                    EnableSsl = false,
+                    EnableSsl = true,
                 };
 
                 smtpClient.Send(mailMessage);
