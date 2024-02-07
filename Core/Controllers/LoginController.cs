@@ -10,9 +10,9 @@ namespace CoreDemo.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        readonly SignInManager<AppUser> signInManager;
+        readonly SignInManager<User> signInManager;
 
-        public LoginController(SignInManager<AppUser> signInManager)
+        public LoginController(SignInManager<User> signInManager)
         {
             this.signInManager = signInManager;
         }

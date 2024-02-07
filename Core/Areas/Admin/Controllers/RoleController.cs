@@ -14,9 +14,9 @@ namespace Core.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         readonly RoleManager<Role> roleManager;
-        readonly UserManager<AppUser> userManager;
+        readonly UserManager<User> userManager;
 
-        public RoleController(RoleManager<Role> roleManager, UserManager<AppUser> userManager)
+        public RoleController(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;

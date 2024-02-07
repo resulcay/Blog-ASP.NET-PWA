@@ -9,9 +9,9 @@ namespace Core.Controllers
 {
     public class WriterController : Controller
     {
-        readonly UserManager<AppUser> userManager;
+        readonly UserManager<User> userManager;
 
-        public WriterController(UserManager<AppUser> userManager)
+        public WriterController(UserManager<User> userManager)
         {
             this.userManager = userManager;
         }

@@ -27,7 +27,7 @@ namespace CoreDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>();
-            services.AddIdentity<AppUser, Role>(x =>
+            services.AddIdentity<User, Role>(x =>
             {
                 x.Password.RequireUppercase = false;
                 x.Password.RequireLowercase = false;

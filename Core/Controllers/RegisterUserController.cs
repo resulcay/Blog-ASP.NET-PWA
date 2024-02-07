@@ -10,9 +10,9 @@ namespace Core.Controllers
     [AllowAnonymous]
     public class RegisterUserController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public RegisterUserController(UserManager<AppUser> userManager)
+        public RegisterUserController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
@@ -28,14 +28,14 @@ namespace Core.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser appUser = new()
+                User user = new()
                 {
                     NameSurname = userModel.NameSurname,
                     UserName = userModel.UserName,
                     Email = userModel.Email
                 };
 
-                var result = await _userManager.CreateAsync(appUser, userModel.Password);
+                var result = await _userManager.CreateAsync(user, userModel.Password);
 
                 if (result.Succeeded)
                 {
