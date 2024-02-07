@@ -33,8 +33,8 @@ namespace Core.Controllers
 
         public IActionResult DeleteMessage(int id)
         {
-            Message message2 = messageManager.GetEntityById(id);
-            messageManager.DeleteEntity(message2);
+            Message message = messageManager.GetEntityById(id);
+            messageManager.DeleteEntity(message);
 
             return RedirectToAction("Inbox", "Message");
         }
@@ -49,7 +49,7 @@ namespace Core.Controllers
         [HttpPost]
         public IActionResult SendMessage(Message message)
         {
-            Message2Validator messageValidator = new();
+            MessageValidator messageValidator = new();
             ValidationResult result = messageValidator.Validate(message);
 
             if (result.IsValid)

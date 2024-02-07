@@ -67,7 +67,7 @@ namespace CoreDemo
             // Register Validators
             services.AddValidatorsFromAssemblyContaining<WriterValidator>();
             services.AddValidatorsFromAssemblyContaining<BlogValidator>();
-            services.AddValidatorsFromAssemblyContaining<Message2Validator>();
+            services.AddValidatorsFromAssemblyContaining<MessageValidator>();
 
             services.AddFluentValidationAutoValidation(); // the same old MVC pipeline behavior
             services.AddFluentValidationClientsideAdapters(); // for client side

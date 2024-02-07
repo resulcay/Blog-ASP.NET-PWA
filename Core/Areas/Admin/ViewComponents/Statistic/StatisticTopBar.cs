@@ -13,14 +13,14 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
     public class StatisticTopBar : ViewComponent
     {
         readonly BlogManager blogManager = new(new EfBlogRepository());
-        readonly MessageManager message2Manager = new(new EfMessageRepository());
+        readonly MessageManager messageManager = new(new EfMessageRepository());
         readonly CommentManager commentManager = new(new EfCommentRepository());
 
         public IViewComponentResult Invoke()
         {
             // TODO: will impact performance if there are many.
             int blogCount = blogManager.GetEntities().Count;
-            int messageCount = message2Manager.GetEntities().Count;
+            int messageCount = messageManager.GetEntities().Count;
             int commentCount = commentManager.GetEntities().Count;
 
 

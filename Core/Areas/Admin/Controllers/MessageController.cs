@@ -36,8 +36,8 @@ namespace Core.Areas.Admin.Controllers
 
         public IActionResult DeleteMessage(int id)
         {
-            Message message2 = messageManager.GetEntityById(id);
-            messageManager.DeleteEntity(message2);
+            Message message = messageManager.GetEntityById(id);
+            messageManager.DeleteEntity(message);
 
             return RedirectToAction("Inbox", "Message");
         }
@@ -56,7 +56,7 @@ namespace Core.Areas.Admin.Controllers
             string nonHtmlText = ExtractNonHtmlText(summernoteHtml);
             message.MessageDetails = nonHtmlText;
 
-            Message2Validator messageValidator = new();
+            MessageValidator messageValidator = new();
             ValidationResult result = messageValidator.Validate(message);
 
             if (result.IsValid)

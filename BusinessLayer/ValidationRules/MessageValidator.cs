@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BusinessLayer.ValidationRules
 {
-    public class Message2Validator : AbstractValidator<Message>
+    public class MessageValidator : AbstractValidator<Message>
     {
-        public Message2Validator()
+        public MessageValidator()
         {
             RuleFor(x => x.Subject).NotEmpty().WithMessage("Konu boş geçilemez");
             RuleFor(x => x.MessageDetails).NotEmpty().WithMessage("Mesaj boş geçilemez");
