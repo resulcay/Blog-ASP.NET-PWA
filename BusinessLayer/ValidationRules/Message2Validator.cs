@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace BusinessLayer.ValidationRules
 {
-    public class Message2Validator : AbstractValidator<Message2>
+    public class Message2Validator : AbstractValidator<Message>
     {
         public Message2Validator()
         {

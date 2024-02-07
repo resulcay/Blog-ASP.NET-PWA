@@ -13,7 +13,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
     public class StatisticTopBar : ViewComponent
     {
         readonly BlogManager blogManager = new(new EfBlogRepository());
-        readonly Message2Manager message2Manager = new(new EfMessage2Repository());
+        readonly MessageManager message2Manager = new(new EfMessageRepository());
         readonly CommentManager commentManager = new(new EfCommentRepository());
 
         public IViewComponentResult Invoke()

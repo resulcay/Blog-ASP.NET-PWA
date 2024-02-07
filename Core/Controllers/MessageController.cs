@@ -13,7 +13,7 @@ namespace Core.Controllers
 {
     public class MessageController : Controller
     {
-        readonly Message2Manager messageManager = new(new EfMessage2Repository());
+        readonly MessageManager messageManager = new(new EfMessageRepository());
         readonly WriterManager writerManager = new(new EfWriterRepository());
         readonly Context context = new();
 
@@ -33,7 +33,7 @@ namespace Core.Controllers
 
         public IActionResult DeleteMessage(int id)
         {
-            Message2 message2 = messageManager.GetEntityById(id);
+            Message message2 = messageManager.GetEntityById(id);
             messageManager.DeleteEntity(message2);
 
             return RedirectToAction("Inbox", "Message");
@@ -47,7 +47,7 @@ namespace Core.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendMessage(Message2 message)
+        public IActionResult SendMessage(Message message)
         {
             Message2Validator messageValidator = new();
             ValidationResult result = messageValidator.Validate(message);

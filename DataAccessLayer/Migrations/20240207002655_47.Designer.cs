@@ -4,14 +4,16 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240207002655_47")]
+    partial class _47
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,7 +330,7 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.Message", b =>
+            modelBuilder.Entity("EntityLayer.Concrete.Message2", b =>
                 {
                     b.Property<int>("MessageID")
                         .ValueGeneratedOnAdd()
@@ -359,7 +361,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("SenderID");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Message2s");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.NewsLetter", b =>
@@ -571,7 +573,7 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Blog");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.Message", b =>
+            modelBuilder.Entity("EntityLayer.Concrete.Message2", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Writer", "ReceiverUser")
                         .WithMany("WriterReceiver")

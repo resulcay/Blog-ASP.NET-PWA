@@ -31,10 +31,10 @@ namespace EntityLayer.Concrete
 
         [JsonIgnore]
         [XmlIgnore]
-        public virtual ICollection<Message2> WriterSender { get; set; }
+        public virtual ICollection<Message> WriterSender { get; set; }
 
         [JsonIgnore]
         [XmlIgnore]
-        public virtual ICollection<Message2> WriterReceiver { get; set; }
+        public virtual ICollection<Message> WriterReceiver { get; set; }
     }
 }

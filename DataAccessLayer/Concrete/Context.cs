@@ -14,25 +14,13 @@ namespace DataAccessLayer.Concrete
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Match>()
-                .HasOne(m => m.HomeTeam)
-                .WithMany(m => m.HomeMatches)
-                .HasForeignKey(m => m.HomeTeamID)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            modelBuilder.Entity<Match>()
-                .HasOne(m => m.GuestTeam)
-                .WithMany(m => m.GuestMatches)
-                .HasForeignKey(m => m.GuestTeamID)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            modelBuilder.Entity<Message2>()
+            modelBuilder.Entity<Message>()
                 .HasOne(m => m.SenderUser)
                 .WithMany(m => m.WriterSender)
                 .HasForeignKey(m => m.SenderID)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            modelBuilder.Entity<Message2>()
+            modelBuilder.Entity<Message>()
                 .HasOne(m => m.ReceiverUser)
                 .WithMany(m => m.WriterReceiver)
                 .HasForeignKey(m => m.ReceiverID)
@@ -60,12 +48,6 @@ namespace DataAccessLayer.Concrete
         public DbSet<Notification> Notifications { get; set; }
 
         public DbSet<Message> Messages { get; set; }
-
-        public DbSet<Message2> Message2s { get; set; }
-
-        public DbSet<Match> Matches { get; set; }
-
-        public DbSet<Team> Teams { get; set; }
 
         public DbSet<Admin> Admins { get; set; }
     }

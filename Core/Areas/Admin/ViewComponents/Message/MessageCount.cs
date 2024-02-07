@@ -8,7 +8,7 @@ namespace Core.Areas.Admin.ViewComponents.Admin
 {
     public class MessageCount : ViewComponent
     {
-        readonly Message2Manager messageManager = new(new EfMessage2Repository());
+        readonly MessageManager messageManager = new(new EfMessageRepository());
         readonly WriterManager writerManager = new(new EfWriterRepository());
         readonly Context context = new();
 

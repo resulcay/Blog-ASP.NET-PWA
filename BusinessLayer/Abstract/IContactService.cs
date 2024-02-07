@@ -7,6 +7,6 @@ namespace BusinessLayer.Abstract
     {
         void ContactAdd(Contact contact);
         List<Contact> GetAll();
-        Contact GetEntityById(int id);  
+        Contact GetEntityById(int id);
     }
 }

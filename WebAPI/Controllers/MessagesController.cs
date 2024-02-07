@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class MessagesController : ControllerBase
     {
-        private readonly Message2Manager manager = new(new EfMessage2Repository());
+        private readonly MessageManager manager = new(new EfMessageRepository());
 
         [HttpGet("all")]
         public IActionResult GetMessageList(string? format)
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateMessage(Message2 message, string? format)
+        public IActionResult UpdateMessage(Message message, string? format)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddMessage(Message2 message, string? format)
+        public IActionResult AddMessage(Message message, string? format)
         {
             try
             {

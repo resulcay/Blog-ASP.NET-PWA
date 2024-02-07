@@ -10,7 +10,7 @@ namespace Core.ViewComponents.Writer
 {
     public class WriterMessageNotification : ViewComponent
     {
-        readonly Message2Manager manager = new(new EfMessage2Repository());
+        readonly MessageManager manager = new(new EfMessageRepository());
         readonly WriterManager writerManager = new(new EfWriterRepository());
         readonly Context context = new();
 

@@ -7,41 +7,51 @@ namespace BusinessLayer.Concrete
 {
     public class MessageManager : IMessageService
     {
-        readonly IMessageDal _messageDal;
+        readonly IMessageDal _message2Dal;
 
-        public MessageManager(IMessageDal messageDal)
+        public MessageManager(IMessageDal message2Dal)
         {
-            _messageDal = messageDal;
+            _message2Dal = message2Dal;
         }
 
         public void AddEntity(Message entity)
         {
-            _messageDal.Insert(entity);
+            _message2Dal.Insert(entity);
         }
 
         public void UpdateEntity(Message entity)
         {
-            _messageDal.Update(entity);
+            _message2Dal.Update(entity);
         }
 
         public void DeleteEntity(Message entity)
         {
-            _messageDal.Delete(entity);
-        }
-
-        public Message GetEntityById(int id)
-        {
-            return _messageDal.GetById(id);
+            _message2Dal.Delete(entity);
         }
 
         public List<Message> GetEntities()
         {
-            return _messageDal.ListAll();
+            return _message2Dal.ListAll();
         }
 
-        public List<Message> GetMessagesByWriter(string receiver)
+        public Message GetEntityById(int id)
         {
-            return _messageDal.ListAll(x => x.Receiver == receiver);
+            return _message2Dal.GetById(id);
+        }
+
+        public List<Message> GetReceivedMessagesByWriter(int id)
+        {
+            return _message2Dal.GetReceivedMessagesByWriter(id);
+        }
+
+        public List<Message> GetSentMessagesByWriter(int id)
+        {
+            return _message2Dal.GetSentMessagesByWriter(id);
+        }
+
+        public List<Message> GetDetailedMessages()
+        {
+            return _message2Dal.GetDetailedMessages();
         }
     }
 }

@@ -90,7 +90,7 @@ namespace WebAPI.Controllers
                 return Content(jsonError, "application/json");
             }
         }
-     
+
         private static string SerializeToXml(object data)
         {
             var serializer = new XmlSerializer(data.GetType());

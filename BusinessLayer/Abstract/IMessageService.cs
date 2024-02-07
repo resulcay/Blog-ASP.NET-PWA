@@ -5,6 +5,8 @@ namespace BusinessLayer.Abstract
 {
     public interface IMessageService : IGenericService<Message>
     {
-        List<Message> GetMessagesByWriter(string receiver);
+        List<Message> GetReceivedMessagesByWriter(int id);
+        List<Message> GetSentMessagesByWriter(int id);
+        List<Message> GetDetailedMessages();
     }
 }
