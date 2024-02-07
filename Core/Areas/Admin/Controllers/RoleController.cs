@@ -13,10 +13,10 @@ namespace Core.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
-        readonly RoleManager<AppRole> roleManager;
+        readonly RoleManager<Role> roleManager;
         readonly UserManager<AppUser> userManager;
 
-        public RoleController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
+        public RoleController(RoleManager<Role> roleManager, UserManager<AppUser> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -39,7 +39,7 @@ namespace Core.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppRole role = new()
+                Role role = new()
                 {
                     Name = model.Name
                 };
