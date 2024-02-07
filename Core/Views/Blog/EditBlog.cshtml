@@ -19,9 +19,6 @@
     <h4>Görsel</h4>
     @Html.TextBoxFor(b => b.BlogImage, new { @class = "form-control" })
     <br />
-    <h4>Küçük Görsel</h4>
-    @Html.TextBoxFor(b => b.BlogThumbnailImage, new { @class = "form-control" })
-    <br />
     <h4>Kategori</h4>
     @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.categories, new { @class = "form-control" })
     <br />
