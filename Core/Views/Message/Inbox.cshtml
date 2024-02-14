@@ -38,11 +38,11 @@
                     <td>@item.MessageDate</td>
                     <td>@{ if (item.SenderUser.WriterID == item.ReceiverUser.WriterID)
                             {
-                                <span>@item.SenderUser.WriterName (Ben)</span>
+                                <span>@item.SenderUser.WriterNameSurname (Ben)</span>
                             }
                             else
                             {
-                                <span>@item.SenderUser.WriterName</span>
+                                <span>@item.SenderUser.WriterNameSurname</span>
                             } }
                     </td>
                     <td>@item.SenderUser.WriterMail</td>

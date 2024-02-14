@@ -73,7 +73,7 @@ namespace Core.Areas.Admin.Controllers
             var newImageName = Guid.NewGuid() + extension;
 
             writer.WriterImage = "/WriterImageFiles/" + newImageName;
-            writer.WriterName = imageObject.WriterName;
+            writer.WriterNameSurname = imageObject.WriterName;
             writer.WriterMail = imageObject.WriterMail;
             writer.WriterPassword = imageObject.WriterPassword;
             writer.WriterAbout = imageObject.WriterAbout;

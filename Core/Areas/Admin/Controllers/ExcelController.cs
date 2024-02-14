@@ -61,7 +61,7 @@ namespace Core.Areas.Admin.Controllers
                 Content = x.BlogContent,
                 CreateDate = x.BlogCreatedAt,
                 Category = x.Category.CategoryName,
-                Writer = x.Writer.WriterName
+                Writer = x.Writer.WriterNameSurname
             }).ToList();
 
             return blogList;

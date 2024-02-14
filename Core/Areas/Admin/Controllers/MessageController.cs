@@ -130,7 +130,7 @@ namespace Core.Areas.Admin.Controllers
             List<SelectListItem> receivers = (from x in writerManager.GetEntities()
                                               select new SelectListItem
                                               {
-                                                  Text = x.WriterName,
+                                                  Text = x.WriterNameSurname,
                                                   Value = x.WriterID.ToString()
                                               }).ToList();
             ViewBag.receivers = receivers;
