@@ -2,18 +2,19 @@
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace DataAccessLayer.EntityFramework
 {
     public class EfWriterRepository : GenericRepository<Writer>, IWriterDal
     {
-        public int GetWriterIDBySession(string session)
+        public Writer GetWriterBySession(string session)
         {
             Context context = new();
-            var writerID = context.Writers.Where(x => x.WriterMail == session).Select(y => y.WriterID).FirstOrDefault();
+            var writer = context.Writers.Include(t => t.User).Where(x => x.UserID == int.Parse(session)).FirstOrDefault();
 
-            return writerID;
+            return writer;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using BusinessLayer.Concrete;
-using DataAccessLayer.EntityFramework;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Areas.Admin.ViewComponents.Statistic
 {

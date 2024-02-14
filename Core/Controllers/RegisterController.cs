@@ -1,64 +1,105 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using Core.Models;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
     [AllowAnonymous]
     public class RegisterController : Controller
     {
-        readonly WriterManager manager = new(new EfWriterRepository());
-        readonly List<string> cities = new()
-            {
-            "Adana", "Adıyaman", "Afyon", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
-            "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale",
-            "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir",
-            "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir",
-            "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya",
-            "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya",
-            "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak",
-            "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak",
-            "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce",
-            };
+        private readonly UserManager<User> _userManager;
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+
+        public RegisterController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         [HttpGet]
-
         public IActionResult Index()
         {
-            RegisterViewModel model = new()
-            {
-                Cities = cities,
-                Writer = new Writer()
-            };
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Index(Writer writer)
+        public async Task<IActionResult> Index(UserRegisterViewModel userModel, string confirmPassword)
         {
-            RegisterViewModel model = new()
+            if (userModel.WriterPassword != confirmPassword)
             {
-                Cities = cities,
-                Writer = writer
-            };
+                ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
+            }
 
+            if (userModel.WriterImage == null)
+            {
+                ModelState.AddModelError("WriterImage", "Lütfen bir profil resmi yükleyiniz.");
+            }
+            else if (!string.Equals(userModel.WriterImage.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase) &&
+                     !string.Equals(userModel.WriterImage.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase) &&
+                     !string.Equals(userModel.WriterImage.ContentType, "image/png", StringComparison.OrdinalIgnoreCase))
+            {
+                ModelState.AddModelError("WriterImage", "Lütfen geçerli bir profil resmi yükleyiniz.");
+            }
+
+            Writer writer = new();
             WriterValidator writerValidator = new();
-            ValidationResult result = writerValidator.Validate(writer);
 
+            var extension = Path.GetExtension(userModel.WriterImage?.FileName);
+            var newImageName = Guid.NewGuid() + extension;
 
-            if (result.IsValid)
+            writer.WriterImage = "/WriterImageFiles/" + newImageName;
+            writer.WriterNameSurname = userModel.WriterNameSurname;
+            writer.WriterUserName = userModel.WriterUserName;
+            writer.WriterMail = userModel.WriterMail;
+            writer.WriterPassword = userModel.WriterPassword;
+            writer.WriterAbout = userModel.WriterAbout;
+            writer.WriterStatus = true;
+
+            var result = writerValidator.Validate(writer);
+
+            if (result.IsValid && userModel.WriterImage != null)
             {
-                writer.WriterStatus = true;
-                writer.WriterAbout = "Test";
-                manager.AddEntity(writer);
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/");
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                var location = Path.Combine(directory + newImageName);
+                var stream = new FileStream(location, FileMode.Create);
+                userModel.WriterImage.CopyTo(stream);
 
-                return RedirectToAction("Index", "Blog");
+                User user = new()
+                {
+                    NameSurname = userModel.WriterNameSurname,
+                    UserName = userModel.WriterUserName,
+                    Email = userModel.WriterMail,
+                    Image = writer.WriterImage,
+                };
+
+                var task = await _userManager.CreateAsync(user, userModel.WriterPassword);
+
+                if (task.Succeeded)
+                {
+                    string id = await _userManager.GetUserIdAsync(user);
+                    writer.WriterPassword = null;
+                    writer.UserID = int.Parse(id);
+                    _writerManager.AddEntity(writer);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.ErrorMessage);
+                    }
+                }
             }
             else
             {
@@ -68,13 +109,7 @@ namespace CoreDemo.Controllers
                 }
             }
 
-            return View(model);
+            return View();
         }
-    }
-
-    public class RegisterViewModel
-    {
-        public List<string> Cities { get; set; }
-        public Writer Writer { get; set; }
     }
 }

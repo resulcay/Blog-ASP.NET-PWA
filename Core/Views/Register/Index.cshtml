@@ -1,74 +1,89 @@
-﻿
-@model CoreDemo.Controllers.RegisterViewModel
+﻿@model Core.Models.UserRegisterViewModel
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/UserLayout.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/UserLayout.cshtml";
 }
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 <section class="main-content-w3layouts-agileits">
 	<div class="container">
-		<h3 class="tittle">Kayıt ol</h3>
+		<h3 class="tittle">Kayıt Ol</h3>
 		<div class="inner-sec">
 			<div class="login p-5 bg-light mx-auto mw-100">
-				@using(Html.BeginForm("Index", "Register", FormMethod.Post))
-				{
-					<div class="form-row">
-						<div class="col-md-6 mb-3">
-							<label for="validationCustom01" style="font-size: 20px;">Adınız Soyadınız</label>
-
-							@Html.TextBoxFor(x => x.Writer.WriterNameSurname, new { @class = "form-control" })
-							@Html.ValidationMessageFor(x => x.Writer.WriterNameSurname, "", new { @class = "text-danger" })
-
-							@* <input type="text" class="form-control" id="validationDefault01" name="WriterName" placeholder="" required=""> *@
-						</div>
-						<div class="col-md-6 mb-3">
-							<label for="validationCustom02" style="font-size: 20px;">E-mail</label>
-
-							@Html.TextBoxFor(x => x.Writer.WriterMail, new { @class = "form-control" })
-							@Html.ValidationMessageFor(x => x.Writer.WriterMail, "", new { @class = "text-danger" })
-
-							@* <input type="email" class="form-control" id="validationDefault02" name="WriterMail" placeholder="" required=""> *@
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="exampleInputPassword1 mb-2" style="font-size: 20px;">Şifre</label>
-
-							@Html.TextBoxFor(x => x.Writer.WriterPassword, new { @class = "form-control", type = "password" })
-							@Html.ValidationMessageFor(x => x.Writer.WriterPassword, "", new { @class = "text-danger" })
-
-							@* <input type="password" class="form-control" id="password1" name="WriterPassword" placeholder="" required=""> *@
-						</div>
-						<div class="form-group col-md-6">
-							<label for="exampleInputPassword2 mb-2" style="font-size: 20px;">Görsel Dosya Yolu</label>
-
-							@Html.TextBoxFor(x => x.Writer.WriterImage, new { @class="form-control"})
-							@Html.ValidationMessageFor(x => x.Writer.WriterImage, "", new { @class = "text-danger" })
-
-							@* <input type="text" class="form-control" id="password2" name="WriterImage" placeholder="" required=""> *@
-						</div>
-					</div>		
-
-					@await Html.PartialAsync("~/Views/Register/CitiesPartial.cshtml", Model.Cities)
-
-					<button type="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
-					<p>
-						<a href="#" id="btn1">Tüm şartları okudum, kabul ediyorum.</a>
-					</p>
-				}
-
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <h6>Ad - Soyad</h6>
+                        @Html.TextBoxFor(x => x.WriterNameSurname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.WriterNameSurname, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Kullanıcı Adı</h6>
+                        @Html.TextBoxFor(x => x.WriterUserName, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.WriterUserName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Email adresi</h6>
+                        @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.WriterMail, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Şifre</h6>
+                        @Html.PasswordFor(x => x.WriterPassword, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(x => x.WriterPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Şifre - Tekrar</h6>
+                        @Html.Password("ConfirmPassword", null, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessage("ConfirmPassword", null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Görsel</h6>
+                        <input type="file" name="WriterImage" class="form-control" placeholder="Görsel Seç">
+                        @Html.ValidationMessage("WriterImage", null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Hakkımda</h6>
+                        @Html.TextAreaFor(x => x.WriterAbout, 10, 3, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
+                    </div>
+                   <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="termsCheckbox">
+                            <label id="btnAgree" class="form-check-label clickable-label" for="termsCheckbox">
+                                Tüm şartları okudum, kabul ediyorum.
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="d-flex justify-content-center"><button id="submitBtn" class="btn btn-primary submit mb-4" style="margin: 5px">Kayıt Ol</button></div>
+				</form>
 			</div>
 		</div>
 	</div>
-	<br />
 	<script>
-		$('#btn1').click(function () {
-			Swal.fire({
-				text: " Bu örnek bir rıza metnidir, okuduğunuz ve kabul ettiğiniz varsayılacaktır.",
-			});
-		});
-		</script>
+        $('#submitBtn').prop('disabled', true);
+
+        $('#btnAgree').click(function () {
+            Swal.fire({
+                text: " Bu örnek bir rıza metnidir, okuduğunuz ve kabul ettiğiniz varsayılacaktır.",
+            });
+        });
+
+        $('#termsCheckbox').change(function () {
+            if (this.checked) {
+                $('#submitBtn').prop('disabled', false);
+            } else {
+                $('#submitBtn').prop('disabled', true);
+            }
+        });
+	</script>
+    <style>
+        .clickable-label {
+            color: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+        }
+    </style>
 </section>

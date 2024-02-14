@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
@@ -23,11 +24,14 @@ namespace EntityLayer.Concrete
 
         public string WriterMail { get; set; }
 
-        public virtual string WriterPassword { get; set; }
-
         public bool WriterStatus { get; set; }
 
         public int UserID { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        [XmlIgnore]
+        public virtual string WriterPassword { get; set; }
 
         [JsonIgnore]
         [XmlIgnore]

@@ -10,13 +10,14 @@ namespace CoreDemo.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        readonly SignInManager<User> signInManager;
+        private readonly SignInManager<User> signInManager;
 
         public LoginController(SignInManager<User> signInManager)
         {
             this.signInManager = signInManager;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -27,10 +28,9 @@ namespace CoreDemo.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(userLoginViewModel.UserName, userLoginViewModel.Password, false, true);
+                var result = await signInManager.PasswordSignInAsync(userLoginViewModel.UserName, userLoginViewModel.Password, userLoginViewModel.IsPersistent, true);
                 if (result.Succeeded)
                 {
-                    //  return RedirectToAction("Index", "Dashboard");
                     return RedirectToAction("Index", "Home");
                 }
                 else

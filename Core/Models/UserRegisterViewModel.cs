@@ -1,27 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Core.Models
 {
     public class UserRegisterViewModel
     {
-        [Display(Name = "Ad-Soyad")]
-        [Required(ErrorMessage = "Lütfen ad-soyad giriniz.")]
-        public string NameSurname { get; set; }
+        public IFormFile WriterImage { get; set; }
 
-        [Display(Name = "Şifre")]
-        [Required(ErrorMessage = "Lütfen şifre giriniz.")]
-        public string Password { get; set; }
+        public string WriterUserName { get; set; }
 
-        [Display(Name = "Şifre-Tekrar")]
-        [Compare("Password", ErrorMessage = "Şifreler eşleşmiyor")]
-        public string ConfirmPassword { get; set; }
+        public string WriterNameSurname { get; set; }
 
-        [Display(Name = "E-mail")]
-        [Required(ErrorMessage = "Lütfen e-mail giriniz.")]
-        public string Email { get; set; }
+        public string WriterAbout { get; set; }
 
-        [Display(Name = "Kullanıcı-Adı")]
-        [Required(ErrorMessage = "Lütfen kullancıı adı giriniz.")]
-        public string UserName { get; set; }
+        public string WriterMail { get; set; }
+
+        public virtual string WriterPassword { get; set; }
     }
 }

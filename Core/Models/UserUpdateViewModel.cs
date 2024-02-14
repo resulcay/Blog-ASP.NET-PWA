@@ -2,14 +2,14 @@
 {
     public class UserUpdateViewModel
     {
-        public string NameSurname { get; set; }
+        public string WriterUserName { get; set; }
 
-        public string UserName { get; set; }
+        public string WriterNameSurname { get; set; }
 
-        public string Email { get; set; }
+        public string WriterAbout { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string WriterMail { get; set; }
 
-        public string Password { get; set; }
+        public virtual string WriterPassword { get; set; }
     }
 }

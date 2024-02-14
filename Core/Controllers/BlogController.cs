@@ -1,29 +1,35 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
-using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
 {
     public class BlogController : Controller
     {
-        readonly BlogManager blogManager = new(new EfBlogRepository());
-        readonly CategoryManager categoryManager = new(new EfCategoryRepository());
-        readonly WriterManager writerManager = new(new EfWriterRepository());
-        readonly Context context = new();
+        private readonly BlogManager _blogManager = new(new EfBlogRepository());
+        private readonly CategoryManager _categoryManager = new(new EfCategoryRepository());
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly UserManager<User> _userManager;
+
+        public BlogController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var values = blogManager.GetBlogListWithCategory(null);
+            var values = _blogManager.GetBlogListWithCategory(null);
             return View(values);
         }
 
@@ -32,7 +38,7 @@ namespace CoreDemo.Controllers
         {
             ViewBag.i = id;
 
-            var value = blogManager.GetEntityById(id);
+            var value = _blogManager.GetEntityById(id);
             if (!value.BlogStatus)
             {
                 return RedirectToAction("Error", "Home");
@@ -41,12 +47,13 @@ namespace CoreDemo.Controllers
             return View(value);
         }
 
-        public IActionResult BlogListByWriter()
+        public async Task<IActionResult> BlogListByWriter()
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-            var writerID = writerManager.GetWriterIDBySession(userMail);
-            var values = blogManager.GetBlogListByWriter(writerID, true);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
+
+            var values = _blogManager.GetBlogListByWriter(writer.WriterID, true);
 
             return View(values);
         }
@@ -59,21 +66,21 @@ namespace CoreDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult BlogAdd(Blog blog)
+        public async Task<IActionResult> BlogAdd(Blog blog)
         {
             BlogValidator blogValidator = new();
             ValidationResult result = blogValidator.Validate(blog);
 
             if (result.IsValid)
             {
-                var userName = User.Identity.Name;
-                var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-                var writerID = writerManager.GetWriterIDBySession(userMail);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                string userId = await _userManager.GetUserIdAsync(user);
+                var writer = _writerManager.GetWriterBySession(userId);
 
                 blog.BlogStatus = true;
                 blog.BlogCreatedAt = DateTime.Now;
-                blog.WriterID = writerID;
-                blogManager.AddEntity(blog);
+                blog.WriterID = writer.WriterID;
+                _blogManager.AddEntity(blog);
 
                 return RedirectToAction("BlogListByWriter", "Blog");
             }
@@ -92,8 +99,8 @@ namespace CoreDemo.Controllers
 
         public IActionResult DeleteBlog(int id)
         {
-            var value = blogManager.GetEntityById(id);
-            blogManager.DeleteEntity(value);
+            var value = _blogManager.GetEntityById(id);
+            _blogManager.DeleteEntity(value);
 
             return RedirectToAction("BlogListByWriter");
         }
@@ -101,28 +108,28 @@ namespace CoreDemo.Controllers
         [HttpGet]
         public IActionResult EditBlog(int id)
         {
-            var value = blogManager.GetEntityById(id);
+            var value = _blogManager.GetEntityById(id);
             PopulateCategoriesDropdown();
 
             return View(value);
         }
 
         [HttpPost]
-        public IActionResult EditBlog(Blog blog)
+        public async Task<IActionResult> EditBlog(Blog blog)
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-            var writerID = writerManager.GetWriterIDBySession(userMail);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
 
-            blog.WriterID = writerID;
-            blogManager.UpdateEntity(blog);
+            blog.WriterID = writer.WriterID;
+            _blogManager.UpdateEntity(blog);
 
             return RedirectToAction("BlogListByWriter");
         }
 
         private void PopulateCategoriesDropdown()
         {
-            List<SelectListItem> categories = (from x in categoryManager.GetEntities()
+            List<SelectListItem> categories = (from x in _categoryManager.GetEntities()
                                                select new SelectListItem
                                                {
                                                    Text = x.CategoryName,

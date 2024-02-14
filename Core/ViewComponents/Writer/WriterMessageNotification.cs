@@ -1,27 +1,32 @@
 ﻿using BusinessLayer.Concrete;
-using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using DateTimeExtensions;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.ViewComponents.Writer
 {
     public class WriterMessageNotification : ViewComponent
     {
-        readonly MessageManager manager = new(new EfMessageRepository());
-        readonly WriterManager writerManager = new(new EfWriterRepository());
-        readonly Context context = new();
+        private readonly MessageManager _manager = new(new EfMessageRepository());
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly UserManager<User> _userManager;
+
+        public WriterMessageNotification(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         public IViewComponentResult Invoke()
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-            var writerID = writerManager.GetWriterIDBySession(userMail);
+            var writer = GetWriterID().Result;
 
-            var values = manager.GetReceivedMessagesByWriter(writerID);
-            values.RemoveAll(x => x.SenderID == writerID);
+            var values = _manager.GetReceivedMessagesByWriter(writer.WriterID);
+            values.RemoveAll(x => x.SenderID == writer.WriterID);
             values = values.OrderByDescending(x => x.MessageDate).ToList();
 
             foreach (var item in values)
@@ -36,6 +41,15 @@ namespace Core.ViewComponents.Writer
             }
 
             return View(values);
+        }
+
+        private async Task<EntityLayer.Concrete.Writer> GetWriterID()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
+
+            return writer;
         }
 
         private static string LocalizeRelativeDateTerm(string relativeDate)

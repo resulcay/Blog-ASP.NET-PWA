@@ -1,40 +1,46 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
-using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Controllers
 {
     public class MessageController : Controller
     {
-        readonly MessageManager messageManager = new(new EfMessageRepository());
-        readonly WriterManager writerManager = new(new EfWriterRepository());
-        readonly Context context = new();
+        private readonly MessageManager _messageManager = new(new EfMessageRepository());
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly UserManager<User> _userManager;
+
+        public MessageController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         public IActionResult Inbox()
         {
-            var values = messageManager.GetReceivedMessagesByWriter(GetWriterID());
+            var values = _messageManager.GetReceivedMessagesByWriter(GetWriterID().Result);
             values = values.OrderByDescending(x => x.MessageDate).ToList();
             return View(values);
         }
 
         public IActionResult Sendbox()
         {
-            var values = messageManager.GetSentMessagesByWriter(GetWriterID());
+            var values = _messageManager.GetSentMessagesByWriter(GetWriterID().Result);
             values = values.OrderByDescending(x => x.MessageDate).ToList();
             return View(values);
         }
 
         public IActionResult DeleteMessage(int id)
         {
-            Message message = messageManager.GetEntityById(id);
-            messageManager.DeleteEntity(message);
+            Message message = _messageManager.GetEntityById(id);
+            _messageManager.DeleteEntity(message);
 
             return RedirectToAction("Inbox", "Message");
         }
@@ -54,11 +60,11 @@ namespace Core.Controllers
 
             if (result.IsValid)
             {
-                message.SenderID = GetWriterID();
+                message.SenderID = GetWriterID().Result;
                 message.ReceiverID = message.ReceiverID;
                 message.MessageDate = System.DateTime.Now;
                 message.MessageStatus = true;
-                messageManager.AddEntity(message);
+                _messageManager.AddEntity(message);
 
                 return RedirectToAction("Inbox", "Message");
             }
@@ -75,18 +81,18 @@ namespace Core.Controllers
             return View();
         }
 
-        private int GetWriterID()
+        private async Task<int> GetWriterID()
         {
-            var userName = User.Identity.Name;
-            var userMail = context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-            var writerID = writerManager.GetWriterIDBySession(userMail);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
 
-            return writerID;
+            return writer.WriterID;
         }
 
         private void PopulateWritersDropdown()
         {
-            List<SelectListItem> receivers = (from x in writerManager.GetEntities()
+            List<SelectListItem> receivers = (from x in _writerManager.GetEntities()
                                               select new SelectListItem
                                               {
                                                   Text = x.WriterNameSurname,

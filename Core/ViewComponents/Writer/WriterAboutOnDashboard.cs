@@ -1,24 +1,35 @@
 ﻿using BusinessLayer.Concrete;
-using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.ViewComponents.Writer
 {
     public class WriterAboutOnDashboard : ViewComponent
     {
-        readonly WriterManager _manager = new(new EfWriterRepository());
-        readonly Context _context = new();
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly UserManager<User> _userManager;
+
+        public WriterAboutOnDashboard(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
         public IViewComponentResult Invoke()
         {
-            var userName = User.Identity.Name;
-            var userMail = _context.Users.Where(x => x.UserName == userName).Select(x => x.Email).FirstOrDefault();
-            var writerID = _manager.GetWriterIDBySession(userMail);
-            var writer = _manager.GetEntityById(writerID);
-
+            var writer = GetWriterID().Result;
             return View(writer);
+        }
+
+        private async Task<EntityLayer.Concrete.Writer> GetWriterID()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
+
+            return writer;
         }
     }
 }

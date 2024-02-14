@@ -7,9 +7,10 @@ namespace BusinessLayer.ValidationRules
     {
         public WriterValidator()
         {
-            RuleFor(x => x.WriterNameSurname).NotEmpty().WithMessage("Yazar adı soyadı boş geçilemez");
+            RuleFor(x => x.WriterNameSurname).NotEmpty().WithMessage("Ad soyad boş geçilemez");
             RuleFor(x => x.WriterNameSurname).MinimumLength(2).WithMessage("Lütfen en az 2 karakter girişi yapın");
             RuleFor(x => x.WriterNameSurname).MaximumLength(50).WithMessage("Lütfen 50 karakterden fazla değer girişi yapmayın");
+            RuleFor(x => x.WriterUserName).NotEmpty().WithMessage("Kullanıcı adı boş geçilemez");
             RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Mail adresi boş geçilemez");
             RuleFor(x => x.WriterPassword).NotEmpty().WithMessage("Şifre boş geçilemez");
             RuleFor(x => x.WriterPassword).MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalı");

@@ -1,25 +1,27 @@
-﻿using Core.Models;
+﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
+using Core.Models;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Core.Controllers
 {
+    [Authorize]
     public class WriterController : Controller
     {
-        readonly UserManager<User> userManager;
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public WriterController(UserManager<User> userManager)
+        public WriterController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
-            this.userManager = userManager;
-        }
-
-        [Authorize]
-        public IActionResult Index()
-        {
-            return View();
+            this.signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public PartialViewResult WriterNavBarPartial()
@@ -35,77 +37,80 @@ namespace Core.Controllers
         [HttpGet]
         public async Task<IActionResult> WriterEditProfile()
         {
-            var value = await userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
 
             UserUpdateViewModel model = new()
             {
-                UserName = value.UserName,
-                NameSurname = value.NameSurname,
-                Email = value.Email,
-                ImageUrl = value.Image
+                WriterUserName = writer.WriterUserName,
+                WriterNameSurname = writer.WriterNameSurname,
+                WriterMail = writer.WriterMail,
+                WriterAbout = writer.WriterAbout,
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel model)
+        public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel userModel, string confirmPassword)
         {
-            var value = await userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
 
-            value.NameSurname = model.NameSurname;
-            value.UserName = model.UserName;
-            value.Email = model.Email;
-            value.Image = model.ImageUrl;
-            value.PasswordHash = userManager.PasswordHasher.HashPassword(value, model.Password);
-
-            var result = await userManager.UpdateAsync(value);
-
-            if (result.Succeeded)
+            if (userModel.WriterPassword != confirmPassword)
             {
-                return RedirectToAction("Index", "Dashboard");
+                ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
+            }
+
+            writer.WriterNameSurname = userModel.WriterNameSurname;
+            writer.WriterUserName = userModel.WriterUserName;
+            writer.WriterMail = userModel.WriterMail;
+            writer.WriterAbout = userModel.WriterAbout;
+            writer.WriterPassword = userModel.WriterPassword;
+
+            WriterValidator writerValidator = new();
+            var validationResult = writerValidator.Validate(writer);
+
+            if (validationResult.IsValid)
+            {
+                user.NameSurname = userModel.WriterNameSurname;
+                user.UserName = userModel.WriterUserName;
+                user.Email = userModel.WriterMail;
+                user.Image = writer.WriterImage;
+                user.SecurityStamp = Guid.NewGuid().ToString();
+
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, userModel.WriterPassword);
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    writer.WriterPassword = null;
+                    writer.User = null;
+                    _writerManager.UpdateEntity(writer);
+                    await signInManager.SignOutAsync();
+                    return RedirectToAction("Index", "Login");
+
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
             }
             else
             {
-                foreach (var item in result.Errors)
+                foreach (var item in validationResult.Errors)
                 {
-                    ModelState.AddModelError(item.Code, item.Description);
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
             }
 
-            return View(model);
+            return View(userModel);
         }
-
-        //[HttpPost]
-        //public IActionResult WriterEditProfile(Writer writer, string confirmPassword, dynamic image)
-        //{
-        //	if (writer.WriterPassword != confirmPassword)
-        //	{
-        //		ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
-        //	}
-
-        //	if (image == null)
-        //	{
-        //		ModelState.AddModelError("WriterImage", "Lütfen bir profil resmi yükleyiniz.");
-        //	}
-
-        //	WriterValidator writerValidator = new();
-        //	ValidationResult result = writerValidator.Validate(writer);
-
-        //	if (result.IsValid && ModelState.IsValid)
-        //	{
-        //		writerManager.UpdateEntity(writer);
-        //		return RedirectToAction("Index", "Dashboard");
-        //	}
-        //	else
-        //	{
-        //		foreach (var item in result.Errors)
-        //		{
-        //			ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-        //		}
-        //	}
-
-        //	return View();
-        //}
     }
 }

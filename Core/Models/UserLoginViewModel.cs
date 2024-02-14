@@ -9,5 +9,7 @@ namespace Core.Models
 
         [Required(ErrorMessage = "Lütfen şifre girin.")]
         public string Password { get; set; }
+
+        public bool IsPersistent { get; set; }
     }
 }

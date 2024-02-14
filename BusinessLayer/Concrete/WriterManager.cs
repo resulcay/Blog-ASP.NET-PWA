@@ -7,7 +7,7 @@ namespace BusinessLayer.Concrete
 {
     public class WriterManager : IWriterService
     {
-        readonly IWriterDal _writerDal;
+        private readonly IWriterDal _writerDal;
 
         public WriterManager(IWriterDal writerDal)
         {
@@ -39,9 +39,9 @@ namespace BusinessLayer.Concrete
             return _writerDal.GetById(id);
         }
 
-        public int GetWriterIDBySession(string session)
+        public Writer GetWriterBySession(string session)
         {
-            return _writerDal.GetWriterIDBySession(session);
+            return _writerDal.GetWriterBySession(session);
         }
     }
 }

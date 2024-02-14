@@ -9,7 +9,7 @@ namespace DataAccessLayer.Migrations
             migrationBuilder.AddColumn<string>(
             name: "WriterUserName",
             table: "Writers",
-            nullable:false,
+            nullable: false,
             defaultValue: "default");
         }
 
