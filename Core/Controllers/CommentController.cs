@@ -27,8 +27,6 @@ namespace CoreDemo.Controllers
         public PartialViewResult PartialAddComment(Comment comment)
         {
             comment.CommentStatus = true;
-            // TODO: Burada kullanıcı ID Generic olacak.
-            comment.BlogID = 13;
             comment.CommentCreatedAt = DateTime.Parse(DateTime.Now.ToShortDateString());
 
             manager.AddEntity(comment);

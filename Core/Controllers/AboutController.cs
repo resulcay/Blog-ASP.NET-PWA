@@ -6,17 +6,12 @@ namespace CoreDemo.Controllers
 {
     public class AboutController : Controller
     {
-        readonly AboutManager manager = new(new EfAboutRepository());
+        private readonly AboutManager _manager = new(new EfAboutRepository());
 
         public IActionResult Index()
         {
-            var values = manager.GetEntities();
+            var values = _manager.GetEntities();
             return View(values);
-        }
-
-        public PartialViewResult SocialMediaAbout()
-        {
-            return PartialView();
         }
     }
 }
