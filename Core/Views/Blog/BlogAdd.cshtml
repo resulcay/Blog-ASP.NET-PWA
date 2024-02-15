@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.Blog
+﻿@model Core.Models.BlogAddViewModel
 
 @{
     ViewData["Title"] = "BlogAdd";
@@ -8,16 +8,14 @@
 <h1>Blog Oluştur</h1>
 <br />
 
-@using(Html.BeginForm("BlogAdd", "Blog", FormMethod.Post))
-{
-    @Html.HiddenFor(x => x.BlogStatus, new { @class = "form-control" })
+<form method="post" enctype="multipart/form-data">
     <h4>Başlık</h4>
     @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
     @Html.ValidationMessageFor(x => x.BlogTitle, "", new { @class = "text-danger" })
     <br />
     <br />
-   <h4>Görsel</h4>
-    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+    <h4>Görsel</h4>
+    <input type="file" id="BlogImage" name="BlogImage" class="form-control" />
     @Html.ValidationMessageFor(x => x.BlogImage, "", new { @class = "text-danger" })
     <br />
     <br />
@@ -30,7 +28,5 @@
     @Html.ValidationMessageFor(x => x.BlogContent, "", new { @class = "text-danger" })
     <br />
     <br />
-
     <div class="d-flex justify-content-center"><button class="btn btn-inverse-success" style="width: 220px">Oluştur</button></div>
-    
-}
+</form>

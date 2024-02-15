@@ -32,6 +32,10 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(UserRegisterViewModel userModel, string confirmPassword)
         {
+            bool isJpg = string.Equals(userModel.WriterImage?.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase);
+            bool isJpeg = string.Equals(userModel.WriterImage?.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase);
+            bool isPng = string.Equals(userModel.WriterImage?.ContentType, "image/png", StringComparison.OrdinalIgnoreCase);
+
             if (userModel.WriterPassword != confirmPassword)
             {
                 ModelState.AddModelError("ConfirmPassword", "Şifreler eşleşmiyor.");
@@ -41,9 +45,7 @@ namespace CoreDemo.Controllers
             {
                 ModelState.AddModelError("WriterImage", "Lütfen bir profil resmi yükleyiniz.");
             }
-            else if (!string.Equals(userModel.WriterImage.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase) &&
-                     !string.Equals(userModel.WriterImage.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase) &&
-                     !string.Equals(userModel.WriterImage.ContentType, "image/png", StringComparison.OrdinalIgnoreCase))
+            else if (!isJpg && !isJpeg && !isPng)
             {
                 ModelState.AddModelError("WriterImage", "Lütfen geçerli bir profil resmi yükleyiniz.");
             }
@@ -64,7 +66,7 @@ namespace CoreDemo.Controllers
 
             var result = writerValidator.Validate(writer);
 
-            if (result.IsValid && userModel.WriterImage != null)
+            if (result.IsValid && userModel.WriterImage != null && (isJpg || isJpeg || isPng))
             {
                 var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/");
                 if (!Directory.Exists(directory))

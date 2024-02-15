@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using Core.Models;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,7 +41,8 @@ namespace CoreDemo.Controllers
             ViewBag.i = id;
 
             var value = _blogManager.GetEntityById(id);
-            if (!value.BlogStatus)
+
+            if (value == null || !value.BlogStatus)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -66,20 +69,53 @@ namespace CoreDemo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlogAdd(Blog blog)
+        public async Task<IActionResult> BlogAdd(BlogAddViewModel model)
         {
+            bool isJpg = string.Equals(model.BlogImage?.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase);
+            bool isJpeg = string.Equals(model.BlogImage?.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase);
+            bool isPng = string.Equals(model.BlogImage?.ContentType, "image/png", StringComparison.OrdinalIgnoreCase);
+
+            if (model.BlogImage == null)
+            {
+                ModelState.AddModelError("BlogImage", "Lütfen bir profil resmi yükleyiniz.");
+            }
+            else if (!isJpg && !isJpeg && !isPng)
+            {
+                ModelState.AddModelError("BlogImage", "Lütfen geçerli bir profil resmi yükleyiniz.");
+            }
+
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            string userId = await _userManager.GetUserIdAsync(user);
+            var writer = _writerManager.GetWriterBySession(userId);
+
+            var extension = Path.GetExtension(model.BlogImage?.FileName);
+            var newImageName = Guid.NewGuid() + extension;
+
+            Blog blog = new()
+            {
+                BlogTitle = model.BlogTitle,
+                BlogContent = model.BlogContent,
+                BlogStatus = true,
+                BlogCreatedAt = DateTime.Now,
+                BlogImage = "/WriterBlogFiles/" + newImageName,
+                CategoryID = model.CategoryID,
+                WriterID = writer.WriterID,
+            };
+
             BlogValidator blogValidator = new();
             ValidationResult result = blogValidator.Validate(blog);
 
-            if (result.IsValid)
+            if (result.IsValid && model.BlogImage != null && (isJpg || isJpeg || isPng))
             {
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                string userId = await _userManager.GetUserIdAsync(user);
-                var writer = _writerManager.GetWriterBySession(userId);
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterBlogFiles/");
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                var location = Path.Combine(directory + newImageName);
+                var stream = new FileStream(location, FileMode.Create);
+                model.BlogImage.CopyTo(stream);
 
-                blog.BlogStatus = true;
-                blog.BlogCreatedAt = DateTime.Now;
-                blog.WriterID = writer.WriterID;
                 _blogManager.AddEntity(blog);
 
                 return RedirectToAction("BlogListByWriter", "Blog");

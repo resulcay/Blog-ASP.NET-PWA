@@ -11,13 +11,11 @@
 {
     <input type="hidden" name="BlogID" value="@Model.BlogID" />
     <input type="hidden" name="BlogCreatedAt" value="@Model.BlogCreatedAt"/>
-    @Html.HiddenFor(x => x.BlogStatus, new { @class = "form-control" })
+    <input type="hidden" name="BlogImage" value="@Model.BlogCreatedAt" />
 
+    @Html.HiddenFor(x => x.BlogStatus, new { @class = "form-control" })
     <h4>Başlık</h4>
     @Html.TextBoxFor(b => b.BlogTitle, new { @class = "form-control" })
-    <br />
-    <h4>Görsel</h4>
-    @Html.TextBoxFor(b => b.BlogImage, new { @class = "form-control" })
     <br />
     <h4>Kategori</h4>
     @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.categories, new { @class = "form-control" })

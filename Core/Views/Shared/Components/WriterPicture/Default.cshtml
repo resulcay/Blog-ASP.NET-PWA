@@ -1,0 +1,16 @@
+﻿@using EntityLayer.Concrete
+@model Writer
+
+<li class="nav-item nav-profile">
+    <a href="#" class="nav-link">
+        <div class="nav-profile-image">
+            <img src="@Model.WriterImage" alt="profile">
+            <span class="login-status online"></span>
+        </div>
+        <div class="nav-profile-text d-flex flex-column">
+            <span class="font-weight-bold mb-2">@Model.WriterNameSurname</span>
+            <span class="text-secondary text-small">Blog Yazarı</span>
+        </div>
+        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+    </a>
+</li>
