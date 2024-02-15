@@ -10,18 +10,15 @@ namespace CoreDemo.ViewComponents
         {
             var comments = new List<UserComment>
             {
-                new UserComment
-                {
+                new() {
                     ID = 1,
                     Username = "Resul",
                 },
-                new UserComment
-                {
+                new() {
                     ID = 2,
                     Username = "Hayri",
                 },
-                new UserComment
-                {
+                new() {
                     ID = 3,
                     Username = "Sefa",
                 },

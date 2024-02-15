@@ -36,7 +36,7 @@
 						<img src="~/coredemotheme/images/logo.png" alt="logo" style="height: auto; max-height: 40px; vertical-align: middle; margin-right: 10px;">
 					</a>
 				</div>
-			@await Html.PartialAsync("BodyPartial")
+			@await Component.InvokeAsync("TopBarInfo")
 				<div class="col-md-4 log-icons text-right">
 
 					<ul class="social_list1 mt-3">
