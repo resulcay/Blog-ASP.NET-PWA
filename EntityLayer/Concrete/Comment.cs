@@ -24,6 +24,8 @@ namespace EntityLayer.Concrete
 
         public int BlogID { get; set; }
 
+        public string Image { get; set; }
+
         public Blog Blog { get; set; }
     }
 }
