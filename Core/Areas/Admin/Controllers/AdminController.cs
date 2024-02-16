@@ -1,5 +1,4 @@
 ﻿using Core.Areas.Admin.Models;
-using Core.Models;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

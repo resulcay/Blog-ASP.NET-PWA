@@ -22,7 +22,7 @@ namespace Core.ViewComponents.Login
             var value = SigningInfo().Result;
 
             ViewBag.Writer = value;
-            
+
             return View();
         }
 

@@ -38,7 +38,7 @@ namespace CoreDemo.Controllers
             {
                 image = writer.WriterImage;
             }
-            else 
+            else
             {
                 image = "/coredemotheme/images/default.png";
             }

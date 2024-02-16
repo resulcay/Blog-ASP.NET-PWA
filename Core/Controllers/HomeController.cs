@@ -1,6 +1,4 @@
-﻿using BusinessLayer.Concrete;
-using Core.Models;
-using DataAccessLayer.EntityFramework;
+﻿using Core.Models;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

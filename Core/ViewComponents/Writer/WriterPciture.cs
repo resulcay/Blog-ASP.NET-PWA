@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.ViewComponents.Writer
 {
-    public class WriterPicture: ViewComponent
+    public class WriterPicture : ViewComponent
     {
         private readonly UserManager<User> _userManager;
         private readonly WriterManager _writerManager = new(new EfWriterRepository());
