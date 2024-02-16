@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using Core.Areas.Admin.Models;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -13,9 +14,10 @@ using System.Linq;
 namespace Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class WriterController : Controller
     {
-        readonly WriterManager writerManager = new(new EfWriterRepository());
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
 
         public IActionResult Index()
         {
@@ -87,7 +89,7 @@ namespace Core.Areas.Admin.Controllers
                 var stream = new FileStream(location, FileMode.Create);
                 imageObject.WriterImage.CopyTo(stream);
 
-                writerManager.AddEntity(writer);
+                _writerManager.AddEntity(writer);
                 return RedirectToAction("Index", "Writer");
             }
             else

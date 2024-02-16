@@ -10,7 +10,7 @@ namespace Core.Controllers
     [AllowAnonymous]
     public class ContactController : Controller
     {
-        readonly ContactManager _contactManager = new(new EfContactRepository());
+        private readonly ContactManager _contactManager = new(new EfContactRepository());
 
         [HttpGet]
         public IActionResult Index()

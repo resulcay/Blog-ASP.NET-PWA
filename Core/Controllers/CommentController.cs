@@ -20,11 +20,6 @@ namespace CoreDemo.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [AllowAnonymous]
         [HttpGet]
         public PartialViewResult PartialAddComment()

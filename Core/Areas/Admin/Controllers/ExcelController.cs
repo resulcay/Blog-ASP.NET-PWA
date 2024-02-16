@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using Core.Areas.Admin.Models;
 using DataAccessLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,7 @@ using System.Linq;
 namespace Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ExcelController : Controller
     {
         public IActionResult BlogListToExcel()

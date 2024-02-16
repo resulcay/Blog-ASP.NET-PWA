@@ -6,11 +6,11 @@ namespace CoreDemo.Controllers
 {
     public class AboutController : Controller
     {
-        private readonly AboutManager _manager = new(new EfAboutRepository());
+        private readonly AboutManager _aboutMmanager = new(new EfAboutRepository());
 
         public IActionResult Index()
         {
-            var values = _manager.GetEntities();
+            var values = _aboutMmanager.GetEntities();
             return View(values);
         }
     }

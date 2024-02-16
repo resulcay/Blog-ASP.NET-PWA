@@ -3,19 +3,21 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList;
 
 namespace Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
-        readonly CategoryManager categoryManager = new(new EfCategoryRepository());
+        private readonly CategoryManager _categoryManager = new(new EfCategoryRepository());
 
         public IActionResult Index(int page = 1)
         {
-            var categories = categoryManager.GetEntities().ToPagedList(page, 3);
+            var categories = _categoryManager.GetEntities().ToPagedList(page, 3);
             return View(categories);
         }
 
@@ -34,7 +36,7 @@ namespace Core.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 category.CategoryStatus = true;
-                categoryManager.AddEntity(category);
+                _categoryManager.AddEntity(category);
 
                 return RedirectToAction("Index", "Category");
             }
@@ -51,8 +53,8 @@ namespace Core.Areas.Admin.Controllers
 
         public IActionResult DeleteCategory(int id)
         {
-            var category = categoryManager.GetEntityById(id);
-            categoryManager.DeleteEntity(category);
+            var category = _categoryManager.GetEntityById(id);
+            _categoryManager.DeleteEntity(category);
 
             return RedirectToAction("Index", "Category");
         }

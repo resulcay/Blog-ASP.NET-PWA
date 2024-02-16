@@ -9,7 +9,7 @@ namespace CoreDemo.Controllers
     [AllowAnonymous]
     public class NewsLetterController : Controller
     {
-        readonly NewsLetterManager newsLetterManager = new(new EfNewsLetterRepository());
+        private readonly NewsLetterManager _newsLetterManager = new(new EfNewsLetterRepository());
 
         [HttpGet]
         public PartialViewResult SubscribeMail()
@@ -21,7 +21,7 @@ namespace CoreDemo.Controllers
         public PartialViewResult SubscribeMail(NewsLetter newsLetter)
         {
             newsLetter.MailStatus = true;
-            newsLetterManager.AddNewsLetter(newsLetter);
+            _newsLetterManager.AddNewsLetter(newsLetter);
             return PartialView();
         }
     }

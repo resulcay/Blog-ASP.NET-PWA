@@ -13,18 +13,18 @@ namespace Core.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
-        readonly RoleManager<Role> roleManager;
-        readonly UserManager<User> userManager;
+        private readonly RoleManager<Role> _roleManager;
+        private readonly UserManager<User> _userManager;
 
         public RoleController(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
-            this.roleManager = roleManager;
-            this.userManager = userManager;
+            this._roleManager = roleManager;
+            this._userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            var roles = roleManager.Roles.ToList();
+            var roles = _roleManager.Roles.ToList();
             return View(roles);
         }
 
@@ -44,7 +44,7 @@ namespace Core.Areas.Admin.Controllers
                     Name = model.Name
                 };
 
-                var result = await roleManager.CreateAsync(role);
+                var result = await _roleManager.CreateAsync(role);
 
                 if (result.Succeeded)
                 {
@@ -63,7 +63,7 @@ namespace Core.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult EditRole(int id)
         {
-            var value = roleManager.Roles.FirstOrDefault(x => x.Id == id);
+            var value = _roleManager.Roles.FirstOrDefault(x => x.Id == id);
 
             var model = new RoleEditViewModel
             {
@@ -77,12 +77,12 @@ namespace Core.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRole(RoleEditViewModel model)
         {
-            var value = roleManager.Roles.Where(x => x.Id == model.Id).FirstOrDefault();
+            var value = _roleManager.Roles.Where(x => x.Id == model.Id).FirstOrDefault();
 
             if (value != null)
             {
                 value.Name = model.Name;
-                var result = await roleManager.UpdateAsync(value);
+                var result = await _roleManager.UpdateAsync(value);
 
                 if (result.Succeeded)
                 {
@@ -99,8 +99,8 @@ namespace Core.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteRole(int id)
         {
-            var value = roleManager.Roles.FirstOrDefault(x => x.Id == id);
-            var result = await roleManager.DeleteAsync(value);
+            var value = _roleManager.Roles.FirstOrDefault(x => x.Id == id);
+            var result = await _roleManager.DeleteAsync(value);
 
             if (result.Succeeded)
             {
@@ -112,18 +112,18 @@ namespace Core.Areas.Admin.Controllers
 
         public IActionResult UserRoleList()
         {
-            var values = userManager.Users.ToList();
+            var values = _userManager.Users.ToList();
             return View(values);
         }
 
         [HttpGet]
         public async Task<IActionResult> AssignRole(int id)
         {
-            var user = userManager.Users.FirstOrDefault(x => x.Id == id);
-            var roles = roleManager.Roles.ToList();
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == id);
+            var roles = _roleManager.Roles.ToList();
             TempData["UserId"] = user.Id;
 
-            var userRoles = await userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
             List<RoleAssignViewModel> roleAssignViewModel = new();
 
             foreach (var item in roles)
@@ -144,17 +144,17 @@ namespace Core.Areas.Admin.Controllers
         public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> roleAssignViewModel)
         {
             var userId = (int)TempData["UserId"];
-            var user = userManager.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
 
             foreach (var item in roleAssignViewModel)
             {
                 if (item.Exist)
                 {
-                    await userManager.AddToRoleAsync(user, item.Name);
+                    await _userManager.AddToRoleAsync(user, item.Name);
                 }
                 else
                 {
-                    await userManager.RemoveFromRoleAsync(user, item.Name);
+                    await _userManager.RemoveFromRoleAsync(user, item.Name);
                 }
             }
 
