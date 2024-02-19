@@ -28,7 +28,22 @@ namespace CoreDemo.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userName = await _signInManager.UserManager.FindByNameAsync(userLoginViewModel.UserName);
+
                 var result = await _signInManager.PasswordSignInAsync(userLoginViewModel.UserName, userLoginViewModel.Password, userLoginViewModel.IsPersistent, true);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("UserName", "Kullanıcı adı veya şifre hatalı");
+                    return View();
+                }
+
+                if (!userName.IsActive)
+                {
+                    ModelState.AddModelError("UserName", "Kullanıcı aktif değil");
+                    return View();
+                }
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");

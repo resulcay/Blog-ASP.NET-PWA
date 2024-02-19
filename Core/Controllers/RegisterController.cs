@@ -83,6 +83,7 @@ namespace CoreDemo.Controllers
                     UserName = userModel.WriterUserName,
                     Email = userModel.WriterMail,
                     Image = writer.WriterImage,
+                    IsActive = true
                 };
 
                 var task = await _userManager.CreateAsync(user, userModel.WriterPassword);
