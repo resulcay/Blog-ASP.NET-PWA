@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\WriterBlogFiles\" />
     <Folder Include="wwwroot\WriterImageFiles\" />
-	<Folder Include="wwwroot\slider\" />
   </ItemGroup>
 
   <ItemGroup>

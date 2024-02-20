@@ -240,7 +240,7 @@ https://templatemo.com/tm-587-tiya-golf-club
   HERO        
 -----------------------------------------*/
 .custom-hero-section {
-    background-image: url('../images/anna-rosar-ZxFyVBHMK-c-unsplash.jpg');
+    background-image: url('../images/car.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -292,7 +292,7 @@ https://templatemo.com/tm-587-tiya-golf-club
   BACKGROUND IMAGE SECTION        
 -----------------------------------------*/
 .custom-section-bg-image {
-    background-image: url('../images/frederik-rosar-NDSZcCfnsbY-unsplash.jpg');
+    background-image: url('../images/lake.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -655,29 +655,29 @@ https://templatemo.com/tm-587-tiya-golf-club
   RESPONSIVE STYLES               
 -----------------------------------------*/
 @media screen and (max-width: 991px) {
-  h1 {
-    font-size: 36px;
-  }
+    h1 {
+        font-size: 36px;
+    }
 
-  h2 {
-    font-size: 28px;
-  }
+    h2 {
+        font-size: 28px;
+    }
 
-  h3 {
-    font-size: 22px;
-  }
+    h3 {
+        font-size: 22px;
+    }
 
-  h4 {
-    font-size: 20px;
-  }
+    h4 {
+        font-size: 20px;
+    }
 
-  h5 {
-    font-size: 18px;
-  }
+    h5 {
+        font-size: 18px;
+    }
 
-  h6 {
-    font-size: 16px;
-  }
+    h6 {
+        font-size: 16px;
+    }
 
     .custom-section-padding {
         padding-top: 50px;
