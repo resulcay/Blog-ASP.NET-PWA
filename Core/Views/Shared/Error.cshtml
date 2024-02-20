@@ -3,22 +3,24 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Hata.</h1>
-<h2 class="text-danger">İsteğiniz işlenirken bir hata meydana geldi.</h2>
+<div style="padding:20px">
+    <h1 class="text-danger">Hata.</h1>
+    <h2 class="text-danger">İsteğiniz işlenirken bir hata meydana geldi.</h2>
 
-@if (Model.ShowRequestId)
-{
+    @if (Model.ShowRequestId)
+    {
+        <p>
+            <strong>İstek ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+
+    <h3>Geliştirme Modu</h3>
     <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        Şu moda dönmek <strong>Geliştirme</strong> hatayı daha detaylı görüntüleme olanağı sağlar.
     </p>
-}
-
-<h3>Geliştirme Modu</h3>
-<p>
-    Şu moda dönmek <strong>Geliştirme</strong> hatayı daha detaylı görüntüleme olanağı sağlar.
-</p>
-<p>
-    <strong>Geliştirme ortamı, yayımlanmış uygulamalar için kapalı olmalıdır.</strong>
- <strong>Geliştirme</strong> ortamı şuradan ayarlanabilir <strong>ASPNETCORE_ENVIRONMENT</strong> ortam adını şuna ayarlayın <strong>Geliştirme</strong>
-    and restarting the app.
-</p>
+    <p>
+        <strong>Geliştirme ortamı, yayımlanmış uygulamalar için kapalı olmalıdır.</strong>
+        <strong>Geliştirme</strong> ortamı şuradan ayarlanabilir <strong>ASPNETCORE_ENVIRONMENT</strong> ortam adını şuna ayarlayın <strong>Geliştirme</strong>
+        ve yeniden başlatınız.
+    </p>
+</div>

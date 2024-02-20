@@ -605,6 +605,7 @@ https://templatemo.com/tm-587-tiya-golf-club
         right: 0;
         left: 0;
         pointer-events: none;
+        margin-bottom: -5px;
     }
 
 .custom-site-footer-title {

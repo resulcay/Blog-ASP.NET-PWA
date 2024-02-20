@@ -50,5 +50,11 @@ namespace DataAccessLayer.EntityFramework
             using var context = new Context();
             return context.Blogs.Include(c => c.Category).Include(d => d.Writer).ToList();
         }
+
+        public Blog GetBlogWithCommentCount(int id)
+        {
+            using var context = new Context();
+            return context.Blogs.Include(c => c.Comments).FirstOrDefault(x => x.BlogID == id);
+        }
     }
 }

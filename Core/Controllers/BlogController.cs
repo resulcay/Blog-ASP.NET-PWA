@@ -40,7 +40,7 @@ namespace CoreDemo.Controllers
         {
             ViewBag.i = id;
 
-            var value = _blogManager.GetEntityById(id);
+            var value = _blogManager.GetBlogWithCommentCount(id);
 
             if (value == null || !value.BlogStatus)
             {
