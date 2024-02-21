@@ -77,7 +77,6 @@ namespace Core.Controllers
                 ("Role", "Index"),
                 ("Role", "UserRoleList"),
                 ("Role", "AddRole"),
-                ("Widget", "Index"),
                 ("Writer", "Index"),
                 ("Writer", "WriterAdd"),
 
