@@ -2,20 +2,7 @@
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
-                <div class="dropdown profile-element">
-                    <img alt="image" class="rounded-circle" src="~/inspinia-gh-pages/img/profile_small.jpg" />
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">David Williams</span>
-                        <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                        <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                        <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="login.html">Logout</a></li>
-                    </ul>
-                </div>
+                @await Component.InvokeAsync("AdminInfo")
                 <div class="logo-element">
                    P
                 </div>
@@ -60,7 +47,10 @@
                 <a href="/Admin/Excel/BlogListToExcel/"><i class="fa fa-file-excel-o"></i> <span class="nav-label">Excel'e Dönüştür</span></a>
             </li>
             <li>
-                <a href="/Home/Index/"><i class="fa fa-power-off"></i> <span class="nav-label">Çıkış</span></a>
+                <a href="/Home/Index/"><i class="fa fa-external-link"></i> <span class="nav-label">Siteye Dön</span></a>
+            </li>
+            <li>
+                <a href="/Login/LogOut/"><i class="fa fa-power-off"></i> <span class="nav-label">Çıkış</span></a>
             </li>
         </ul>
     </div>
