@@ -8,33 +8,31 @@ using System.Threading.Tasks;
 
 namespace Core.Areas.Admin.ViewComponents.Statistic
 {
-    public class StatisticAbout : ViewComponent
+    public class SmallWidget : ViewComponent
     {
         private readonly UserManager<User> _userManager;
-        private readonly WriterManager _writerManager = new(new EfWriterRepository());
-        private readonly AdminManager _adminManager = new(new EfAdminRepository()); 
 
-        public StatisticAbout(UserManager<User> userManager)
+        public SmallWidget(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly AdminManager _adminManager = new(new EfAdminRepository());
+
         public IViewComponentResult Invoke()
         {
             var user = GetUserFromSession().Result;
-            var data = _adminManager.ComplexQueryData();
+            var data = _adminManager.SmallQueryData(user.WriterID);
 
-            ViewBag.adminName = user.WriterNameSurname;
-            ViewBag.adminImage = user.WriterImage;
-            ViewBag.adminAbout = user.WriterAbout;
-
-            var model = new LargeWidgetViewModel
+            var model = new SmallWidgetViewModel
             {
-                RoleCount = data[0],
-                NotificationCount = data[1],
-                PassiveCategoryCount = data[2],
-                PassiveBlogCount = data[3],
-                Date = System.DateTime.Now
+                UserCount = data[0],
+                CategoryCount = data[1],
+                ReceivedMessageCount = data[2],
+                SentMessageCount = data[3],
+                RoleCount = data[4],
+                Profit = 50.992
             };
 
             return View(model);

@@ -1,0 +1,76 @@
+﻿@model SmallWidgetViewModel
+
+<div class="row">
+    <div class="col-lg-2">
+        <div class="widget style1 navy-bg">
+            <div class="row vertical-align">
+                <div class="col-3">
+                    <i class="fa fa-user fa-3x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h2 class="font-bold">@Model.UserCount</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget style1 navy-bg">
+            <div class="row vertical-align">
+                <div class="col-3">
+                    <i class="fa fa-list fa-3x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h2 class="font-bold">@Model.CategoryCount</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget style1 navy-bg">
+            <div class="row vertical-align">
+                <div class="col-3">
+                    <i class="fa fa-mail-reply fa-3x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h2 class="font-bold">@Model.ReceivedMessageCount</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget style1 lazur-bg">
+            <div class="row vertical-align">
+                <div class="col-3">
+                    <i class="fa fa-mail-forward fa-3x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h2 class="font-bold">@Model.SentMessageCount</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget style1 lazur-bg">
+            <div class="row vertical-align">
+                <div class="col-3">
+                    <i class="fa fa-try fa-3x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h2 class="font-bold">@Model.Profit</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget style1 yellow-bg">
+            <div class="row vertical-align">
+                <div class="col-3">
+                    <i class="fa fa-address-card fa-3x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h2 class="font-bold">@Model.RoleCount</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
