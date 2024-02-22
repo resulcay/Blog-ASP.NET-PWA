@@ -92,6 +92,8 @@ namespace Core.Areas.Admin.Controllers
 
         private static string ExtractNonHtmlText(string html)
         {
+            html ??= "";
+
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
 

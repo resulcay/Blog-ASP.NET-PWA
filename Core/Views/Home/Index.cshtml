@@ -4,14 +4,16 @@
 }
 
 <section style="margin-top:10px" class="custom-hero-section d-flex justify-content-center align-items-center">
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="~/slider/images/star.mp4" type="video/mp4">
+        Tarayıcınız video oynatmayı desteklemiyor.
+    </video>
 
-    <div class="custom-section-overlay"></div>
+    <div class="overlay"></div>
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#fff" fill-opacity="1" d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,0L1405.7,0C1371.4,0,1303,0,1234,0C1165.7,0,1097,0,1029,0C960,0,891,0,823,0C754.3,0,686,0,617,0C548.6,0,480,0,411,0C342.9,0,274,0,206,0C137.1,0,69,0,34,0L0,0Z"></path></svg>
-
-    <div class="container">
+    <div class="content container">
         <div class="row">
-            <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+            <div class="col-lg-12 col-12 mb-5 mb-lg-0">
                 <h1 class="custom-cd-headline rotate-1 text-white mb-4 pb-2">
                     <span class="custom-cd-words-wrapper">
                         <b class="is-visible">PureBlog'a</b>
@@ -19,25 +21,6 @@
                     </span>
                 </h1>
             </div>
-
-            <div class="col-lg-6 col-12" id="dotlottie-container">
-                <dotlottie-player style="height: 400px; width:400px;overflow:hidden; border-radius: 10px;" src="https://lottie.host/8289f572-3f13-40ee-8186-d1c316788dbf/MKc7W7lETG.json" background="#3D405B" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
-                <script>
-                    var dotlottiePlayer = document.querySelector('dotlottie-player');
-                    function resizePlayer() {
-                        var screenWidth = window.innerWidth;
-      
-                        if (screenWidth > 480) {
-                            dotlottiePlayer.style.width = '400px';
-                            dotlottiePlayer.style.height = '400px';
-                        } else {
-                            dotlottiePlayer.style.width = '280px';
-                            dotlottiePlayer.style.height = '280px';
-                        }
-                    }
-                    resizePlayer();
-                    window.addEventListener('resize', resizePlayer);
-                </script>
             </div>
         </div>
     </div>

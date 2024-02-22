@@ -43,5 +43,10 @@ namespace BusinessLayer.Concrete
         {
             return _categoryDal.GetCategoryListWithBlogCount();
         }
+
+        public Dictionary<string, int> GetCategoryWithBlogCount()
+        {
+            return _categoryDal.GetCategoryWithBlogCount();
+        }
     }
 }

@@ -21,5 +21,14 @@ namespace DataAccessLayer.EntityFramework
 
             return categoriesWithBlogCounts;
         }
+
+        public Dictionary<string, int> GetCategoryWithBlogCount()
+        {
+            using var context = new Context();
+            var categoriesWithBlogCounts = context.Categories.Include(x => x.Blogs)
+                .ToDictionary(c => c.CategoryName, c => c.Blogs.Count);
+
+            return categoriesWithBlogCounts;
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace BusinessLayer.Abstract
     public interface ICategoryService : IGenericService<Category>
     {
         List<Category> GetCategoryListWithBlogCount();
+        Dictionary<string, int> GetCategoryWithBlogCount();
     }
 }

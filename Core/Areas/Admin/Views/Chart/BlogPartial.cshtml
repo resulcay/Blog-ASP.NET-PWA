@@ -1,0 +1,49 @@
+﻿<style>
+    .customchart {
+        width: 100%;
+        min-height: 60vh;
+    }
+</style>
+
+<div id="chartdiv" class="customchart">
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(DrawOnLoad);
+
+    window.onresize = function () {
+        DrawOnLoad();
+        DrawOnLoad2();
+    }
+
+    function DrawOnLoad() {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Chart/CategoryChart/',
+                success: function (chartsdata) {
+                    var value = chartsdata.jsonList;
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'categoryname');
+                    data.addColumn('number', 'categorycount');
+
+                    for (var i = 0; i < value.length; i++) {
+                        data.addRow([value[i].categoryname, value[i].categorycount]);
+                    }
+
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                    chart.draw(data,
+                        {
+                            title: "Bloglar",
+                            position: "top",
+                            fontsize: "16px"
+                        });
+                }
+            });
+        })
+    }
+</script>
