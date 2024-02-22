@@ -27,8 +27,8 @@ namespace ReporterWindowsService
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
 
             // 86_400_000 milliseconds is 24 hours
-            // 300_000 milliseconds is 5 minutes
-            timer.Interval = 300_000;
+            // 3_600_000 milliseconds is 60 minutes
+            timer.Interval = 3_600_000;
             timer.Enabled = true;
         }
 
@@ -41,7 +41,7 @@ namespace ReporterWindowsService
         {
             var date = DateTime.Now;
 
-            if (date.Hour == 22 && date.Minute < 6)
+            if (date.Hour == 22)
             {
                 WriteToExcel();
             }
