@@ -23,20 +23,30 @@ namespace ReporterWindowsService
         protected override void OnStart(string[] args)
         {
             WriteToExcel();
+
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
 
-            // 86400000 milliseconds is 24 hours
-            timer.Interval = 10000;
+            // 86_400_000 milliseconds is 24 hours
+            // 300_000 milliseconds is 5 minutes
+            timer.Interval = 300_000;
             timer.Enabled = true;
         }
+
         protected override void OnStop()
         {
 
         }
+
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
-            WriteToExcel();
+            var date = DateTime.Now;
+
+            if (date.Hour == 22 && date.Minute < 6)
+            {
+                WriteToExcel();
+            }
         }
+
         public void WriteToExcel()
         {
             BlogDataAccess _blogManager = new BlogDataAccess();
@@ -114,7 +124,7 @@ namespace ReporterWindowsService
                 string smtpUsername = "test@pureblog.com.tr";
                 string smtpPassword = "8d8b3S3NnAcYZTf";
                 string senderEmail = "test@pureblog.com.tr";
-                string recipientEmail = "karayip630@gmail.com";
+                string recipientEmail = "info@pureblog.com.tr";
                 string subject = "Günlük Blog Raporu";
                 string htmlBody = @"<!DOCTYPE html>
 <html lang=""en"">

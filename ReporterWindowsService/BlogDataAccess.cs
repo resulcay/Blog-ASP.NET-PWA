@@ -19,7 +19,7 @@ INNER JOIN Writers ON Blogs.WriterID = Writers.WriterID WHERE BlogCreatedAt BETW
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                DateTime initialDate = DateTime.Now.AddDays(-100);
+                DateTime initialDate = DateTime.Now.AddHours(24);
                 DateTime endingDate = DateTime.Now;
 
                 command.Parameters.AddWithValue("@InitialDate", initialDate);
