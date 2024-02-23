@@ -10,16 +10,16 @@
         $(function () {
             $.ajax({
                 type: 'GET',
-                url: '/Admin/Chart/UserChart/',
+                url: '/Admin/Chart/RoleChart/',
                 success: function (chartsdata) {
                     var value = chartsdata.jsonList;
                     var data = new google.visualization.DataTable();
 
-                    data.addColumn('string', 'categoryname');
-                    data.addColumn('number', 'categorycount');
+                    data.addColumn('string', 'rolename');
+                    data.addColumn('number', 'rolecount');
 
                     for (var i = 0; i < value.length; i++) {
-                        data.addRow([value[i].categoryname, value[i].categorycount]);
+                        data.addRow([value[i].rolename, value[i].rolecount]);
                     }
 
                     var chart = new google.visualization.PieChart(document.getElementById('chartdiv2'));

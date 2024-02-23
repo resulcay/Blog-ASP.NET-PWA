@@ -22,5 +22,10 @@ namespace BusinessLayer.Concrete
         {
             return _adminDal.SmallQueryData(id);
         }
+
+        public List<string> GetRoles() 
+        {
+            return _adminDal.GetRoles();
+        }
     }
 }

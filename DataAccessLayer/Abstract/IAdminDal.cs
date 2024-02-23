@@ -6,5 +6,6 @@ namespace DataAccessLayer.Abstract
     {
         List<int> SmallQueryData (int id);
         List<int> ComplexQueryData();
+        List<string> GetRoles();
     }
 }

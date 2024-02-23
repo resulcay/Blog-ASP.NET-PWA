@@ -105,7 +105,7 @@ namespace CoreDemo
 
                 endpoints.MapControllerRoute(
                 name: "admin_default",
-                pattern: "{area:exists}/{controller=Chart}/{action=Index}/{id?}",
+                pattern: "{area:exists}/{controller=Category}/{action=Index}/{id?}",
                 defaults: new { area = "Admin" });
 
                 endpoints.MapControllerRoute(

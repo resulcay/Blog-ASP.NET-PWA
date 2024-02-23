@@ -1,11 +1,16 @@
 ﻿using BusinessLayer.Concrete;
 using Core.Areas.Admin.Models;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Areas.Admin.Controllers
 {
@@ -13,6 +18,14 @@ namespace Core.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class ChartController : Controller
     {
+        private readonly UserManager<User> _userManager;
+        private readonly AdminManager _adminManager = new(new EfAdminRepository());
+
+        public ChartController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+
         private readonly CategoryManager _categoryManager = new(new EfCategoryRepository());
 
         public IActionResult Index()
@@ -53,16 +66,24 @@ namespace Core.Areas.Admin.Controllers
             return Content(jsonString, "application/json");
         }
 
-        public IActionResult UserChart()
+        public IActionResult RoleChart()
         {
-            List<CategoryModel> list = new()
-            {
-                new(){ CategoryName = "Teknoloji", CategoryCount = 10},
-                new(){ CategoryName = "Yazılım", CategoryCount = 6},
-                new(){ CategoryName = "Spor", CategoryCount = 3},
-            };
+            var roleModels = new List<RoleModel>();
+            List<string> roles = _adminManager.GetRoles();
 
-            string jsonString = JsonConvert.SerializeObject(new { jsonList = list });
+            foreach (string role in roles)
+            {
+                List<User> usersAssociatedWithRole = _userManager.GetUsersInRoleAsync(role).Result.ToList();
+            
+                roleModels.Add(
+                    new RoleModel()
+                    {
+                        RoleName = role,
+                        RoleCount = usersAssociatedWithRole.Count
+                    });
+            }
+
+            string jsonString = JsonConvert.SerializeObject(new { jsonList = roleModels });
 
             return Content(jsonString, "application/json");
         }

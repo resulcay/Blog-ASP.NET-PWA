@@ -34,5 +34,11 @@ namespace DataAccessLayer.EntityFramework
 
             return result;
         }
+
+        public List<string> GetRoles()
+        {
+            using var context = new Context();
+            return context.Roles.Select(a => a.Name).ToList();
+        }
     }
 }
