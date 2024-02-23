@@ -108,13 +108,16 @@ namespace CoreDemo.Controllers
             if (result.IsValid && model.BlogImage != null && (isJpg || isJpeg || isPng))
             {
                 var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterBlogFiles/");
+
                 if (!Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
+
                 var location = Path.Combine(directory + newImageName);
                 var stream = new FileStream(location, FileMode.Create);
                 model.BlogImage.CopyTo(stream);
+                stream.Close();
 
                 _blogManager.AddEntity(blog);
 
@@ -135,8 +138,15 @@ namespace CoreDemo.Controllers
 
         public IActionResult DeleteBlog(int id)
         {
-            var value = _blogManager.GetEntityById(id);
-            _blogManager.DeleteEntity(value);
+            Blog blog = _blogManager.GetEntityById(id);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + blog.BlogImage);
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+
+            _blogManager.DeleteEntity(blog);
 
             return RedirectToAction("BlogListByWriter");
         }

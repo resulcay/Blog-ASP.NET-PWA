@@ -1,18 +1,27 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "BlogListToExcel";
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
-<h1>Blogları İndir - Excel</h1>
-
-<br />
-
+<h2>Blogları Excel Formatında İndir</h2>
 <button class="btn btn-primary" onclick="GetBlogsAsExcel()">Blogları İndir</button>
+<br />
+<h2>Kullanıcıları Excel Formatında İndir</h2>
+<button class="btn btn-secondary" onclick="GetUsersAsExcel()">Kullanıcıları İndir</button>
+<br />
+<h2>Yorumları Excel Formatında İndir</h2>
+<button class="btn btn-info" onclick="GetCommentsAsExcel()">Yorumları İndir</button>
 
 <script>
-function GetBlogsAsExcel()
-{
+    function GetBlogsAsExcel() {
         window.open("/Admin/Excel/ExportDynamicBlogToExcel")
-}
+    }
+
+    function GetUsersAsExcel() {
+        window.open("/Admin/Excel/ExportDynamicUserToExcel")
+    }
+
+    function GetCommentsAsExcel() {
+        window.open("/Admin/Excel/ExportDynamicCommentToExcel")
+    }
 </script>

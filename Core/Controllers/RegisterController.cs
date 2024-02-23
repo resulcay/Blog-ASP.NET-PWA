@@ -69,13 +69,16 @@ namespace CoreDemo.Controllers
             if (result.IsValid && userModel.WriterImage != null && (isJpg || isJpeg || isPng))
             {
                 var directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/");
+
                 if (!Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
+
                 var location = Path.Combine(directory + newImageName);
                 var stream = new FileStream(location, FileMode.Create);
                 userModel.WriterImage.CopyTo(stream);
+                stream.Close();
 
                 User user = new()
                 {
