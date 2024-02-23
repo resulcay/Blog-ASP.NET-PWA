@@ -1,16 +1,13 @@
 ﻿using BusinessLayer.Concrete;
 using Core.Areas.Admin.Models;
-using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Core.Areas.Admin.Controllers
 {
@@ -74,7 +71,7 @@ namespace Core.Areas.Admin.Controllers
             foreach (string role in roles)
             {
                 List<User> usersAssociatedWithRole = _userManager.GetUsersInRoleAsync(role).Result.ToList();
-            
+
                 roleModels.Add(
                     new RoleModel()
                     {

@@ -12,7 +12,7 @@ namespace Core.Areas.Admin.ViewComponents.Statistic
     {
         private readonly UserManager<User> _userManager;
         private readonly WriterManager _writerManager = new(new EfWriterRepository());
-        private readonly AdminManager _adminManager = new(new EfAdminRepository()); 
+        private readonly AdminManager _adminManager = new(new EfAdminRepository());
 
         public StatisticAbout(UserManager<User> userManager)
         {

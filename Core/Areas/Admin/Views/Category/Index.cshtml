@@ -43,19 +43,19 @@
                                         @{
                                             if (item.CategoryStatus)
                                             {
-                                                <span class="badge badge-success">Aktif</span>
+                                                    <span class="badge badge-success">Aktif</span>
                                             }
                                             else
                                             {
-                                                <span class="badge badge-dark">Pasif</span>
+                                                    <span class="badge badge-dark">Pasif</span>
                                             }
                                         }
                                     </td>
                                 <td style="text-align:center; vertical-align:middle">
-                                        <button class="btn btn-primary dim" type="button"><i class="fa fa-check"></i></button>
+                                        <button onclick="activate('@item.CategoryID')" class="btn btn-primary dim" type="button"><i class="fa fa-check"></i></button>
                                 </td>
                                 <td style="text-align:center; vertical-align:middle">
-                                        <button class="btn btn-warning dim " type="button"><i class="fa fa-warning"></i></button>
+                                        <button onclick="deactivate('@item.CategoryID')" class="btn btn-warning dim " type="button"><i class="fa fa-warning"></i></button>
                                 </td>
                                 <td style="text-align:center; vertical-align:middle">
                                     <button class="btn btn-danger dim" type="button"
@@ -103,6 +103,15 @@
                 window.location.href = '/Admin/Category/DeleteCategory/' + categoryId;
             }
         })
+    }
+
+    function activate(categoryId) 
+    {
+        window.location.href = '/Admin/Category/ActivateCategory/' + categoryId;
+    }
+
+    function deactivate(categoryId) {
+        window.location.href = '/Admin/Category/DeactivateCategory/' + categoryId;
     }
 </script>
 

@@ -21,6 +21,57 @@ namespace Core.Areas.Admin.Controllers
             return View(categories);
         }
 
+        public IActionResult ActivateCategory(int id)
+        {
+            Category category = _categoryManager.GetEntityById(id);
+
+            category.CategoryStatus = true;
+            _categoryManager.UpdateEntity(category);
+
+            return RedirectToAction("Index", "Category");
+        }
+
+        public IActionResult DeactivateCategory(int id)
+        {
+            Category category = _categoryManager.GetEntityById(id);
+
+            category.CategoryStatus = false;
+            _categoryManager.UpdateEntity(category);
+
+            return RedirectToAction("Index", "Category");
+        }
+
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+        {
+            var category = _categoryManager.GetEntityById(id);
+            return View(category);
+        }
+
+
+        [HttpPost]
+        public IActionResult EditCategory(Category category)
+        {
+            CategoryValidator categoryValidator = new();
+            ValidationResult result = categoryValidator.Validate(category);
+
+            if (result.IsValid)
+            {
+                _categoryManager.UpdateEntity(category);
+                return RedirectToAction("Index", "Category");
+
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+
+            return View();
+        }
+
         [HttpGet]
         public IActionResult AddCategory()
         {

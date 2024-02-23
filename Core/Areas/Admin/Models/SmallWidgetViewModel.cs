@@ -7,7 +7,7 @@
         public int CategoryCount { get; set; }
 
         public int ReceivedMessageCount { get; set; }
-        
+
         public int SentMessageCount { get; set; }
 
         public double Profit { get; set; }
