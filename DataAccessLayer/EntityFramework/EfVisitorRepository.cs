@@ -11,7 +11,15 @@ namespace DataAccessLayer.EntityFramework
         public bool IsVisitorUnique(string ip)
         {
             using var context = new Context();
-            return context.Visitors.Any(x => x.VisitorIp != ip);
+            var visitor = context.Visitors.Where(a => a.VisitorIp == ip).FirstOrDefault();
+
+            if (visitor == null)
+            {
+                return true;
+            }
+
+            return false;
+
         }
     }
 }

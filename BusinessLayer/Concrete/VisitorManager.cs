@@ -7,7 +7,7 @@ namespace BusinessLayer.Concrete
 {
     public class VisitorManager : IVisitorService
     {
-        private readonly IVisitorDal _visitorDal;
+        readonly IVisitorDal _visitorDal;
 
         public VisitorManager(IVisitorDal visitorDal)
         {
