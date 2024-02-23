@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 public class BlogDataAccess
 {
-    const string connectionString = @"Data Source=77.245.159.27\MSSQLSERVER2019; User Id=resulcay; Password=HV8plhmA&z?9d6za; Initial Catalog=CoreBlogDb;";
+    const string connectionString = "provide your connection string here";
 
     public List<Blog> GetAllBlogs()
     {

@@ -49,7 +49,6 @@ namespace CoreDemo
             });
 
             services.AddControllersWithViews();
-            //services.AddSession();
             services.AddMvc(
                 config =>
                 {
@@ -65,13 +64,12 @@ namespace CoreDemo
                 x.LoginPath = "/Login/Index";
             });
 
-            // Register Validators
             services.AddValidatorsFromAssemblyContaining<WriterValidator>();
             services.AddValidatorsFromAssemblyContaining<BlogValidator>();
             services.AddValidatorsFromAssemblyContaining<MessageValidator>();
 
-            services.AddFluentValidationAutoValidation(); // the same old MVC pipeline behavior
-            services.AddFluentValidationClientsideAdapters(); // for client side
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
