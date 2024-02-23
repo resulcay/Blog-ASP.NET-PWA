@@ -23,6 +23,12 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityLayer\EntityLayer.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BusinessLayer">
+      <HintPath>..\BusinessLayer\bin\Release\net5.0\BusinessLayer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 	<PropertyGroup>
 		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 	</PropertyGroup>
