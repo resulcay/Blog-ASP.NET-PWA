@@ -12,7 +12,7 @@ namespace DataAccessLayer.EntityFramework
         public Writer GetWriterBySession(string session)
         {
             Context context = new();
-            var writer = context.Writers.Include(t => t.User).Where(x => x.UserID == int.Parse(session)).FirstOrDefault();
+            var writer = context.Writers.Include(t => t.User).Where(x => x.UserID == int.Parse(session) && x.WriterStatus).FirstOrDefault();
 
             return writer;
         }

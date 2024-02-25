@@ -13,7 +13,7 @@ namespace DataAccessLayer.EntityFramework
         public List<Comment> GetCommentsWithBlogAndWriter()
         {
             using var context = new Context();
-            return context.Comments.Include(c => c.Blog).Include(d => d.Blog.Writer).ToList();
+            return context.Comments.Include(c => c.Blog).Include(d => d.Blog.Writer).Where(a => a.Blog.Writer.WriterStatus && a.CommentStatus).ToList();
         }
     }
 }

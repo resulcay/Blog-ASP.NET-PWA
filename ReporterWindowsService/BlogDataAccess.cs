@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 public class BlogDataAccess
 {
-    const string connectionString = "provide your connection string here";
+    const string connectionString = "provide connection string";
 
     public List<Blog> GetAllBlogs()
     {

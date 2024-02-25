@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CoreDemo
 {
@@ -38,6 +40,11 @@ namespace CoreDemo
             })
                 .AddEntityFrameworkStores<Context>();
 
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.Zero;
+            });
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
@@ -45,7 +52,7 @@ namespace CoreDemo
                 options.LoginPath = "/Login/Index";
                 options.LogoutPath = "/Login/LogOut";
                 options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Login/AccessDenied");
-                options.ExpireTimeSpan = System.TimeSpan.FromMinutes(30);
+                options.ExpireTimeSpan = System.TimeSpan.FromDays(7);
             });
 
             services.AddControllersWithViews();
@@ -87,6 +94,7 @@ namespace CoreDemo
             }
 
             app.UseMiddleware<VisitorMiddleware>();
+
             app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code={0}");
 
             app.UseHttpsRedirection();

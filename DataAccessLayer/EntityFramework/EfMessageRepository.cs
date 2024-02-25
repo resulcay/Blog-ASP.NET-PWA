@@ -13,7 +13,7 @@ namespace DataAccessLayer.EntityFramework
         public List<Message> GetReceivedMessagesByWriter(int id)
         {
             using var context = new Context();
-            var messages = context.Messages.Include(z => z.SenderUser).Include(a => a.ReceiverUser).Where(x => x.ReceiverID == id && x.MessageStatus).ToList();
+            var messages = context.Messages.Include(z => z.SenderUser).Include(a => a.ReceiverUser).Where(x => x.ReceiverID == id && x.MessageStatus && x.ReceiverUser.WriterStatus && x.SenderUser.WriterStatus).ToList();
 
             return messages;
         }
@@ -21,7 +21,7 @@ namespace DataAccessLayer.EntityFramework
         public List<Message> GetSentMessagesByWriter(int id)
         {
             using var context = new Context();
-            var messages = context.Messages.Include(z => z.SenderUser).Include(a => a.ReceiverUser).Where(x => x.SenderID == id && x.MessageStatus).ToList();
+            var messages = context.Messages.Include(z => z.SenderUser).Include(a => a.ReceiverUser).Where(x => x.SenderID == id && x.MessageStatus && x.ReceiverUser.WriterStatus && x.SenderUser.WriterStatus).ToList();
 
             return messages;
         }

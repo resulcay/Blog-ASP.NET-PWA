@@ -20,7 +20,7 @@ namespace DataAccessLayer.EntityFramework
         {
             using var context = new Context();
 
-            return context.Blogs.Include(t => t.Category).Where(z => z.Category.CategoryStatus).Where(x => x.BlogStatus)
+            return context.Blogs.Include(t => t.Category).Include(a => a.Writer).Where(z => z.Category.CategoryStatus && z.Writer.WriterStatus).Where(x => x.BlogStatus)
                 .OrderByDescending(x => x.BlogCreatedAt)
                 .Take(3)
                 .ToList();
@@ -29,7 +29,7 @@ namespace DataAccessLayer.EntityFramework
         public List<Blog> GetListWithCategory(int? length)
         {
             using var context = new Context();
-            var query = context.Blogs.Where(x => x.BlogStatus).Include(c => c.Category).Where(t => t.Category.CategoryStatus);
+            var query = context.Blogs.Where(x => x.BlogStatus).Include(c => c.Category).Include(a => a.Writer).Where(t => t.Category.CategoryStatus && t.Writer.WriterStatus);
 
             if (length.HasValue && length > 0)
             {
@@ -42,19 +42,19 @@ namespace DataAccessLayer.EntityFramework
         public List<Blog> GetBlogListByWriter(int id, bool isWriter)
         {
             using var context = new Context();
-            return context.Blogs.Include(c => c.Category).Where(w => w.WriterID == id && (isWriter || w.BlogStatus)).ToList();
+            return context.Blogs.Include(c => c.Category).Include(a => a.Writer).Where(g => g.Writer.WriterStatus).Where(w => w.WriterID == id && (isWriter || w.BlogStatus)).ToList();
         }
 
         public List<Blog> GetDetailedBlogList()
         {
             using var context = new Context();
-            return context.Blogs.Include(c => c.Category).Include(d => d.Writer).ToList();
+            return context.Blogs.Include(c => c.Category).Include(a => a.Writer).Where(g => g.Writer.WriterStatus).ToList();
         }
 
         public Blog GetBlogWithCommentCount(int id)
         {
             using var context = new Context();
-            return context.Blogs.Include(c => c.Comments).FirstOrDefault(x => x.BlogID == id);
+            return context.Blogs.Include(c => c.Comments).Include(a => a.Writer).Where(g => g.Writer.WriterStatus).FirstOrDefault(x => x.BlogID == id);
         }
     }
 }

@@ -93,6 +93,7 @@ namespace Core.Controllers
         private void PopulateWritersDropdown()
         {
             List<SelectListItem> receivers = (from x in _writerManager.GetEntities()
+                                              where x.WriterStatus
                                               select new SelectListItem
                                               {
                                                   Text = x.WriterNameSurname,

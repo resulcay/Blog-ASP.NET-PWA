@@ -6,14 +6,15 @@
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 <style>
-    .endless {
-        display: flex;
-        justify-content: space-between;
+    @@media (max-width: 450px) {
+    .ml-auto {
+        margin-left: 0 !important;
     }
+}
 </style>
-<div class="endless">
+<div class="row">
     <h1>Gelen Kutusu</h1>
-    <button onclick="window.location.href='/Message/SendBox/'" style="text-align:center" class="btn btn-outline-danger btn-fw">Giden Kutusu</button>
+    <button onclick="window.location.href='/Message/SendBox/'" class="btn btn-outline-danger btn-fw ml-auto">Giden Kutusu</button>
 </div>
 <div class="table-responsive">
     <table class="table">

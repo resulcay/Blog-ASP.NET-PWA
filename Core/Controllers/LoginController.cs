@@ -1,8 +1,14 @@
 ﻿using Core.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CoreDemo.Controllers
@@ -11,10 +17,12 @@ namespace CoreDemo.Controllers
     public class LoginController : Controller
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public LoginController(SignInManager<User> signInManager)
+        public LoginController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
-            this._signInManager = signInManager;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -29,18 +37,27 @@ namespace CoreDemo.Controllers
             if (ModelState.IsValid)
             {
                 var userName = await _signInManager.UserManager.FindByNameAsync(userLoginViewModel.UserName);
-
+                var isPasswordCorrect = await _userManager.CheckPasswordAsync(userName, userLoginViewModel.Password);
                 var result = await _signInManager.PasswordSignInAsync(userLoginViewModel.UserName, userLoginViewModel.Password, userLoginViewModel.IsPersistent, true);
+
+                if (userName != null && isPasswordCorrect)
+                {
+
+                    if (result.IsLockedOut)
+                    {
+                        ModelState.AddModelError("UserName", "Kullanıcı aktif değil");
+                        return View();
+                    }
+                    else if (result.RequiresTwoFactor)
+                    {
+                        ModelState.AddModelError("UserName", "İki faktörlü doğrulama aktif değil");
+                        return View();
+                    }
+                }
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("UserName", "Kullanıcı adı veya şifre hatalı");
-                    return View();
-                }
-
-                if (!userName.IsActive)
-                {
-                    ModelState.AddModelError("UserName", "Kullanıcı aktif değil");
                     return View();
                 }
 

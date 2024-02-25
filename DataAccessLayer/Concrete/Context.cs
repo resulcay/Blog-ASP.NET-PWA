@@ -8,7 +8,7 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-             optionsBuilder.UseSqlServer("provide your connection string here");
+            optionsBuilder.UseSqlServer("provide connection string");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

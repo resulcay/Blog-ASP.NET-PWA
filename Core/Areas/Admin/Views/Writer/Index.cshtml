@@ -6,14 +6,14 @@
 <h1>Yazarlar</h1>
 <br />
 <div style="margin-bottom: 5px" id="writerById">ID ile Yazar getir</div>
-   <div class="row">
-        <div class="col col-lg-10">
-            <input id="writerId" type="text" placeholder="Yazar ID giriniz" class="form-control" />
-       </div>
-        <div class="col col-lg-2">
-            <button id="btnGetById" class="btn btn-outline-success" type="button">ID ile Yazar Ara</button>
-       </div>
-   </div>
+<div class="row">
+    <div class="col col-lg-10">
+        <input id="writerId" type="text" placeholder="Yazar ID giriniz" class="form-control" />
+    </div>
+    <div class="col col-lg-2">
+        <button id="btnGetById" class="btn btn-outline-success" type="button">ID ile Yazar Ara</button>
+    </div>
+</div>
 <br />
 <div id="writerList">Yazarlar</div>
 
@@ -27,11 +27,23 @@
                 url: "/Admin/Writer/WriterList",
                 success: function (func) {
                     let writer = jQuery.parseJSON(func);
-                    let tableHtml = "<div class=table-responsive><table class=table><tr><th>ID</th><th>Kullanıcı Adı</th><th>Ad - Soyad</th><th>Hakkında</th><th>Görsel Yolu</th><th>E-mail</th><th>Durum</th></tr>";
+                    let tableHtml = "<div class=table-responsive><table class=table><tr><th>ID</th><th>Kullanıcı Adı</th><th>Ad - Soyad</th><th>Hakkında</th><th>Görsel Yolu</th><th>E-mail</th><th>Durum</th><th>Aktive Et</th><th>Deaktive Et</th><th>Sil</th></tr>";
 
                     $.each(writer, (index, value) => {
                         let statusText = value.WriterStatus ? 'Aktif' : 'Pasif';
-                        tableHtml += `<tr><td>${value.WriterID}</td><td>${value.WriterUserName}</td><td>${value.WriterNameSurname}</td><td>${value.WriterAbout}</td><td>${value.WriterImage}</td><td>${value.WriterMail}</td><td>${statusText}</td></tr>`;
+                        tableHtml += `<tr><td>${value.WriterID}</td><td>${value.WriterUserName}</td><td>${value.WriterNameSurname}</td><td>${value.WriterAbout}</td><td>${value.WriterImage}</td><td>${value.WriterMail}</td><td>${statusText}</td>
+                                <td style="vertical-align:middle">
+                                <button onclick="activate('${value.WriterID}')" class="btn btn-primary dim" type="button"><i class="fa fa-check"></i></button>
+                                 </td>
+                                 <td style="vertical-align:middle">
+                                 <button onclick="deactivate('${value.WriterID}')" class="btn btn-warning dim"  type="button"><i class="fa fa-warning"></i></button>
+                                 </td>
+                                 <td style="vertical-align:middle">
+                                 <button class="btn btn-danger dim" type="button"
+                                  onclick="confirmDelete('${value.WriterID}')">
+                                  <i class="fa fa-trash-o"></i>
+                                  </button>
+                                  </td></tr>`;
                     });
 
                     tableHtml += "</table></div>";
@@ -56,7 +68,19 @@
                         let writer = jQuery.parseJSON(func);
                         let statusText = writer.WriterStatus ? 'Aktif' : 'Pasif';
 
-                        let value = `<div class=table-responsive><table class=table><tr><th>ID</th><th>Kullanıcı Adı</th><th>Ad - Soyad</th><th>Hakkında</th><th>Görsel Yolu</th><th>E-mail</th><th>Durum</th></tr><tr><td>${writer.WriterID}</td><td>${writer.WriterUserName}</td><td>${writer.WriterNameSurname}</td><td>${writer.WriterAbout}</td><td>${writer.WriterImage}</td><td>${writer.WriterMail}</td><td>${statusText}</td></tr>`;
+                        let value = `<div class=table-responsive><table class=table><tr><th>ID</th><th>Kullanıcı Adı</th><th>Ad - Soyad</th><th>Hakkında</th><th>Görsel Yolu</th><th>E-mail</th><th>Durum</th><th>Aktive Et</th><th>Deaktive Et</th><th>Sil</th></tr><tr><td>${writer.WriterID}</td><td>${writer.WriterUserName}</td><td>${writer.WriterNameSurname}</td><td>${writer.WriterAbout}</td><td>${writer.WriterImage}</td><td>${writer.WriterMail}</td><td>${statusText}</td>
+                                                 <td style="vertical-align:middle">
+                                                <button onclick="activate('${writer.WriterID}')" class="btn btn-primary dim" type="button"><i class="fa fa-check"></i></button>
+                                         </td>
+                                         <td style="vertical-align:middle">
+                                                 <button onclick="deactivate('${writer.WriterID}')" class="btn btn-warning dim"  type="button"><i class="fa fa-warning"></i></button>
+                                         </td>
+                                         <td style="vertical-align:middle">
+                                         <button class="btn btn-danger dim" type="button"
+                                                  onclick="confirmDelete('${writer.WriterID}')">
+                                          <i class="fa fa-trash-o"></i>
+                                          </button>
+                                          </td></tr>`;
                         value += "</table></div>";
 
                         $("#writerById").html(value);
@@ -64,6 +88,34 @@
                 });
             });
         });
-    </script>
 
+
+        function confirmDelete(userId) {
+            Swal.fire({
+                title: 'Sil?',
+                text: 'Kullanıcıyı silmek istediğinize emin misiniz?',
+                showDenyButton: true,
+                confirmButtonText: 'Evet',
+                denyButtonText: 'Hayır',
+                customClass: {
+                    actions: 'my-actions',
+                    cancelButton: 'order-1 right-gap',
+                    confirmButton: 'order-2',
+                    denyButton: 'order-3',
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Admin/Writer/DeleteUser/' + userId;
+                }
+            })
+        }
+
+        function activate(userId) {
+            window.location.href = '/Admin/Writer/ActivateUser/' + userId;
+        }
+
+        function deactivate(userId) {
+            window.location.href = '/Admin/Writer/DeactivateUser/' + userId;
+        }
+    </script>
 }
