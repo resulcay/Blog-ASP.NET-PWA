@@ -14,12 +14,12 @@ public class BlogDataAccess
         {
             connection.Open();
 
-            string query = @"SELECT Blogs.*, Categories.CategoryName, Writers.WriterName FROM Blogs INNER JOIN Categories ON Blogs.CategoryID = Categories.CategoryID
+            string query = @"SELECT Blogs.*, Categories.CategoryName, Writers.WriterNameSurname FROM Blogs INNER JOIN Categories ON Blogs.CategoryID = Categories.CategoryID
 INNER JOIN Writers ON Blogs.WriterID = Writers.WriterID WHERE BlogCreatedAt BETWEEN @InitialDate AND @EndingDate";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                DateTime initialDate = DateTime.Now.AddHours(24);
+                DateTime initialDate = DateTime.Now.AddHours(-24);
                 DateTime endingDate = DateTime.Now;
 
                 command.Parameters.AddWithValue("@InitialDate", initialDate);
@@ -72,12 +72,11 @@ INNER JOIN Writers ON Blogs.WriterID = Writers.WriterID WHERE BlogCreatedAt BETW
             BlogID = Convert.ToInt32(reader["BlogID"]),
             BlogTitle = reader["BlogTitle"].ToString(),
             BlogContent = reader["BlogContent"].ToString(),
-            BlogThumbnailImage = reader["BlogThumbnailImage"].ToString(),
             BlogImage = reader["BlogImage"].ToString(),
             BlogCreatedAt = Convert.ToDateTime(reader["BlogCreatedAt"]),
             BlogStatus = Convert.ToBoolean(reader["BlogStatus"]),
             Category = reader["CategoryName"].ToString(),
-            Writer = reader["WriterName"].ToString()
+            Writer = reader["WriterNameSurname"].ToString()
         };
     }
 
