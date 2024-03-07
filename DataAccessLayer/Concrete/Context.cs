@@ -8,7 +8,8 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("provide connection string");
+            //optionsBuilder.UseSqlServer("server=77.245.159.27\\MSSQLSERVER2019; database=CoreBlogDb; user=coreblogdb; password=HV8plhmA&z?9d6za");
+            optionsBuilder.UseSqlServer("server=(localdb)\\CoreDemo;database=CoreBlogDb; integrated security=true;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
